@@ -1,7 +1,7 @@
 {
   "name": "back-crud",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/cstudio7/back-crud.git",
   "author": "cstudio7 <conquerorsword36@yahoo.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "test": "NODE_ENV=testing npm run db-undo-migration && NODE_ENV=testing npm run db-migrate && NODE_ENV=testing nyc --reporter=html --reporter=text mocha --require @babel/register src/tests/*.js  --require @babel/polyfill --require @babel/register --timeout 100000000 --exit",
     "pretest-travis": "NODE_ENV=testing npm run db-undo-migration && NODE_ENV=testing  npm run db-migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "npm run db-seed-dev && cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "db-migrate": "npx sequelize db:migrate",
     "db-undo-migration": "npx sequelize db:migrate:undo:all",
     "db-seed-test": "NODE_ENV=testing npx sequelize-cli db:seed:undo:all && NODE_ENV=testing sequelize db:seed:all",
