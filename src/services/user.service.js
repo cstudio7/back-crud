@@ -45,6 +45,7 @@ class UserServices {
     try {
       const user = await db.user.findOne({
         where: {email}});
+      console.log(user)
       if (!user) return null;
       return user;
     } catch (error) {
