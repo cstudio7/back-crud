@@ -13,7 +13,7 @@ module.exports.testing = {
 };
 
 module.exports.production = {
-  url: process.env.DATABASE_URL_PROD,
+  url: process.env.DATABASE_URL,
   dialect: 'postgresql',
   logging: false,
 };
