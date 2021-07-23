@@ -13,11 +13,11 @@ const checkEmailpassword = async (req, res) => {
     const status = 409;
     return response.errorMessage(res, 'Invalid Login Detail', status);
   }
-  // const isverifiedTrue = user.isVerified;
-  // if (!isverifiedTrue) {
-  //   const status = 401;
-  //   return response.errorMessage(res, 'User Is Not Verified, Please verify the User First', status);
-  // }
+  const isverifiedTrue = user.isVerified;
+  if (!isverifiedTrue) {
+    const status = 401;
+    return response.errorMessage(res, 'User Is Not Verified, Please verify the User First', status);
+  }
 
   const token = GenerateToken({ email: req.body.email, isVerified: user.isVerified, id: user.id, authType: user.authType, firstName: user.firstName, lastName: user.lastName });
   return response.successMessage(

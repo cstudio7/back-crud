@@ -56,35 +56,36 @@ class userController {
           process.env.SENDGRID_API_KEY,
           email,
           process.env.SENDER_EMAIL,
-          'Diatron App',
+          'Diatron Health',
           verificationEmail
         );
         const data = {
           token,
         };
 
-      const params = {
-        Message: `Welcome ${firstName} ${lastName} to Diatron App, Your code is ${code} !`,
-        PhoneNumber: `+${phoneNumber}`,
-        MessageAttributes: {
-          'AWS.SNS.SMS.SenderID': {
-            'DataType': 'String',
-            'StringValue': 'Diatron-App'
-          }
-        }
-      };
-      // console.log(params)
+      // const params = {
+      //   Message: `Welcome ${firstName} ${lastName} to Diatron App, Your code is ${code} !`,
+      //   PhoneNumber: `+${phoneNumber}`,
+      //   MessageAttributes: {
+      //     'AWS.SNS.SMS.SenderID': {
+      //       'DataType': 'String',
+      //       'StringValue': 'Diatron-App'
+      //     }
+      //   }
+      // };
 
-      const publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
+      // const publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
+      //
+      // publishTextPromise.then(
+      //     function (data) {
+      //       console.log(JSON.stringify({ MessageID: data.MessageId }));
+      //     }).catch(
+      //     function (err) {
+      //       console.log(JSON.stringify({ Error: err }));
+      //       res.status(500).json("{message: Account Created but SMS failed}")
+      //     });
 
-      publishTextPromise.then(
-          function (data) {
-            console.log(JSON.stringify({ MessageID: data.MessageId }));
-          }).catch(
-          function (err) {
-            console.log(JSON.stringify({ Error: err }));
-            res.status(500).json("{message: Account Created but SMS failed}")
-          });
+
       await db.user.create(NewUser);
 
       return response.successMessage(
@@ -99,35 +100,47 @@ class userController {
     }
   }
 
-
+  /**
+   * Logs in a user by checking if they exist in the database
+   * and if the supplied password matches the stored password
+   * @param {Object} req The request object
+   * @param {Object} res The response object
+   * @returns {Object} A user object with selected fields
+   * excluing the password
+   */
   static async signIn(req, res) {
     await checkPassword(req, res);
   }
 
 
-  // static async changePassword(req, res) {
-  //   try {
-  //     const { oldPassword } = req.body;
-  //     const password = EncryptPassword(req.body.newPassword);
-  //     const { id } = req.user;
-  //     const user = await db.user.findByPk(id);
-  //     if (!comparePassword(oldPassword, user.password)) {
-  //       const status = 401;
-  //       return response.errorMessage(res, 'Incorrect Password', status);
-  //     }
-  //     if (!user) {
-  //       return {
-  //         status: 404,
-  //         message: 'Incorrect Password',
-  //       };
-  //     }
-  //     await user.update({ password });
-  //     return response.successMessage(res, 'Password Changed Successfully', 200);
-  //   } catch (e) {
-  //     return response.errorMessage(res, e.message, 400);
-  //   }
-  // }
-  //
+  /**
+   * It activate a user account by updating isVerified attribute to true
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async activateUserByCode(req, res) {
+    const activate = {
+      isVerified: true,
+    };
+    const { phoneNumber, code } = req.body;
+    try {
+      const updateUser = await UserServices.activeUser(phoneNumber, code, activate);
+      const data = {
+        isVerified: true,
+      };
+      if (updateUser.status === 200) {
+        return response.successMessage(res, updateUser.message, updateUser.status, data);
+      }
+      if (updateUser.status === 409) {
+        return response.errorMessage(res, updateUser.message, updateUser.status);
+      }
+    } catch (e) {
+      return response.errorMessage(res, e.message, 404);
+    }
+  }
+
+
   // /**
   //  * resending a user code to phone number
   //  * @param {Object} req The request object
@@ -169,6 +182,29 @@ class userController {
   //       'Account code sent successfully, Please proceed to verify your account from your phone',
   //       201
   //     );
+  //   } catch (e) {
+  //     return response.errorMessage(res, e.message, 400);
+  //   }
+  // }
+
+  // static async changePassword(req, res) {
+  //   try {
+  //     const { oldPassword } = req.body;
+  //     const password = EncryptPassword(req.body.newPassword);
+  //     const { id } = req.user;
+  //     const user = await db.user.findByPk(id);
+  //     if (!comparePassword(oldPassword, user.password)) {
+  //       const status = 401;
+  //       return response.errorMessage(res, 'Incorrect Password', status);
+  //     }
+  //     if (!user) {
+  //       return {
+  //         status: 404,
+  //         message: 'Incorrect Password',
+  //       };
+  //     }
+  //     await user.update({ password });
+  //     return response.successMessage(res, 'Password Changed Successfully', 200);
   //   } catch (e) {
   //     return response.errorMessage(res, e.message, 400);
   //   }
@@ -222,7 +258,7 @@ class userController {
   // }
 
   // /**
-  //  * Logs in a user by checking if they exist in the database
+  //  * Logs in a user using google
   //  * and if the supplied password matches the stored password
   //  * @param {Object} req The request object
   //  * @param {Object} res The response object
@@ -302,7 +338,7 @@ class userController {
   //     return response.errorMessage(res, 'Invalid Sign in details', 400);
   //   }
   // }
-  //
+
   // /**
   //  * It activate a user account by updating isVerified attribute to true
   //  * @param {int} req This is the parameter(user id) that will be passed in url
@@ -342,34 +378,7 @@ class userController {
   //     return response.errorMessage(res, e.message, 400);
   //   }
   // }
-  //
-  // /**
-  //  * It activate a user account by updating isVerified attribute to true
-  //  * @param {int} req This is the parameter(user id) that will be passed in url
-  //  * @param {object} res This is a response will be send to the user
-  //  * @returns {object} return object which include status and message
-  //  */
-  // static async updatedUser(req, res) {
-  //   const activate = {
-  //     isVerified: true,
-  //   };
-  //   const { phoneNumber, code } = req.body;
-  //   try {
-  //     const updateUser = await UserServices.activeUser(phoneNumber, code, activate);
-  //     const data = {
-  //       isVerified: true,
-  //     };
-  //     if (updateUser.status === 200) {
-  //       return response.successMessage(res, updateUser.message, updateUser.status, data);
-  //     }
-  //     if (updateUser.status === 409) {
-  //       return response.errorMessage(res, updateUser.message, updateUser.status);
-  //     }
-  //   } catch (e) {
-  //     return response.errorMessage(res, e.message, 404);
-  //   }
-  // }
-  //
+
   // /**
   //  * This logs out a user by updating token attribute to null
   //  * @param {object} req This is a request coming from a user
@@ -385,7 +394,7 @@ class userController {
   //     'Proceed to signin again'
   //   );
   // }
-  //
+
   // /**
   //  *login function to get profile from google and facebook and manipulate it
   //  *

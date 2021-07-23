@@ -57,7 +57,7 @@ export default class InputValidation {
     validation(req, res, schema, next);
   }
 
-  static validateActivate(req, res, next) {
+  static validateActivateByCode(req, res, next) {
     const schema = Joi.object({
       phoneNumber: Joi.string()
         .trim()

@@ -6,7 +6,7 @@ import InputValidation from '../helpers/Validations/users.joi.validate';
 const {
     validateSignup,
     validateLogin,
-    validateActivate,
+    validateActivateByCode,
     validateResetPassword,
     validateResetPasswordPh,
     validateResendCode,
@@ -16,10 +16,9 @@ const {
 
 const router = express.Router();
 
-
-
 router.post('/signup', validateSignup, userController.signup);
 router.post('/signin', validateLogin, userController.signIn);
+router.post('/verify', validateActivateByCode, userController.activateUserByCode);
 
 
 export default router;

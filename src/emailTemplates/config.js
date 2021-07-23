@@ -1,6 +1,6 @@
 import Mailgen from 'mailgen';
 
-export const APP_NAME = 'Diatron App';
+export const APP_NAME = 'Diatron Health';
 
 export const getMailGenerator = (link) => new Mailgen({
   theme: 'default',
