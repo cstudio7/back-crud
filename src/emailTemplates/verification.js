@@ -1,8 +1,8 @@
 import { APP_NAME, getMailGenerator } from './config';
 
-const emailTemplate = (first_Name, code, link) => ({
+const emailTemplate = (firstName, code, link) => ({
   body: {
-    intro: `${first_Name}!`,
+    intro: `${firstName}!`,
     action: {
       instructions:
         "You're almost there. To finish activating your account please use the code below.",
@@ -18,9 +18,9 @@ const emailTemplate = (first_Name, code, link) => ({
 
 const generateEmail = (user) => {
   const { BASE_URL } = process.env;
-  const { first_Name, last_Name, code } = user;
+  const { firstName, code } = user;
   const mailGenerator = getMailGenerator(BASE_URL);
-  const link = emailTemplate(`${first_Name}`,`${code}`, `${BASE_URL}`);
+  const link = emailTemplate(`${firstName}`,`${code}`, `${BASE_URL}`);
   const emailBody = mailGenerator.generate(link);
   return emailBody;
 };
