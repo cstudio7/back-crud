@@ -135,6 +135,9 @@ class userController {
       if (updateUser.status === 409) {
         return response.errorMessage(res, updateUser.message, updateUser.status);
       }
+      if (updateUser.status === 404) {
+        return response.errorMessage(res, updateUser.message, updateUser.status);
+      }
     } catch (e) {
       return response.errorMessage(res, e.message, 404);
     }

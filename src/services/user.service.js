@@ -255,10 +255,14 @@ class UserServices {
           message: 'Account successfully activated',
         };
       }
-      return {
-        status: 404,
-        message: 'User not found',
-      };
+
+      if (!userToUpdate) {
+        return {
+          status: 404,
+          message: 'User not found',
+        };
+      }
+
     } catch (error) {
       return {
         status: 400,
