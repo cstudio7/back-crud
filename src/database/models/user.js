@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   user.associate = (models) => {
     // association goes here
-
   };
   return user;
 };

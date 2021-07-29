@@ -63,27 +63,27 @@ class userController {
           token,
         };
 
-      // const params = {
-      //   Message: `Welcome ${firstName} ${lastName} to Diatron App, Your code is ${code} !`,
-      //   PhoneNumber: `+${phoneNumber}`,
-      //   MessageAttributes: {
-      //     'AWS.SNS.SMS.SenderID': {
-      //       'DataType': 'String',
-      //       'StringValue': 'Diatron-App'
-      //     }
-      //   }
-      // };
+      const params = {
+        Message: `Welcome ${firstName} ${lastName} to Diatron App, Your code is ${code} !`,
+        PhoneNumber: `+${phoneNumber}`,
+        MessageAttributes: {
+          'AWS.SNS.SMS.SenderID': {
+            'DataType': 'String',
+            'StringValue': 'Diatron-Health'
+          }
+        }
+      };
 
-      // const publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-      //
-      // publishTextPromise.then(
-      //     function (data) {
-      //       console.log(JSON.stringify({ MessageID: data.MessageId }));
-      //     }).catch(
-      //     function (err) {
-      //       console.log(JSON.stringify({ Error: err }));
-      //       res.status(500).json("{message: Account Created but SMS failed}")
-      //     });
+      const publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
+
+      publishTextPromise.then(
+          function (data) {
+            console.log(JSON.stringify({ MessageID: data.MessageId }));
+          }).catch(
+          function (err) {
+            console.log(JSON.stringify({ Error: err }));
+            res.status(500).json("{message: Account Created but SMS failed}")
+          });
 
 
       await db.user.create(NewUser);
