@@ -20,5 +20,9 @@ router.post('/signup', validateSignup, userController.signup);
 router.post('/signin', validateLogin, userController.signIn);
 router.post('/verify', validateActivateByCode, userController.activateUserByCode);
 
+router.post('/resendcode', validateResendCode, userController.resendCode);
 
+router.post('/forgetpassword', userController.sendResetPasswordCode);
+
+router.post('/activate', validateResetPassword, userController.resetPassword);
 export default router;

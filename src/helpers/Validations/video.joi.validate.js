@@ -17,12 +17,17 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateVideo(req, res, next) {
+  static validateOnBoard(req, res, next) {
     const schema = Joi.object({
-      title: Joi.string(),
-      videoUrl: Joi.string(),
-      duration: Joi.string(),
-      description: Joi.string(),
+      userId: Joi.string(),
+      typeOfDiabetes: Joi.string(),
+      diagnosedDate: Joi.string(),
+      insulin: Joi.string(),
+      comorbidities: Joi.string(),
+      diabetesRelatedComplication: Joi.string(),
+      onMedication: Joi.string(),
+      medicationDetails1: Joi.object(),
+      medicationDetails2: Joi.object(),
     });
     validation(req, res, schema, next);
   }

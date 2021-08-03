@@ -2,48 +2,46 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('onBoardings', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      firstName: {
+      userId: {
+        allowNull: false,
+        type: Sequelize.DataTypes.UUID,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      typeOfDiabetes: {
         type: Sequelize.STRING,
       },
-      lastName: {
-        type: Sequelize.STRING,
+      diagnosedDate: {
+        type: Sequelize.DATE,
       },
-      phoneNumber: {
-        type: Sequelize.BIGINT,
-      },
-      email: {
-        type: Sequelize.STRING,
-      },
-      gender: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
-      },
-      code: {
-        type: Sequelize.STRING(6),
-      },
-      state: {
-        type: Sequelize.STRING,
-      },
-      country: {
-        type: Sequelize.STRING,
-      },
-      authType: {
-        type: Sequelize.STRING,
-      },
-      isVerified: {
+      insulin: {
         type: Sequelize.BOOLEAN,
       },
-      isBlocked: {
+      diabetesRelatedComplication: {
+        type: Sequelize.STRING,
+      },
+      comorbidities: {
+        type: Sequelize.STRING,
+      },
+      onMedication: {
         type: Sequelize.BOOLEAN,
+      },
+      medicationDetails1: {
+        type: Sequelize.JSONB,
+      },
+      medicationDetails2: {
+        type: Sequelize.JSONB,
       },
       createdAt: {
         allowNull: false,
@@ -56,6 +54,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('onBoardings');
   },
 };

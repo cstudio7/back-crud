@@ -1,4 +1,3 @@
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
@@ -17,6 +16,7 @@ module.exports = {
       },
       phoneNumber: {
         type: Sequelize.BIGINT,
+        unique: true
       },
       email: {
         type: Sequelize.STRING,

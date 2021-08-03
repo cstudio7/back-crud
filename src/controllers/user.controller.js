@@ -12,10 +12,18 @@ import AWS from 'aws-sdk';
 import UserServices from '../services/user.service';
 import checkPassword from '../middlewares/user.middleware';
 import db from '../database/models';
+import Vonage from '@vonage/server-sdk'
 import comparePassword from '../helpers/Decryptor';
 
-
 dotenv.config();
+
+
+const vonage = new Vonage({
+  apiKey: process.env.nexKey,
+  apiSecret: process.env.nexSec
+})
+
+
 
 /**
  * Class for users related operations such Sign UP, Sign In and others
@@ -63,24 +71,23 @@ class userController {
           token,
         };
 
-      const params = {
-        Message: `Welcome ${firstName} ${lastName} to Diatron App, Your code is ${code} !`,
-        PhoneNumber: `+${phoneNumber}`,
-        MessageAttributes: {
-          'AWS.SNS.SMS.SenderID': {
-            'DataType': 'String',
-            'StringValue': 'Diatron-Health'
+      const from = "Diatron APP"
+      const to = `+${phoneNumber}`
+      const text = `Welcome ${firstName} to Diatron Health, Your Verification code is ${code} !`
+
+      await vonage.message.sendSms(from, to, text, (err, responseData) => {
+        if (err) {
+          console.log(err);
+        } else {
+          if(responseData.messages[0]['status'] === "0") {
+            console.log("Message sent successfully.");
+          } else {
+            console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
           }
         }
-      };
-
-      const publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-
-      await publishTextPromise
-
+      })
 
       await db.user.create(NewUser);
-
       return response.successMessage(
           res,
           'user created successfully, proceed to verify your account from your email',
@@ -105,6 +112,56 @@ class userController {
     await checkPassword(req, res);
   }
 
+
+    /**
+     * resending a user code to phone number
+     * @param {Object} req The request object
+     * @param {Object} res The response object
+     * @returns {Object} A user object with selected fields
+     */
+    static async resendCode(req, res) {
+        try {
+            const { phoneNumber } = req.body;
+            const userToUpdate = await UserServices.findUserByPhone(phoneNumber);
+            const { firstName } = userToUpdate
+            if (!userToUpdate) {
+                return response.errorMessage(res, 'Account not found', 404);
+            }
+            if (userToUpdate && userToUpdate.isVerified) {
+                return response.errorMessage(res, 'user already activated', 409);
+            }
+
+            const code = Math.floor(100000 + Math.random() * 900000);
+            const from = "Diatron APP"
+            const to = `+${phoneNumber}`
+            const text = `Hi ${firstName} to Diatron Health, Your Verification code is ${code} !`
+
+            await vonage.message.sendSms(from, to, text, (err, responseData) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(responseData.messages[0]['status'] === "0") {
+                        console.log("Message sent successfully.");
+                    } else {
+                        console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+                    }
+                }
+            })
+
+            const data = {
+                code,
+            };
+
+            await userToUpdate.update(data);
+            return response.successMessage(
+                res,
+                'Account code sent successfully, Please proceed to verify your account from your phone',
+                201
+            );
+        } catch (e) {
+            return response.errorMessage(res, e.message, 400);
+        }
+    }
 
   /**
    * It activate a user account by updating isVerified attribute to true
@@ -137,51 +194,78 @@ class userController {
   }
 
 
-  // /**
-  //  * resending a user code to phone number
-  //  * @param {Object} req The request object
-  //  * @param {Object} res The response object
-  //  * @returns {Object} A user object with selected fields
-  //  */
-  // static async resendCode(req, res) {
-  //   try {
-  //     const { phoneNumber } = req.body;
-  //     const userToUpdate = await UserServices.findUserByPhone(phoneNumber);
-  //     if (!userToUpdate) {
-  //       return response.errorMessage(res, 'Account not found', 404);
-  //     }
-  //     if (userToUpdate && userToUpdate.isVerified) {
-  //       return response.errorMessage(res, 'user already activated', 409);
-  //     }
-  //
-  //     const code = Math.floor(100000 + Math.random() * 900000);
-  //     // send Sms
-  //     const mobile = `+${phoneNumber}`;
-  //     const message = `Welcome to Oyoyo App, your verification code is ${code}`;
-  //
-  //     // Your login credentials
-  //     const sms = AfricasTalking.SMS;
-  //     const options = {
-  //       to: mobile,
-  //       message,
-  //     };
-  //     sms
-  //       .send(options)
-  //       .then((res) => res)
-  //       .catch((e) => e.message);
-  //     const data = {
-  //       code,
-  //     };
-  //     await userToUpdate.update(data);
-  //     return response.successMessage(
-  //       res,
-  //       'Account code sent successfully, Please proceed to verify your account from your phone',
-  //       201
-  //     );
-  //   } catch (e) {
-  //     return response.errorMessage(res, e.message, 400);
-  //   }
-  // }
+    /**
+     * send a reset password link to the user
+     * @param {Object} req user request
+     * @param {Object} res user response
+     * @returns {Object} return user response
+     */
+    static async sendResetPasswordCode(req, res) {
+        const { phoneNumber } = req.body;
+        const result = await UserServices.findUserByPhone(phoneNumber);
+        const { firstName } = result
+        if (result !== null) {
+            const code = Math.floor(100000 + Math.random() * 900000);
+            const from = "Diatron APP"
+            const to = `+${phoneNumber}`
+            const text = `Hello ${firstName} from Diatron Health, Your Verification code is ${code}`
+
+            await vonage.message.sendSms(from, to, text, (err, responseData) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(responseData.messages[0]['status'] === "0") {
+                        console.log("Message sent successfully.");
+                    } else {
+                        console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+                    }
+                }
+            })
+            const data = {
+                code
+            }
+            await result.update(data);
+
+            return response.successMessage(res,
+                'Account code sent successfully, Please proceed to reset password',
+                200);
+        }
+        return response.errorMessage(res, 'user not found!', 404);
+    }
+
+    /**
+     * It used to reset a user password
+     * @param {object} req user request
+     * @param {object} res user response
+     * @returns {object} result
+     */
+    static async resetPassword(req, res) {
+        //code needs to be used as well to reset password
+        const { password, phoneNumber, confirmPassword , code} = req.body;
+        const codes = Math.floor(100000 + Math.random() * 900000);
+        if (password !== confirmPassword) {
+            return response.errorMessage(res, 'Password does not match!', 400);
+        }
+
+        const pass = {
+            password: EncryptPassword(req.body.password),
+            code: codes
+        };
+
+        const user = await UserServices.findUserByPhoneAndCode(phoneNumber,code)
+
+        if(user === null){
+            return response.errorMessage(res, 'user not found!', 404);
+        }
+        if (!user.isVerified) {
+            return response.errorMessage(res, 'Account is not verified', 401);
+        }
+        if (user !== null) {
+            await user.update(pass);
+            return response.successMessage(res, 'Password has been changed successfully', 200);
+        }
+    }
+
 
   // static async changePassword(req, res) {
   //   try {
@@ -206,52 +290,7 @@ class userController {
   //   }
   // }
 
-  // /**
-  //  * resending a user code to phone number
-  //  * @param {Object} req The request object
-  //  * @param {Object} res The response object
-  //  * @returns {Object} A user object with selected fields
-  //  */
 
-  // static async resendEmail(req, res) {
-  //   try {
-  //     const { email } = req.body;
-  //     const userToUpdate = await UserServices.findUserByEmail(email);
-  //     if (!userToUpdate) {
-  //       return response.errorMessage(res, 'Account not found', 404);
-  //     }
-  //     if (userToUpdate && userToUpdate.isVerified) {
-  //       return response.errorMessage(res, 'user already activated', 409);
-  //     }
-  //     const token = GenerateToken({
-  //       email: req.body.email,
-  //       isVerified: userToUpdate.isVerified,
-  //     });
-  //
-  //     const NewUser = {
-  //       category: userToUpdate.category,
-  //       email,
-  //       token,
-  //     };
-  //
-  //     const verificationEmail = generateEmail(NewUser);
-  //     await sendMail(
-  //       process.env.SENDGRID_API_KEY,
-  //       email,
-  //       process.env.SENDER_EMAIL,
-  //       'Email Verification',
-  //       verificationEmail
-  //     );
-  //
-  //     return response.successMessage(
-  //       res,
-  //       'Account code sent successfully, Please proceed to verify your account from your Email',
-  //       201
-  //     );
-  //   } catch (e) {
-  //     return response.errorMessage(res, e.message, 400);
-  //   }
-  // }
 
   // /**
   //  * Logs in a user using google

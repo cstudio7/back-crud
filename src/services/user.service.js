@@ -88,15 +88,13 @@ class UserServices {
 
   /**
    * Find user by phoneNumber
-   * @param {Object} phoneNumber of the User email.
-   * @param {Object} email of the User email.
+   * @param {Object} phoneNumber of the User.
    * @returns {Object} Returns a user object and if user doesn't exist it returns null.
    */
   static async findUserByPhone(phoneNumber) {
     try {
       const user = await db.user.findOne({
         where: { phoneNumber },
-        include: ['profile'],
       });
       if (!user) return null;
       return user;
