@@ -7,8 +7,7 @@ const verifyAllToken = async (req, res, next, token) => {
     if (!token) {
       return response.errorMessage(res, 'No token provided, Access Denied!', 401);
     }
-    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-    console.log(decodedToken)
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY)
     const {
       payload: { email, phoneNumber },
     } = decodedToken;

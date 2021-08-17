@@ -14,6 +14,7 @@ class onBoardingController {
     static async createBoard(req, res) {
         try {
             const { id } = req.user;
+
             const {
                 typeOfDiabetes,
                 diagnosedDate,
@@ -21,8 +22,9 @@ class onBoardingController {
                 diabetesRelatedComplication,
                 comorbidities,
                 onMedication,
-                medicationDetails1,
-                medicationDetails2
+                medicationDetails,
+                mainGoal,
+                careTeam
             } = req.body;
             const newOnBoard = {
                 userId: id,
@@ -32,8 +34,9 @@ class onBoardingController {
                 diabetesRelatedComplication,
                 comorbidities,
                 onMedication,
-                medicationDetails1,
-                medicationDetails2
+                medicationDetails,
+                mainGoal,
+                careTeam
             };
             const board = await db.onBoarding.create(newOnBoard);
             const data = { board };

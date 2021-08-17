@@ -9,8 +9,17 @@ module.exports = (sequelize, DataTypes) => {
             diabetesRelatedComplication: { type: DataTypes.STRING, allowNull: false },
             comorbidities: { type: DataTypes.STRING, allowNull: false },
             onMedication: { type: DataTypes.BOOLEAN, allowNull: false },
-            medicationDetails1: { type: DataTypes.JSONB},
-            medicationDetails2: { type: DataTypes.JSONB },
+            medicationDetails: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+            },
+            mainGoal: {
+                type: DataTypes.ARRAY(DataTypes.STRING),
+                allowNull: true,
+            },
+            careTeam:{
+                type: DataTypes.ARRAY(DataTypes.STRING),
+                allowNull: true,
+            },
         },
         {}
     );

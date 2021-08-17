@@ -37,11 +37,14 @@ module.exports = {
       onMedication: {
         type: Sequelize.BOOLEAN,
       },
-      medicationDetails1: {
-        type: Sequelize.JSONB,
+      medicationDetails: {
+        type: Sequelize.ARRAY(Sequelize.JSONB),
       },
-      medicationDetails2: {
-        type: Sequelize.JSONB,
+      mainGoal:{
+        type: Sequelize.ARRAY(Sequelize.STRING),
+      },
+      careTeam:{
+        type: Sequelize.ARRAY(Sequelize.STRING),
       },
       createdAt: {
         allowNull: false,

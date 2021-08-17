@@ -24,6 +24,24 @@ module.exports = {
       gender: {
         type: Sequelize.STRING,
       },
+      avatar: {
+        type: Sequelize.STRING,
+      },
+      avatarAwsDetails: {
+        type: Sequelize.JSONB,
+      },
+      personalDetails: {
+        type: Sequelize.JSONB,
+      },
+      diabetesProfile: {
+        type: Sequelize.JSONB,
+      },
+      hypertensionProfile: {
+        type: Sequelize.JSONB,
+      },
+      lifestyleProfile: {
+        type: Sequelize.JSONB,
+      },
       password: {
         type: Sequelize.STRING,
       },

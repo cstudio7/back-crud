@@ -26,8 +26,9 @@ export default class InputValidation {
       comorbidities: Joi.string(),
       diabetesRelatedComplication: Joi.string(),
       onMedication: Joi.string(),
-      medicationDetails1: Joi.object(),
-      medicationDetails2: Joi.object(),
+      medicationDetails: Joi.array(),
+      mainGoal: Joi.array(),
+      careTeam: Joi.array(),
     });
     validation(req, res, schema, next);
   }

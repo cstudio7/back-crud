@@ -1,7 +1,7 @@
 import express from 'express';
 import verifyToken from '../middlewares/verify.token.middleware';
 import onBoardingController from '../controllers/onBoarding.controller';
-import InputValidation from '../helpers/Validations/video.joi.validate';
+import InputValidation from '../helpers/Validations/onBoarding.joi.validate';
 
 const router = express.Router();
 
