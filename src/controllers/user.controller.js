@@ -12,16 +12,11 @@ import AWS from 'aws-sdk';
 import UserServices from '../services/user.service';
 import checkPassword from '../middlewares/user.middleware';
 import db from '../database/models';
-import Vonage from '@vonage/server-sdk'
 import comparePassword from '../helpers/Decryptor';
 
 dotenv.config();
 
 
-const vonage = new Vonage({
-  apiKey: process.env.nexKey,
-  apiSecret: process.env.nexSec
-})
 
 
 
@@ -71,21 +66,18 @@ class userController {
           token,
         };
 
-      const from = "Diatron APP"
-      const to = `+${phoneNumber}`
-      const text = `Welcome ${firstName} to Diatron Health, Your Verification code is ${code} !`
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const message = `Welcome ${firstName} to Diatron Health, Your Verification code is ${code} !`
 
-      await vonage.message.sendSms(from, to, text, (err, responseData) => {
-        if (err) {
-          console.log(err);
-        } else {
-          if(responseData.messages[0]['status'] === "0") {
-            console.log("Message sent successfully.");
-          } else {
-            console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
-          }
-        }
-      })
+        const client = require('twilio')(accountSid, authToken);
+        client.messages
+            .create({
+                body: message,
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: `+${phoneNumber}`
+            })
+            .then(message => console.log("Phone Message Delivered"));
 
       await db.user.create(NewUser);
       return response.successMessage(

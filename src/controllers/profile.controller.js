@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import response from '../helpers/response.helper';
-import AWS from 'aws-sdk';
 import profileHelper from '../helpers/profile.helper';
 import db from '../database/models';
 
@@ -34,12 +33,12 @@ class profileController {
         const user = req.user;
         const { email } = user
         const userInfo = req.body;
+        await user.update(userInfo);
         // Check if user is verified
         if (user.isVerified === false) {
           const status = 401;
           return response.errorMessage(res, 'User Is Not Verified, Please verify the User First', status);
         }
-        user.update(userInfo);
         const user2 = await db.user.findOne({
             where: { email }
         });

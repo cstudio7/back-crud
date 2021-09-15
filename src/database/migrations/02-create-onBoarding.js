@@ -19,11 +19,17 @@ module.exports = {
           key: 'id',
         },
       },
+      manage: {
+        type: Sequelize.STRING,
+      },
       typeOfDiabetes: {
         type: Sequelize.STRING,
       },
       diagnosedDate: {
         type: Sequelize.DATE,
+      },
+      diagnosedStyle: {
+        type: Sequelize.STRING,
       },
       insulin: {
         type: Sequelize.BOOLEAN,
@@ -37,11 +43,17 @@ module.exports = {
       onMedication: {
         type: Sequelize.BOOLEAN,
       },
+      medicationInterval: {
+        type: Sequelize.STRING,
+      },
       medicationDetails: {
         type: Sequelize.ARRAY(Sequelize.JSONB),
       },
+      averageBloodGlucose: {
+        type: Sequelize.STRING,
+      },
       mainGoal:{
-        type: Sequelize.ARRAY(Sequelize.STRING),
+        type: Sequelize.ARRAY(Sequelize.JSONB),
       },
       careTeam:{
         type: Sequelize.ARRAY(Sequelize.STRING),

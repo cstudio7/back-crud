@@ -16,25 +16,33 @@ class onBoardingController {
             const { id } = req.user;
 
             const {
+                manage,
                 typeOfDiabetes,
                 diagnosedDate,
+                diagnosedStyle,
                 insulin,
                 diabetesRelatedComplication,
                 comorbidities,
                 onMedication,
+                medicationInterval,
                 medicationDetails,
+                averageBloodGlucose,
                 mainGoal,
                 careTeam
             } = req.body;
             const newOnBoard = {
                 userId: id,
+                manage,
                 typeOfDiabetes,
                 diagnosedDate,
+                diagnosedStyle,
                 insulin,
                 diabetesRelatedComplication,
                 comorbidities,
                 onMedication,
+                medicationInterval,
                 medicationDetails,
+                averageBloodGlucose,
                 mainGoal,
                 careTeam
             };

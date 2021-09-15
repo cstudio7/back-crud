@@ -1,6 +1,4 @@
-/* eslint-disable no-new */
-/* eslint-disable func-names */
-/* eslint-disable no-console */
+
 import AWS from 'aws-sdk';
 
 const s3 = new AWS.S3({
