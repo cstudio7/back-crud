@@ -25,6 +25,15 @@ module.exports = {
       typeOfDiabetes: {
         type: Sequelize.STRING,
       },
+      habit: {
+        type: Sequelize.STRING,
+      },
+      habitDetails: {
+        type: Sequelize.STRING,
+      },
+      conditionOfHypertension: {
+        type: Sequelize.STRING,
+      },
       diagnosedDate: {
         type: Sequelize.DATE,
       },
@@ -34,7 +43,7 @@ module.exports = {
       insulin: {
         type: Sequelize.BOOLEAN,
       },
-      diabetesRelatedComplication: {
+      relatedComplication: {
         type: Sequelize.STRING,
       },
       comorbidities: {
@@ -52,11 +61,29 @@ module.exports = {
       averageBloodGlucose: {
         type: Sequelize.STRING,
       },
-      mainGoal:{
-        type: Sequelize.ARRAY(Sequelize.JSONB),
+      bloodGlucose: {
+        type: Sequelize.JSONB
       },
-      careTeam:{
+      weight: {
+        type: Sequelize.JSONB
+      },
+      height: {
+        type: Sequelize.JSONB
+      },
+      mainGoal:{
         type: Sequelize.ARRAY(Sequelize.STRING),
+      },
+      isCareTeamPresent: {
+        type: Sequelize.BOOLEAN,
+      },
+      isCareTeamList: {
+        type: Sequelize.BOOLEAN,
+      },
+      progressRate: {
+        type: Sequelize.STRING,
+      },
+      needsACareTeam: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,

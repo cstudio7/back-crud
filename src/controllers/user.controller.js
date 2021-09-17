@@ -31,9 +31,9 @@ class userController {
       const { firstName, lastName, phoneNumber, authType, email, gender, state, country } = req.body;
       const password = EncryptPassword(req.body.password);
       const code = Math.floor(100000 + Math.random() * 900000);
-      const existingUser = await UserServices.findExistingUser(email);
+      const existingUser = await UserServices.findExistingUser(email, phoneNumber);
       if (existingUser) {
-        return response.errorMessage(res, 'user with this email already exist', 409);
+        return response.errorMessage(res, 'user already exist', 409);
       }
         const token = GenerateToken({
           email,
@@ -55,29 +55,29 @@ class userController {
           isBlocked: false,
         };
          const verificationEmail = generateEmail(NewUser);
-        await sendMail(
-          process.env.SENDGRID_API_KEY,
-          email,
-          process.env.SENDER_EMAIL,
-          'Diatron Health',
-          verificationEmail
-        );
+        // await sendMail(
+        //   process.env.SENDGRID_API_KEY,
+        //   email,
+        //   process.env.SENDER_EMAIL,
+        //   'Diatron Health',
+        //   verificationEmail
+        // );
         const data = {
           token,
         };
 
         const accountSid = process.env.TWILIO_ACCOUNT_SID;
         const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const message = `Welcome ${firstName} to Diatron Health, Your Verification code is ${code} !`
+        const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
 
-        const client = require('twilio')(accountSid, authToken);
-        client.messages
-            .create({
-                body: message,
-                from: process.env.TWILIO_PHONE_NUMBER,
-                to: `+${phoneNumber}`
-            })
-            .then(message => console.log("Phone Message Delivered"));
+        // const client = require('twilio')(accountSid, authToken);
+        // client.messages
+        //     .create({
+        //         body: message,
+        //         from: process.env.TWILIO_PHONE_NUMBER,
+        //         to: `+${phoneNumber}`
+        //     })
+        //     .then(message => console.log("Phone Message Delivered"));
 
       await db.user.create(NewUser);
       return response.successMessage(
@@ -88,6 +88,7 @@ class userController {
       );
 
     } catch (e) {
+        console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
