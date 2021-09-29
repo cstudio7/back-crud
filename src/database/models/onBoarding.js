@@ -3,22 +3,31 @@ module.exports = (sequelize, DataTypes) => {
     const onBoarding = sequelize.define('onBoarding',
         {
             userId: { type: DataTypes.UUID, defaultValue: DataTypes.UUID },
-            manage: { type: DataTypes.STRING, allowNull: false },
+            manage: { type: DataTypes.STRING },
             typeOfDiabetes: { type: DataTypes.STRING },
             habit: { type: DataTypes.STRING },
             habitDetails: { type: DataTypes.STRING },
+            improvement: { type: DataTypes.BOOLEAN },
+            habitManagement: {
+                type: DataTypes.ARRAY(DataTypes.STRING ),
+            },
             conditionOfHypertension:{ type: DataTypes.STRING },
-            diagnosedDate: { type: DataTypes.STRING },
+            diagnosedDate: { type: DataTypes.DATE },
             diagnosedStyle: { type: DataTypes.STRING },
             insulin: { type: DataTypes.BOOLEAN },
-            relatedComplication: { type: DataTypes.STRING },
-            comorbidities: { type: DataTypes.STRING },
+            relatedComplication: {
+                type: DataTypes.ARRAY(DataTypes.STRING ),
+            },
+            comorbidities: {
+                type: DataTypes.ARRAY(DataTypes.STRING ),
+            },
             onMedication: { type: DataTypes.BOOLEAN },
             medicationInterval: { type: DataTypes.STRING },
             medicationDetails: {
                 type: DataTypes.ARRAY(DataTypes.JSON),
             },
-            averageBloodGlucose: { type: DataTypes.STRING },
+            averageBloodGlucose: { type: DataTypes.JSONB },
+            averageBloodPressure: { type: DataTypes.STRING },
             bloodGlucose: { type: DataTypes.JSONB },
             weight:  { type: DataTypes.JSONB },
             height:  { type: DataTypes.JSONB },
@@ -26,9 +35,14 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.ARRAY(DataTypes.STRING),
             },
             isCareTeamPresent: { type: DataTypes.BOOLEAN },
+            careTeam: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+            },
             isCareTeamList: { type: DataTypes.BOOLEAN },
             progressRate:{ type: DataTypes.STRING },
             needsACareTeam: { type: DataTypes.BOOLEAN },
+            foodTimetable: { type: DataTypes.BOOLEAN },
+            personalizedFoodTimetable: { type: DataTypes.BOOLEAN }
         },
         {}
     );

@@ -31,6 +31,12 @@ module.exports = {
       habitDetails: {
         type: Sequelize.STRING,
       },
+      improvement: {
+        type: Sequelize.BOOLEAN,
+      },
+      habitManagement: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+      },
       conditionOfHypertension: {
         type: Sequelize.STRING,
       },
@@ -44,10 +50,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       relatedComplication: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.STRING),
       },
       comorbidities: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.STRING),
       },
       onMedication: {
         type: Sequelize.BOOLEAN,
@@ -56,9 +62,12 @@ module.exports = {
         type: Sequelize.STRING,
       },
       medicationDetails: {
-        type: Sequelize.ARRAY(Sequelize.JSONB),
+        type: Sequelize.ARRAY(Sequelize.JSON),
       },
       averageBloodGlucose: {
+        type: Sequelize.JSONB,
+      },
+      averageBloodPressure: {
         type: Sequelize.STRING,
       },
       bloodGlucose: {
@@ -76,6 +85,9 @@ module.exports = {
       isCareTeamPresent: {
         type: Sequelize.BOOLEAN,
       },
+      careTeam: {
+        type: Sequelize.ARRAY(Sequelize.JSON),
+      },
       isCareTeamList: {
         type: Sequelize.BOOLEAN,
       },
@@ -83,6 +95,12 @@ module.exports = {
         type: Sequelize.STRING,
       },
       needsACareTeam: {
+        type: Sequelize.BOOLEAN,
+      },
+      foodTimetable: {
+        type: Sequelize.BOOLEAN,
+      },
+      personalizedFoodTimetable: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {

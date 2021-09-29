@@ -1,7 +1,6 @@
 import express from 'express';
 import userController from '../controllers/user.controller';
 import InputValidation from '../helpers/Validations/users.joi.validate';
-// import '../config/passport.config';
 
 const {
     validateSignup,

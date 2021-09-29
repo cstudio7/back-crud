@@ -15,59 +15,30 @@ class onBoardingController {
         try {
             const { id } = req.user;
 
-            const {
-                manage,
-                typeOfDiabetes,
-                habit,
-                habitDetails,
-                conditionOfHypertension,
-                diagnosedDate,
-                diagnosedStyle,
-                insulin,
-                relatedComplication,
-                comorbidities,
-                onMedication,
-                medicationInterval,
-                medicationDetails,
-                averageBloodGlucose,
-                bloodGlucose,
-                weight,
-                height,
-                mainGoal,
-                isCareTeamPresent,
-                isCareTeamList,
-                progressRate,
-                needsACareTeam,
+            const { manage, typeOfDiabetes, habit, habitDetails, improvement,
+                habitManagement, conditionOfHypertension,
+                diagnosedDate, diagnosedStyle, insulin, relatedComplication,
+                comorbidities, onMedication, medicationInterval,
+                medicationDetails, averageBloodGlucose, averageBloodPressure,
+                bloodGlucose, weight, height, mainGoal, isCareTeamPresent,
+                careTeam, isCareTeamList, progressRate, needsACareTeam,
+                foodTimetable, personalizedFoodTimetable
             } = req.body;
             const newOnBoard = {
-                userId: id,
-                manage,
-                typeOfDiabetes,
-                habit,
-                habitDetails,
-                conditionOfHypertension,
-                diagnosedDate,
-                diagnosedStyle,
-                insulin,
-                relatedComplication,
-                comorbidities,
-                onMedication,
-                medicationInterval,
-                medicationDetails,
-                averageBloodGlucose,
-                bloodGlucose,
-                weight,
-                height,
-                mainGoal,
-                isCareTeamPresent,
-                isCareTeamList,
-                progressRate,
-                needsACareTeam,
+                userId: id, manage, typeOfDiabetes, habit, habitDetails, improvement,
+                habitManagement, conditionOfHypertension,
+                diagnosedDate, diagnosedStyle, insulin, relatedComplication,
+                comorbidities, onMedication, medicationInterval,
+                medicationDetails, averageBloodGlucose, averageBloodPressure,
+                bloodGlucose, weight, height, mainGoal, isCareTeamPresent,
+                careTeam, isCareTeamList, progressRate, needsACareTeam,
+                foodTimetable, personalizedFoodTimetable
             };
             const board = await db.onBoarding.create(newOnBoard);
             const data = { board };
             response.successMessage(res, 'onBoarded successfully', 201, data);
         } catch (e) {
+            console.log(e)
             return response.errorMessage(res, e.message, 400);
         }
     }
@@ -81,7 +52,7 @@ class onBoardingController {
     static async getBoard(req, res) {
         try {
             const { id } = req.params;
-            const board = await db.onBoarding.findOne({where:{userId: id}});
+            const board = await db.onBoarding.findOne({where:{id}});
             const data = {
                 board,
             };
@@ -101,7 +72,7 @@ class onBoardingController {
         try {
             const { id } = req.params;
             const infoData = req.body;
-            const updateData = await db.onBoarding.findOne({ where: { userId: id } });
+            const updateData = await db.onBoarding.findOne({ where: { id } });
             const newData = await updateData.update(infoData);
             const data = {
                 newData,
