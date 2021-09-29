@@ -86,7 +86,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       careTeam: {
-        type: Sequelize.ARRAY(Sequelize.JSON),
+        type: Sequelize.ARRAY(Sequelize.STRING),
       },
       isCareTeamList: {
         type: Sequelize.BOOLEAN,

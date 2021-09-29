@@ -82,7 +82,6 @@ class onBoardingController {
             return response.errorMessage(res, e.message, 400);
         }
     }
-
 }
 
 export default onBoardingController;

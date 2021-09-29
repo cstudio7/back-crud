@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             isCareTeamPresent: { type: DataTypes.BOOLEAN },
             careTeam: {
-                type: DataTypes.ARRAY(DataTypes.JSON),
+                type: DataTypes.ARRAY(DataTypes.STRING),
             },
             isCareTeamList: { type: DataTypes.BOOLEAN },
             progressRate:{ type: DataTypes.STRING },
