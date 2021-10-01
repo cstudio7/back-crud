@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.ARRAY(DataTypes.JSON),
             },
             averageBloodGlucose: { type: DataTypes.JSONB },
-            averageBloodPressure: { type: DataTypes.STRING },
+            averageBloodPressure: { type: DataTypes.JSONB },
             bloodGlucose: { type: DataTypes.JSONB },
             weight:  { type: DataTypes.JSONB },
             height:  { type: DataTypes.JSONB },

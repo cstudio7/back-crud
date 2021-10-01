@@ -14,7 +14,6 @@ class onBoardingController {
     static async createBoard(req, res) {
         try {
             const { id } = req.user;
-
             const { manage, typeOfDiabetes, habit, habitDetails, improvement,
                 habitManagement, conditionOfHypertension,
                 diagnosedDate, diagnosedStyle, insulin, relatedComplication,
