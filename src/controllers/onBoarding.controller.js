@@ -1,5 +1,6 @@
 import response from '../helpers/response.helper';
 import db from '../database/models';
+import UserServices from "../services/user.service";
 
 /**
  * Class for users related operations such Sign UP, Sign In and others
@@ -14,6 +15,14 @@ class onBoardingController {
     static async createBoard(req, res) {
         try {
             const { id } = req.user;
+            const existingUser = await db.user.findOne({
+                where: {id}
+            });
+            if(existingUser) {
+                return response.errorMessage(res, 'user already onBoarded', 409);
+            }
+
+
             const { manage, typeOfDiabetes, habit, habitDetails, improvement,
                 habitManagement, conditionOfHypertension,
                 diagnosedDate, diagnosedStyle, insulin, relatedComplication,
@@ -33,6 +42,7 @@ class onBoardingController {
                 careTeam, isCareTeamList, progressRate, needsACareTeam,
                 foodTimetable, personalizedFoodTimetable
             };
+
             const board = await db.onBoarding.create(newOnBoard);
             const data = { board };
             response.successMessage(res, 'onBoarded successfully', 201, data);
