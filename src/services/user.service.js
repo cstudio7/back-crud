@@ -48,6 +48,7 @@ class UserServices {
           [Op.or]: [{ email}, {phoneNumber }],
         },
         });
+      console.log(user)
       if (!user) return null;
       return user;
     } catch (error) {

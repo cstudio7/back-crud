@@ -22,7 +22,6 @@ class onBoardingController {
                 return response.errorMessage(res, 'user already onBoarded', 409);
             }
 
-
             const { manage, typeOfDiabetes, habit, habitDetails, improvement,
                 habitManagement, conditionOfHypertension,
                 diagnosedDate, diagnosedStyle, insulin, relatedComplication,
@@ -42,7 +41,6 @@ class onBoardingController {
                 careTeam, isCareTeamList, progressRate, needsACareTeam,
                 foodTimetable, personalizedFoodTimetable
             };
-
             const board = await db.onBoarding.create(newOnBoard);
             const data = { board };
             response.successMessage(res, 'onBoarded successfully', 201, data);

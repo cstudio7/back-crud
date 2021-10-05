@@ -28,7 +28,7 @@ class userController {
 
   static async signup(req, res) {
     try {
-      const { firstName, lastName, phoneNumber, authType, email, gender, state, country } = req.body;
+      const { firstName, lastName, phoneNumber, email,authType, gender, state, country } = req.body;
       const password = EncryptPassword(req.body.password);
       const code = Math.floor(100000 + Math.random() * 900000);
       const existingUser = await UserServices.findExistingUser(email, phoneNumber);
@@ -37,7 +37,8 @@ class userController {
       }
         const token = GenerateToken({
           email,
-          authType,
+            firstName,
+            lastName,
           isVerified: false,
         });
         const NewUser = {
@@ -48,11 +49,10 @@ class userController {
           gender,
           password,
           code,
+          authType,
           state,
           country,
-          authType,
           isVerified: false,
-          isBlocked: false,
         };
          const verificationEmail = generateEmail(NewUser);
         await sendMail(
@@ -114,41 +114,39 @@ class userController {
      */
     static async resendCode(req, res) {
         try {
-            const { phoneNumber } = req.body;
-            const userToUpdate = await UserServices.findUserByPhone(phoneNumber);
-            const { firstName } = userToUpdate
+            const { phoneNumber, email } = req.body;
+            const userToUpdate = await UserServices.findExistingUser(phoneNumber, email);
             if (!userToUpdate) {
                 return response.errorMessage(res, 'Account not found', 404);
             }
             if (userToUpdate && userToUpdate.isVerified) {
                 return response.errorMessage(res, 'user already activated', 409);
             }
+            const { firstName, code } = userToUpdate
+            const verificationEmail = generateEmail(userToUpdate);
+            await sendMail(
+                process.env.SENDGRID_API_KEY,
+                email,
+                process.env.SENDER_EMAIL,
+                'Diatron Health',
+                verificationEmail
+            );
 
-            const code = Math.floor(100000 + Math.random() * 900000);
-            const from = "Diatron APP"
-            const to = `+${phoneNumber}`
-            const text = `Hi ${firstName} to Diatron Health, Your Verification code is ${code} !`
+            const accountSid = process.env.TWILIO_ACCOUNT_SID;
+            const authToken = process.env.TWILIO_AUTH_TOKEN;
+            const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
 
-            await vonage.message.sendSms(from, to, text, (err, responseData) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    if(responseData.messages[0]['status'] === "0") {
-                        console.log("Message sent successfully.");
-                    } else {
-                        console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
-                    }
-                }
-            })
-
-            const data = {
-                code,
-            };
-
-            await userToUpdate.update(data);
+            const client = require('twilio')(accountSid, authToken);
+            client.messages
+                .create({
+                    body: message,
+                    from: process.env.TWILIO_PHONE_NUMBER,
+                    to: `+${phoneNumber}`
+                })
+                .then(message => console.log("Phone Message Delivered"));
             return response.successMessage(
                 res,
-                'Account code sent successfully, Please proceed to verify your account from your phone',
+                'Account code sent successfully, Please verify your account',
                 201
             );
         } catch (e) {
@@ -199,21 +197,20 @@ class userController {
         const { firstName } = result
         if (result !== null) {
             const code = Math.floor(100000 + Math.random() * 900000);
-            const from = "Diatron APP"
-            const to = `+${phoneNumber}`
-            const text = `Hello ${firstName} from Diatron Health, Your Verification code is ${code}`
 
-            await vonage.message.sendSms(from, to, text, (err, responseData) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    if(responseData.messages[0]['status'] === "0") {
-                        console.log("Message sent successfully.");
-                    } else {
-                        console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
-                    }
-                }
-            })
+            const accountSid = process.env.TWILIO_ACCOUNT_SID;
+            const authToken = process.env.TWILIO_AUTH_TOKEN;
+            const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
+
+            const client = require('twilio')(accountSid, authToken);
+            client.messages
+                .create({
+                    body: message,
+                    from: process.env.TWILIO_PHONE_NUMBER,
+                    to: `+${phoneNumber}`
+                })
+                .then(message => console.log("Phone Message Delivered"));
+
             const data = {
                 code
             }

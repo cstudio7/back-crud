@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post('/signup', validateSignup, userController.signup);
 router.post('/signin', validateLogin, userController.signIn);
-router.post('/verify', validateActivateByCode, userController.activateUserByCode);
+router.post('/verify', validateActivateByCode, userController.activateUserByCode );
 
 router.post('/resendcode', validateResendCode, userController.resendCode);
 

@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('healthTeam', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -21,32 +21,17 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      gender: {
-        type: Sequelize.STRING,
-      },
       avatar: {
         type: Sequelize.STRING,
       },
       avatarAwsDetails: {
         type: Sequelize.JSONB,
       },
-      personalDetails: {
-        type: Sequelize.JSONB,
-      },
-      diabetesProfile: {
-        type: Sequelize.JSONB,
-      },
-      hypertensionProfile: {
-        type: Sequelize.JSONB,
-      },
-      lifestyleProfile: {
-        type: Sequelize.JSONB,
+      gender: {
+        type: Sequelize.STRING,
       },
       password: {
         type: Sequelize.STRING,
-      },
-      code: {
-        type: Sequelize.STRING(6),
       },
       state: {
         type: Sequelize.STRING,
@@ -71,6 +56,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('HealthTeam');
   },
 };

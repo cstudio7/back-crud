@@ -24,7 +24,7 @@ export default class InputValidation {
       firstName: Joi.string().empty(''),
       lastName: Joi.string().empty(''),
       password: Joi.string()
-          .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{8,})/)
+          .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
           .message(
               'password field should contain at least 7 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.'
           )
@@ -35,7 +35,7 @@ export default class InputValidation {
       gender: Joi.string().valid('female', 'male'),
       state: Joi.string(),
       country: Joi.string(),
-      authType: Joi.string().valid('user', 'employee', 'admin'),
+      authType: Joi.string().valid('user', 'coach', 'admin'),
       phoneNumber: Joi.string()
         .trim()
         .regex(/^[0-9]{8,23}$/)
@@ -50,7 +50,7 @@ export default class InputValidation {
         .email({ minDomainSegments: 2 })
         .message('email field should be a valid email address. e.g: johndoe@gmail.com.'),
       password: Joi.string()
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{8,})/)
+          .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
         .message('Invalid Login detail')
         .required(),
     });
@@ -75,7 +75,7 @@ export default class InputValidation {
   static validateResetPasswordPh(req, res, next) {
     const schema = Joi.object({
       password: Joi.string()
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
+          .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
         .message(
           'password field should contain at least 7 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.'
         )
@@ -102,7 +102,7 @@ export default class InputValidation {
           .regex(/^[0-9]{6,23}$/)
           .message('The phone number should be numbers of 8 to 10 digits.'),
       password: Joi.string()
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
+        .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
         .message(
           'password field should contain at least 7 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.'
         )
@@ -118,6 +118,11 @@ export default class InputValidation {
         .trim()
         .regex(/^[0-9]{8,13}$/)
         .message('The phone number should be numbers of 8 to 10 digits.'),
+      code: Joi.string()
+          .trim()
+          .required()
+          .length(6)
+          .message('the code is not correct')
     });
     validation(req, res, schema, next);
   }
@@ -126,7 +131,7 @@ export default class InputValidation {
     const schema = Joi.object({
       category: Joi.string().valid('tailor', 'weaver', 'fashionista', 'agent'),
       password: Joi.string()
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
+          .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
         .message(
           'password field should contain at least 7 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.'
         )
