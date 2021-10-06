@@ -30,8 +30,9 @@ class coachController {
       }
         const token = GenerateToken({
           email,
-            firstName,
-            lastName,
+          firstName,
+          lastName,
+          authType,
           isVerified: false,
         });
         const NewUser = {
@@ -71,7 +72,7 @@ class coachController {
             })
             .then(message => console.log("Phone Message Delivered"));
 
-      await db.user.create(NewUser);
+      await db.coach.create(NewUser);
       return response.successMessage(
           res,
           'user created successfully, proceed to verify your account from your email',

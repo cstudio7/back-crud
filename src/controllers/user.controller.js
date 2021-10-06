@@ -17,9 +17,6 @@ import comparePassword from '../helpers/Decryptor';
 dotenv.config();
 
 
-
-
-
 /**
  * Class for users related operations such Sign UP, Sign In and others
  */

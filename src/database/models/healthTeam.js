@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define(
-    'user',
+  const coach = sequelize.define(
+    'coach',
     {
       firstName: { type: DataTypes.STRING, allowNull: true },
       lastName: { type: DataTypes.STRING, allowNull: true },
@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  user.associate = (models) => {
+    coach.associate = (models) => {
     // association goes here
   };
-  return user;
+  return coach;
 };
