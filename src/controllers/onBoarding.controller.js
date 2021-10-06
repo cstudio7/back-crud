@@ -15,8 +15,8 @@ class onBoardingController {
     static async createBoard(req, res) {
         try {
             const { id } = req.user;
-            const existingUser = await db.user.findOne({
-                where: {id}
+            const existingUser = await db.onBoarding.findOne({
+                where: {userId: id}
             });
             if(existingUser) {
                 return response.errorMessage(res, 'user already onBoarded', 409);
