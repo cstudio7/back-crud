@@ -1,11 +1,14 @@
 import response from '../helpers/response.helper';
-import UserServices from '../services/user.service';
 import comparePassword from '../helpers/Decryptor';
 import GenerateToken from '../helpers/token.helper';
+import db from "../database/models";
 
 const checkEmailpassword = async (req, res) => {
-  const user = await UserServices.findUserByEmail(req.body.email);
-  if (user == null) {
+  const { email } = req.body
+  const user = await db.user.findOne({
+    where: { email }
+  });
+  if (!user) {
     const status = 404;
     return response.errorMessage(res, 'User is not found', status);
   }
