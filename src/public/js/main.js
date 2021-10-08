@@ -8,7 +8,8 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
-const socket = io();
+const socket = io.connect('https://diatron.herokuapp.com', { timeout: 1000 });
+// const socket = io();
 
 // Join chatroom
 socket.emit('joinRoom', { username, room });

@@ -1,4 +1,11 @@
 import skt from 'socket.io';
+
+const io = require('socket.io')(8010, {
+  cors: {
+    origin: '*',
+  },
+});
+
 const formatMessage = require('./utils/messages');
 const {
   userJoin,
@@ -10,7 +17,17 @@ const {
 const botName = 'Diatron App';
 
 const socketio = (server) => {
-  const io = skt(server);
+  const io = skt(server, {
+    cors: {
+      origin: '*',
+    },
+  });
+
+  // (8010, {
+  //   cors: {
+  //     origin: '*',
+  //   },
+  // });
 
   io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, room}) => {
