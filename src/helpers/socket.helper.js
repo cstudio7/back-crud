@@ -1,10 +1,10 @@
 import skt from 'socket.io';
 
-const io = require('socket.io')(8010, {
-  cors: {
-    origin: '*',
-  },
-});
+// const io = require('socket.io')(8010, {
+//   cors: {
+//     origin: '*',
+//   },
+// });
 
 const formatMessage = require('./utils/messages');
 const {
@@ -23,11 +23,6 @@ const socketio = (server) => {
     },
   });
 
-  // (8010, {
-  //   cors: {
-  //     origin: '*',
-  //   },
-  // });
 
   io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, room}) => {
