@@ -1,18 +1,12 @@
 import dotenv from 'dotenv';
-// import jwt_decode from 'jwt-decode';
-import authenticator from '../helpers/authenticator';
 import response from '../helpers/response.helper';
 import EncryptPassword from '../helpers/Encryptor';
 import GenerateToken from '../helpers/token.helper';
 import generateEmail from '../emailTemplates/verification';
-import generateResetEmail from '../emailTemplates/recoverEmail';
 import sendMail from '../helpers/emails';
-import AWS from 'aws-sdk';
-// import profileHelper from '../helpers/profile.helper';
 import UserServices from '../services/user.service';
 import checkPassword from '../middlewares/user.middleware';
 import db from '../database/models';
-import comparePassword from '../helpers/Decryptor';
 
 dotenv.config();
 

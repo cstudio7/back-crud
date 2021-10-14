@@ -5,7 +5,7 @@ import db from "../database/models";
 
 const checkEmailpassword = async (req, res) => {
   const { email } = req.body
-  const user = await db.user.findOne({
+  const user = await db.coach.findOne({
     where: { email }
   });
   if (!user) {

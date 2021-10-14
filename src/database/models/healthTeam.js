@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       avatarAwsDetails: DataTypes.JSONB,
       gender: { type: DataTypes.STRING, allowNull: true },
       password: { type: DataTypes.STRING, allowNull: false },
-      state: { type: DataTypes.STRING, allowNull: false },
+      state: { type: DataTypes.STRING },
       country: { type: DataTypes.STRING, allowNull: true },
       authType: { type: DataTypes.STRING, allowNull: true },
       isVerified: { type: DataTypes.BOOLEAN, allowNull: false }

@@ -1,4 +1,3 @@
-import UserServices from '../services/user.service';
 import response from './response.helper';
 
 /**
@@ -7,7 +6,7 @@ import response from './response.helper';
 class ProfileHelper {
   /**
  * service to choose profile to edit
- // eslint-disable-next-line valid-jsdoc
+ * eslint-disable-next-line valid-jsdoc
  * @param {Object} email user request
  * @param {Object} userData user request
  * @returns {Object} return user message

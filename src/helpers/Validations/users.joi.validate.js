@@ -21,7 +21,7 @@ const validation = (req, res, schema, next) => {
 export default class InputValidation {
   static validateSignup(req, res, next) {
     const schema = Joi.object({
-      firstName: Joi.string().empty(''),
+      firstName: Joi.string().required(),
       lastName: Joi.string().empty(''),
       password: Joi.string()
           .regex(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*.,])(?=.{7,})/)
@@ -36,7 +36,7 @@ export default class InputValidation {
       state: Joi.string(),
       country: Joi.string(),
       authType: Joi.string().valid('user', 'coach', 'admin'),
-      phoneNumber: Joi.string()
+      phoneNumber: Joi.string().required()
         .trim()
         .regex(/^[0-9]{8,23}$/)
         .message('The phone number should be numbers of 8 to 10 digits.'),

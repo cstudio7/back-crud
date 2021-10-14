@@ -2,17 +2,13 @@ import dotenv from 'dotenv';
 import response from '../helpers/response.helper';
 import EncryptPassword from '../helpers/Encryptor';
 import GenerateToken from '../helpers/token.helper';
-import generateEmail from '../emailTemplates/verification';
+import generateEmail from '../emailTemplates/verificationCoach';
 import sendMail from '../helpers/emails';
 import UserServices from '../services/user.service';
 import checkPassword from '../middlewares/users.middleware';
 import db from '../database/models';
 
 dotenv.config();
-
-
-
-
 
 /**
  * Class for users related operations such Sign UP, Sign In and others
@@ -58,10 +54,9 @@ class coachController {
         const data = {
           token,
         };
-
         const accountSid = process.env.TWILIO_ACCOUNT_SID;
         const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
+        const message = `Hi ${firstName}, Welcome to Diatron Health,We are Glad to have you on our Platform!`
 
         const client = require('twilio')(accountSid, authToken);
         client.messages
@@ -79,9 +74,7 @@ class coachController {
           201,
           data
       );
-
     } catch (e) {
-        console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
