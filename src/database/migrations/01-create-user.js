@@ -30,8 +30,14 @@ module.exports = {
       avatarAwsDetails: {
         type: Sequelize.JSONB,
       },
-      personalDetails: {
+      emergencyContact: {
         type: Sequelize.JSONB,
+      },
+      manage: {
+        type: Sequelize.STRING,
+      },
+      emergencyMail: {
+        type: Sequelize.STRING,
       },
       diabetesProfile: {
         type: Sequelize.JSONB,

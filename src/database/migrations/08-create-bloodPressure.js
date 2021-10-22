@@ -1,15 +1,21 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('groups', {
+    return queryInterface.createTable('bloodPressure', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      name: {
+      type: {
         type: Sequelize.STRING,
+      },
+      readingValue:{
+        type: Sequelize.STRING,
+      },
+      time: {
+        type: Sequelize.TIME,
       },
       desc:{
         type: Sequelize.STRING,
@@ -25,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('groups');
+    return queryInterface.dropTable('bloodPressure');
   },
 };

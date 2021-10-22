@@ -19,23 +19,67 @@ class ChatController {
    */
   static async getAllUsers(req, res) {
     try {
-      const { id: userId, category: userCategory } = req.user;
 
-      let chatContactUserAs = 'artisan';
-      let chatContactUserId = 'artisanId';
-      if (userCategory !== 'fashionista') {
-        chatContactUserAs = 'user';
-        chatContactUserId = 'userId';
-      }
+      const mapEntityToModel = (entity) => {
+        switch (entity) {
+          case 'nutrition':
+            return db.nutrition;
+            break;
+          case 'weightMgt':
+            return db.weightMgt;
+            break;
+          case 'hypertensionMgt':
+            return db.hypertensionMgt;
+            break;
+          case 'stressMgt':
+            return db.stressMgt;
+            break;
+          case 'workHome':
+            return db.workHome;
+            break;
+          case 'workout':
+            return db.workout;
+          case 'homeAged':
+            return db.homeAged;
+            break;
+          case 'homeKid':
+            return db.homeKid;
+            break;
+          case 'sleepHealth':
+            return db.sleepHealth;
+            break;
+          default:
+            break;
+        }
+      };
 
-      const allContacts = await db.contact.findAll({
+      const { userId } = req.query.id;
+      const allContacts =   await mapEntityToModel(req.query.modal).findAll({
+        where: { senderId:userId },
+        include: [
+          {
+            model: db.user,
+            as: userDetails,
+            attributes: [
+              'id',
+              'firstName',
+              'lastName',
+              'avatar',
+              'email',
+              'createdAt',
+            ],
+          },
+        ],
+      });
+
+      const privateContacts =  await db.chat.findAll({
         where: {
           [Op.or]: [
             {
-              userId,
+              senderId: userId,
             },
             {
-              artisanId: userId,
+              receiverId: userId,
             },
           ],
         },
@@ -47,10 +91,8 @@ class ChatController {
               'id',
               'firstName',
               'lastName',
-              'otherName',
-              'category',
+              'avatar',
               'email',
-              'phoneNumber',
               'createdAt',
             ],
           },
@@ -59,13 +101,26 @@ class ChatController {
 
       const newArray = [];
       allContacts.forEach((contact) => {
-        const client = clients[contact[chatContactUserId]];
+        const client = clients[contact[userId]];
         newArray.push({
           id: contact.id,
           userId: contact.userId,
           artisanId: contact.artisanId,
           createdAt: contact.createdAt,
-          user: contact[chatContactUserAs].dataValues,
+          user: contact[userId].dataValues,
+          isOnline: Boolean(client),
+        });
+      });
+
+
+      privateContacts.forEach((contact) => {
+        const client = clients[contact[userId]];
+        newArray.push({
+          id: contact.id,
+          userId: contact.userId,
+          artisanId: contact.artisanId,
+          createdAt: contact.createdAt,
+          user: contact[userId].dataValues,
           isOnline: Boolean(client),
         });
       });
@@ -74,7 +129,7 @@ class ChatController {
         res,
         'users available',
         200,
-        newArray
+          newArray
           .sort((a, b) => a.isOnline.toString().localeCompare(b.isOnline.toString()))
           .reverse()
       );
@@ -82,6 +137,7 @@ class ChatController {
       return response.errorMessage(res, e.message, 400);
     }
   }
+
 
   /** Get Private and public message between two users
    * @param {object} req the request sent
@@ -92,8 +148,8 @@ class ChatController {
     try {
       const { userId, page, size } = req.query;
       const { id } = req.user;
-      if (!userId) {
-        const publicMessages = await chatService.getPublicMessage();
+      if (userId) {
+        const publicMessages = await chatService.getGroupMessage();
         return response.successMessage(res, 'Messages', 200, publicMessages);
       }
       const privateMessages = await chatService.getPrivateMessage(userId, id, page, size);

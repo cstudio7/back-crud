@@ -5,14 +5,15 @@ module.exports = (sequelize, DataTypes) => {
       firstName: { type: DataTypes.STRING, allowNull: true },
       lastName: { type: DataTypes.STRING, allowNull: true },
       phoneNumber: { type: DataTypes.BIGINT, allowNull: true, unique: true },
-      personalDetails: { type: DataTypes.JSONB},
-      avatar: DataTypes.STRING,
-      avatarAwsDetails: DataTypes.JSONB,
-      hypertensionProfile: { type: DataTypes.JSONB},
-      diabetesProfile: { type: DataTypes.JSONB},
-      lifestyleProfile: { type: DataTypes.JSONB},
       email: { type: DataTypes.STRING, allowNull: false },
       gender: { type: DataTypes.STRING, allowNull: true },
+      avatar: DataTypes.STRING,
+      avatarAwsDetails: DataTypes.JSONB,
+      emergencyContact: DataTypes.JSONB,
+      emergencyMail: { type: DataTypes.JSONB},
+      diabetesProfile: { type: DataTypes.JSONB},
+      hypertensionProfile: { type: DataTypes.JSONB},
+      lifestyleProfile: { type: DataTypes.JSONB},
       password: { type: DataTypes.STRING, allowNull: false },
       code: { type: DataTypes.STRING, allowNull: false },
       state: { type: DataTypes.STRING, allowNull: false },
@@ -24,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
   );
   user.associate = (models) => {
     // association goes here
+      user.hasOne(models.onBoarding, {
+          foreignKey: 'userId',
+          as: 'profile',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
   };
   return user;
 };

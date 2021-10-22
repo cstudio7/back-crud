@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post(
   '/',
-  verifyToken.paramTokenUsers,
   upload.single('avatar'),
   fileUploadController.uploadAvatar
 );

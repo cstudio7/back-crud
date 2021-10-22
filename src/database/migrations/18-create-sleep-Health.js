@@ -1,18 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('groups', {
+    return queryInterface.createTable('sleepHealths', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      name: {
+      group: {
         type: Sequelize.STRING,
       },
-      desc:{
+      message: {
         type: Sequelize.STRING,
+      },
+      receiverId: {
+        type: Sequelize.UUID,
+      },
+      senderId: {
+        type: Sequelize.UUID,
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('groups');
+    return queryInterface.dropTable('sleepHealths');
   },
 };

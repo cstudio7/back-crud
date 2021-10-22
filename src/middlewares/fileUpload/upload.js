@@ -15,6 +15,7 @@ const upload = multer({
   // CREATE MULTER-S3 FUNCTION FOR STORAGE
   storage: multerS3({
     s3: S3,
+    acl: 'public-read',
     // bucket - WE CAN PASS SUB FOLDER NAME ALSO LIKE 'bucket-name/sub-folder1'
     bucket: process.env.AWS_BUCKET_NAME,
     // META DATA FOR PUTTING FIELD NAME

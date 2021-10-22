@@ -84,5 +84,29 @@ class Queries {
       return error;
     }
   }
+
+  /**
+   *
+   * This method will be used to get all messages between a sender and receiver upon login
+   * @param {String} table the name of the table to updated
+   * @param {integer} senderId the id of the user who sent the message
+   * @param {integer} receiverId the id of the connected user
+   * @returns {object} messages retrieved
+   */
+  static async getGroupMessage(table, page, size) {
+    try {
+      const { limit, offset } = getPagination(page, size);
+      const privateMessages = await table.findAndCountAll({
+        limit,
+        offset,
+        order: [['createdAt', 'DESC']],
+      });
+
+      const result = await getPagingData(privateMessages, page, limit);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 export default Queries;

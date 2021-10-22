@@ -1,15 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('roles', {
+    return queryInterface.createTable('healthSettings', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      name: {
-        type: Sequelize.STRING,
+      bloodPressureMin: {
+        type: Sequelize.JSONB,
+      },
+      bloodPressureMax:{
+        type: Sequelize.JSONB,
+      },
+      bloodGlucoseMin: {
+        type: Sequelize.JSONB,
+      },
+      bloodGlucoseMax:{
+        type: Sequelize.JSONB,
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('role');
+    return queryInterface.dropTable('healthSettings');
   },
 };

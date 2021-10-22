@@ -41,14 +41,10 @@ class ChatService {
    * get Public Message
    * @returns { Promise } Returns a list of Public messages
    */
-  static async getPublicMessage() {
+  static async getGroupMessage() {
     try {
-      const publicMessages = await db.chat.findAll({
-        where: {
-          receiverId: null,
-        },
-      });
-      return publicMessages;
+      const groupMessages = Queries.getGroupMessage(db.chat, page, size);
+      return groupMessages;
     } catch (error) {
       return error;
     }

@@ -48,8 +48,6 @@ class UserServices {
           [Op.or]: [{ email}, {phoneNumber }],
         },
         });
-      console.log(user)
-      console.log('f')
       if (!user) return null;
       return user;
     } catch (error) {
@@ -70,6 +68,23 @@ class UserServices {
       return searchRole;
     } catch (error) {
       return undefined;
+    }
+  }
+
+
+  /**
+   * service to all users in database
+   // eslint-disable-next-line valid-jsdoc
+   * @returns {Object} return user message
+   */
+  static async getAllUsers() {
+    try {
+      const searchUsers = await db.user.findAll({
+        attributes: ['id', 'firstName', 'lastName', 'avatar']
+      });
+      return searchUsers;
+    } catch (error) {
+      return error;
     }
   }
 

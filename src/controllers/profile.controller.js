@@ -18,6 +18,8 @@ class profileController {
      * @returns {object} return object which include status and message
      */
     static async viewProfile(req, res) {
+
+
       return profileHelper.getProfileData(req, res);
     }
 

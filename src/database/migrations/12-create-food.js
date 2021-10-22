@@ -1,42 +1,39 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('goals', {
+    return queryInterface.createTable('foods', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
       },
-      interval:{
+      addRecipe:{
+        type: Sequelize.ARRAY(Sequelize.JSONB),
+      },
+      desc: {
         type: Sequelize.STRING,
       },
-      goal: {
+      avatar: {
         type: Sequelize.STRING,
       },
-      desc:{
-        type: Sequelize.STRING,
+      avatarAwsDetails: {
+        type: Sequelize.JSONB,
       },
-      notification: {
-        type: Sequelize.BOOLEAN,
-      },
-      goalDay:{
-        type: Sequelize.ARRAY(Sequelize.STRING),
-      },
-      notificationDelay: {
-        type: Sequelize.STRING,
-      },
-      startDate:{
+      date: {
         type: Sequelize.DATE,
       },
-      startTime:{
+      time:{
         type: Sequelize.TIME,
       },
-      streak:{
-        type: Sequelize.ARRAY(Sequelize.JSONB),
+      tag: {
+        type: Sequelize.STRING,
+      },
+      addToLibrary:{
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
@@ -49,6 +46,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('goals');
+    return queryInterface.dropTable('foods');
   },
 };

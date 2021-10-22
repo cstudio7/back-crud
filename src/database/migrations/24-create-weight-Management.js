@@ -1,15 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('roles', {
+    return queryInterface.createTable('weightMgts', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      name: {
+      group: {
         type: Sequelize.STRING,
+      },
+      message: {
+        type: Sequelize.STRING,
+      },
+      receiverId: {
+        type: Sequelize.UUID,
+      },
+      senderId: {
+        type: Sequelize.UUID,
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('role');
+    return queryInterface.dropTable('weightMgts');
   },
 };

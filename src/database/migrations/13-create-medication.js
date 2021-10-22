@@ -1,42 +1,42 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('goals', {
+    return queryInterface.createTable('medications', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
       },
-      interval:{
+      type:{
         type: Sequelize.STRING,
       },
-      goal: {
+      amount: {
+        type: Sequelize.BIGINT,
+      },
+      measuringUnit:{
         type: Sequelize.STRING,
       },
-      desc:{
-        type: Sequelize.STRING,
-      },
-      notification: {
-        type: Sequelize.BOOLEAN,
-      },
-      goalDay:{
-        type: Sequelize.ARRAY(Sequelize.STRING),
-      },
-      notificationDelay: {
-        type: Sequelize.STRING,
-      },
-      startDate:{
+      date: {
         type: Sequelize.DATE,
       },
-      startTime:{
+      time:{
         type: Sequelize.TIME,
       },
-      streak:{
-        type: Sequelize.ARRAY(Sequelize.JSONB),
+      tag: {
+        type: Sequelize.STRING,
+      },
+      avatar: {
+        type: Sequelize.STRING,
+      },
+      avatarAwsDetails: {
+        type: Sequelize.JSONB,
+      },
+      addToLibrary:{
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
@@ -49,6 +49,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('goals');
+    return queryInterface.dropTable('medications');
   },
 };
