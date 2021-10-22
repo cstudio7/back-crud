@@ -11,6 +11,9 @@ module.exports = {
       background: {
         type: Sequelize.STRING,
       },
+      condition:{
+        type: Sequelize.STRING,
+      },
       icon:{
         type: Sequelize.STRING,
       },
@@ -40,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('weights');
+    return queryInterface.dropTable('inspirations');
   },
 };

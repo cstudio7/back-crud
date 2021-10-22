@@ -4,25 +4,34 @@
  * @returns {object} Comment model
  */
 module.exports = (sequelize, DataTypes) => {
-  const weight = sequelize.define('weight', {
+  const inspiration = sequelize.define('inspiration', {
+    background: {
+      type: DataTypes.STRING,
+    },
+    condition: {
+      type: DataTypes.STRING,
+    },
+    icon: {
+      type: DataTypes.STRING,
+    },
     type: {
       type: DataTypes.STRING,
     },
-    readingValue: {
+    category: {
       type: DataTypes.STRING,
     },
-    time: {
-      type: DataTypes.TIME,
+    avatar: {
+      type: DataTypes.STRING,
     },
-    desc: {
+    avatarAwsDetails: {
+      type: DataTypes.JSONB,
+    },
+    quote: {
       type: DataTypes.STRING,
     }
   });
-  weight.associate = (models) => {
-    // weight.belongsTo(models.user, {
-    //   foreignKey: 'artisanId',
-    //   onDelete: 'CASCADE',
-    // });
+  inspiration.associate = (models) => {
+
   };
-  return weight;
+  return inspiration;
 };

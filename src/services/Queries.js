@@ -1,5 +1,6 @@
 /* eslint-disable valid-jsdoc */
 import { Op } from 'sequelize';
+import db from "../database/models";
 // import db from '../database/models';
 // import response from '../helpers/response.helper';
 
@@ -50,6 +51,58 @@ class Queries {
       return error;
     }
   }
+
+  /**
+   * creating user query
+   * @param {string} table users table in database.
+   * @param {string} data the data to be inputed in database.
+   * @returns {array} data the data to be returned.
+   */
+  static async creates(table, data) {
+    try {
+
+      const mapEntityToModel = (entity) => {
+        switch (entity) {
+          case 'nutrition':
+            return db.nutrition;
+            break;
+          case 'weightMgt':
+            return db.weightMgt;
+            break;
+          case 'hypertensionMgt':
+            return db.hypertensionMgt;
+            break;
+          case 'stressMgt':
+            return db.stressMgt;
+            break;
+          case 'workHome':
+            return db.workHome;
+            break;
+          case 'workout':
+            return db.workout;
+          case 'homeAged':
+            return db.homeAged;
+            break;
+          case 'homeKid':
+            return db.homeKid;
+            break;
+          case 'sleepHealth':
+            return db.sleepHealth;
+            break;
+          default:
+            break;
+        }
+      };
+      const { senderId, table } = req.query.id;
+      const datas =  await mapEntityToModel(table).create(senderId);
+      return datas;
+    } catch (error) {
+      return error;
+    }
+  }
+
+
+
 
   /**
    *

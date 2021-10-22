@@ -23,6 +23,20 @@ class ChatService {
   }
 
   /**
+   * save Chat Message
+   * @param { Object } chatData
+   * @returns { Promise } Returns a a saved message
+   */
+
+  static async saveMessages(chatData) {
+    try {
+      return Queries.creates(db.chat, chatData);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
    * get Private Message
    * @param { Integer } sender .
    * @param { Integer } receiver .
