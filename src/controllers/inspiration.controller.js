@@ -1,28 +1,21 @@
 import response from '../helpers/response.helper';
 import db from '../database/models';
+import shuffle from '../helpers/shuffle'
 
 /**
  * Class for users related operations such Sign UP, Sign In and others
  */
-class weightController {
+class inspirationController {
   /**
    * Add a client and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addWeight(req, res) {
+  static async addInspiration(req, res) {
     try {
-      const { id } = req.user;
-      const { type, readingValue, time, desc } = req.body;
-      const Blood = { userId: id, type, readingValue, time, desc };
-
-      const data = await db.weight.create(Blood);
-      return res.json({
-        status: 201,
-        message: 'Weight Details Added',
-        data,
-      });
+      await db.inspiration.create(req.body);
+      response.successMessage(res, 'Inspiration added successfully', 201);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -34,20 +27,37 @@ class weightController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getWeight(req, res) {
-    const { id } = req.user;
+  static async getInspiration(req, res) {
     try {
-      const weight = await db.weight.findAll({
-        where: { userId: id },
+      const { condition } = req.body;
+      const datas = await db.inspiration.findAll({
+        where: { condition },
       });
+      const data = shuffle(datas)
+      response.successMessage(res, 'Gallery photos', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
+  /**
+   * User can get all client associated to a user
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async getAllInspiration(req, res) {
+    try {
+      const datas = await db.inspiration.findAll();
       const data = {
-        weight,
+        datas
       };
-      response.successMessage(res, 'Weight', 200, data)
+      response.successMessage(res, 'Gallery photos', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
+
 
   /**
    * User can get all client associated to a user
@@ -55,35 +65,14 @@ class weightController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOneWeight(req, res) {
-    const { id } = req.params;
+  static async editInspiration(req, res) {
     try {
-      const weight = await db.weight.findOne({
-        where: { id },
-      });
-      const data = {
-        weight,
-      };
-      response.successMessage(res, 'Weight', 200, data);
-    } catch (e) {
-      return response.errorMessage(res, e.message, 400);
-    }
-  }
-
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
-  static async editWeight(req, res) {
-    try {
-      const { id } = req.params;
+      const { id } = req.body;
       const infoData = req.body;
-      const weightToUpdate = await db.weight.findOne({ where: { id } });
-      const weight = await weightToUpdate.update(infoData);
+      const inspToUpdate = await db.inspiration.findOne({ where: { id } });
+      const newInspiration = await inspToUpdate.update(infoData);
       const data = {
-        weight,
+        newInspiration,
       };
       return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
     } catch (e) {
@@ -93,19 +82,19 @@ class weightController {
 
   /**
    * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
+   * @param {int} req This is the parameter(user id) that will be passed in url
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteWeight(req, res) {
+  static async deleteInspiration(req, res) {
     try {
       const { id } = req.body;
-      await db.weight.destroy({ where: { id } });
-      response.successMessage(res, 'Weight deleted', 200);
+      await db.inspiration.destroy({ where: { id } });
+      response.successMessage(res, 'Inspiration deleted successfully', 200);
     } catch (e) {
-      return response.errorMessage(res, e.message, 400);
+      return response.errorMessage(res, e.message, 404);
     }
   }
 }
 
-export default weightController;
+export default inspirationController;

@@ -49,7 +49,7 @@ const socketio = (server) => {
       // set isOnline session when sender joins a chat room
 
       const chatRoom = getChatRoom(data);
-      if(chatRoom.length === 2){
+      if(getChatRooms.length === 2){
         client[data.senderId] = socket;
           socket.join(chatRoom);
           io.to(chatRoom).emit('joined_Room', { chatRoom });
@@ -64,11 +64,14 @@ const socketio = (server) => {
 
     // Listen for chatMessage
     socket.on('chatMessage', async (data) => {
-
-        if (chatRooms.length === 2) {
+      const chatRoom = getChatRoom(data);
+        if (chatRoom.length === 2) {
 
           const {message} = data;
           if (message && message.trim()) {
+            //messages are saved here at this phase,
+            //it takes sendersId and message
+            //you need to work on your saving message the algorithm is not completed
             await chatServices.saveMessage(data);
 
             // set isOnline session when sender sends a message
@@ -84,7 +87,7 @@ const socketio = (server) => {
           }
         }
 
-        if (chatRooms.length === 1) {
+        if (getChatRooms.length === 1) {
           const { message } = data;
           if (message && message.trim()) {
             await chatServices.saveMessages(data);

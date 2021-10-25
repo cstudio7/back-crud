@@ -2,25 +2,30 @@ import response from '../helpers/response.helper';
 import db from '../database/models';
 
 /**
- * Class for bloodPressure related operations
+ * Class for users related operations such Sign UP, Sign In and others
  */
-class bloodPressureController {
+class foodController {
   /**
-   * Add a bloodPressure and saving client data in the database
+   * Add a food and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addBloodPressure(req, res) {
+  static async addFood(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, time, desc } = req.body;
-      const Blood = { userId: id, type, readingValue, time, desc };
+      const { name,
+        addRecipe,desc,avatar,
+        avatarAwsDetails,date,time,addToLibrary } = req.body;
+      const Food = { userId: id, name,
+        addRecipe,desc,avatar,
+        avatarAwsDetails,date,
+        time,addToLibrary  };
 
-      const data = await db.bloodPressure.create(Blood);
+      const data = await db.food.create(Food);
       return res.status(status).json({
         status: 201,
-        message: 'Blood Pressure Added',
+        message: 'Food Details Added',
         data,
       });
     } catch (e) {
@@ -34,16 +39,16 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getPressues(req, res) {
+  static async getOneFood(req, res) {
     const { id } = req.user;
     try {
-      const blood = await db.bloodPressure.findAll({
+      const food = await db.food.findAll({
         where: { userId: id },
       });
       const data = {
-        blood,
+        food,
       };
-      response.successMessage(res, 'Blood Pressure', 200, data);
+      response.successMessage(res, 'Food', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -55,16 +60,16 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOnePressues(req, res) {
+  static async getOneFood(req, res) {
     const { id } = req.params;
     try {
-      const blood = await db.bloodPressure.findOne({
+      const weight = await db.food.findOne({
         where: { id },
       });
       const data = {
-        blood,
+        weight,
       };
-      response.successMessage(res, 'Blood Pressure', 200, data);
+      response.successMessage(res, 'Weight', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -76,16 +81,16 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getAllPressure(req, res) {
-    const { userId } = req.query;
+  static async getOnePressure(req, res) {
+    const { id } = req.params;
     try {
-      const blood = await db.blooodPressure.findAll({
-        where: { userId },
+      const photo = await db.media.findOne({
+        where: { id },
       });
       const data = {
-        blood,
+        photo,
       };
-      response.successMessage(res, 'All Blood Pressure Records', 200, data);
+      response.successMessage(res, 'Gallery photo', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -97,16 +102,16 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editPressure(req, res) {
+  static async editFood(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const weightToUpdate = await db.bloodPressure.findOne({ where: { id } });
-      const pressure = await weightToUpdate.update(infoData);
+      const weightToUpdate = await db.food.findOne({ where: { id } });
+      const weight = await weightToUpdate.update(infoData);
       const data = {
-        pressure,
+        weight,
       };
-      return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
+      return response.successMessage(res, 'Food Details Updated.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -118,15 +123,15 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteBlood(req, res) {
+  static async deleteWeight(req, res) {
     try {
       const { id } = req.body;
-      await db.bloodPressure.destroy({ where: { id } });
-      response.successMessage(res, 'Blood Pressure deleted', 200);
+      await db.food.destroy({ where: { id } });
+      response.successMessage(res, 'Weight deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 }
 
-export default bloodPressureController;
+export default weightController;

@@ -41,11 +41,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   goal.associate = (models) => {
-    // goal.belongsTo(models.playlist, {
-    //   foreignKey: 'mediaId',
-    //   as: 'comments',
-    //   onDelete: 'CASCADE',
-    // });
+    goal.belongsTo(models.user, {
+      foreignKey: 'userId',
+      as: 'goals',
+      onDelete: 'CASCADE',
+    });
   };
   return goal;
 };

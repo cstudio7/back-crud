@@ -80,6 +80,7 @@ class Queries {
             break;
           case 'workout':
             return db.workout;
+            break;
           case 'homeAged':
             return db.homeAged;
             break;

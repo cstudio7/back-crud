@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     readingValue: {
       type: DataTypes.STRING,
     },
+    userId: {
+      type: DataTypes.UUID,
+      onDelete: 'CASCADE',
+    },
     time: {
       type: DataTypes.TIME,
     },
@@ -19,10 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   weight.associate = (models) => {
-    // weight.belongsTo(models.user, {
-    //   foreignKey: 'artisanId',
-    //   onDelete: 'CASCADE',
-    // });
+    weight.belongsTo(models.user, {
+      foreignKey: 'userId',
+      as: 'weight',
+      onDelete: 'CASCADE',
+    });
   };
   return weight;
 };

@@ -27,7 +27,31 @@ module.exports = (sequelize, DataTypes) => {
     // association goes here
       user.hasOne(models.onBoarding, {
           foreignKey: 'userId',
-          as: 'profile',
+          as: 'onBoarding',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.weight, {
+          foreignKey: 'userId',
+          as: 'weight',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.goal, {
+          foreignKey: 'userId',
+          as: 'goal',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.food, {
+          foreignKey: 'userId',
+          as: 'food',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.bloodPressure, {
+          foreignKey: 'userId',
+          as: 'bloodPressure',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });

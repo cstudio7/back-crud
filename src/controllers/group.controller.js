@@ -12,7 +12,7 @@ class groupController {
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addGroup(req, res) {
+  static async addToGroup(req, res) {
 
     const mapEntityToModel = (entity) => {
       switch (entity) {
@@ -33,6 +33,7 @@ class groupController {
           break;
         case 'workout':
           return db.workout;
+          break;
         case 'homeAged':
           return db.homeAged;
           break;

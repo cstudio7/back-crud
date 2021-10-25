@@ -24,7 +24,7 @@ const checkEmailpassword = async (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     avatar: user.avatar,
-    manage: user.manage
+    manage: user.onBoarding.manage
   };
   return response.successMessage(
       res,

@@ -168,7 +168,12 @@ class UserServices {
   static async findUserByEmail(email) {
     try {
       const user = await db.user.findOne({
-        where: { email }
+        where: { email },include: [
+          {
+            model: db.onBoarding,
+            as: 'onBoarding',
+          },
+        ],
       });
       if (!user) return null;
       return user;

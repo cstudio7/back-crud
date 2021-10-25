@@ -5,6 +5,10 @@
  */
 module.exports = (sequelize, DataTypes) => {
   const food = sequelize.define('food', {
+    userId: {
+      type: DataTypes.UUID,
+      onDelete: 'CASCADE',
+    },
     name: {
       type: DataTypes.STRING,
     },
@@ -31,10 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   food.associate = (models) => {
-    // weight.belongsTo(models.user, {
-    //   foreignKey: 'artisanId',
-    //   onDelete: 'CASCADE',
-    // });
+    food.belongsTo(models.user, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    });
   };
   return food;
 };
