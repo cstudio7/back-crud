@@ -12,8 +12,14 @@ const socket = io.connect();
 // const socket = io.connect('https://diatron.herokuapp.com', { timeout: 1000 });
 // const socket = io('http://localhost:4000');
 
+const user = {
+  id: "14873a3b-247a-41fa-8e84-3254134c2e5e",
+  modal: "nutritionMgt"
+}
+
 // Join chatroom
-socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
+socket.emit('addUser', user );
+// socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {

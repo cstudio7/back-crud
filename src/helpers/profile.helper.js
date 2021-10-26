@@ -42,8 +42,9 @@ class ProfileHelper {
    * excluing the password
    */
   static async getProfileData(req, res) {
+    // console.log(req.user)
 
-    const userDetails = db.user.findOne({
+    const userDetails = await db.user.findOne({
       where: { id: req.user.id }, include: [
         {
           model: db.onBoarding,
@@ -51,6 +52,7 @@ class ProfileHelper {
         }
         ]
     });
+    console.log(userDetails)
 
     const user = req.user
     // const userProfile = this.chooseProfileData(user, userDetails);

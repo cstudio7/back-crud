@@ -1,21 +1,15 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('nutritions', {
+    return queryInterface.createTable('nutritionMgts', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      groupName: {
-        type: Sequelize.STRING,
-      },
       message: {
         type: Sequelize.STRING,
-      },
-      receiverId: {
-        type: Sequelize.UUID,
       },
       senderId: {
         type: Sequelize.UUID,
@@ -31,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('nutritions');
+    return queryInterface.dropTable('nutritionMgts');
   },
 };

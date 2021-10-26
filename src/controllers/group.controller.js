@@ -1,4 +1,3 @@
-import Sequelize, { Op } from 'sequelize';
 import response from '../helpers/response.helper';
 import db from '../database/models';
 
@@ -16,8 +15,8 @@ class groupController {
 
     const mapEntityToModel = (entity) => {
       switch (entity) {
-        case 'nutrition':
-          return db.nutrition;
+        case 'nutritionMgt':
+          return db.nutritionMgt;
           break;
         case 'weightMgt':
           return db.weightMgt;
@@ -49,22 +48,24 @@ class groupController {
     };
 
     try {
-      const userId = req.body.senderId;
-      const existingUser = await mapEntityToModel(req.query.modal).findOne({
-        where: { userId },
+      const senderId = req.id;
+      const existingUser = await mapEntityToModel(req.modal).findOne({
+        where: { senderId },
       });
+      console.log(existingUser)
       if (existingUser) {
         const data = {
           status: 409,
           message: 'User Already Exist',
           data: existingUser,
         };
+        console.log(data)
         return data;
       }
       const newContact = {
-        userId,
+        senderId,
       };
-      const contact = await mapEntityToModel(req.query.modal).create(newContact);
+      const contact = await mapEntityToModel(req.modal).create(newContact);
       let name = 'A new user'
       const data = {
         status: 201,
@@ -73,6 +74,7 @@ class groupController {
       };
       return data;
     } catch (e) {
+      console.log(e)
       const data = {
         status: 400,
         message: 'Error Adding User',
