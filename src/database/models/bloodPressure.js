@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 module.exports = (sequelize, DataTypes) => {
-  const bloodPressure = sequelize.define(
-    'bloodPressure',
+  const blood = sequelize.define(
+    'blood',
     {
         userId: {
             type: DataTypes.UUID,
@@ -13,21 +13,18 @@ module.exports = (sequelize, DataTypes) => {
         readingValue: {
             type: DataTypes.STRING,
         },
-        time: {
-            type: DataTypes.TIME,
-        },
         desc: {
             type: DataTypes.STRING,
         }
     },
   );
-    bloodPressure.associate = (models) => {
+    blood.associate = (models) => {
     // associations can be defined here
-    bloodPressure.belongsTo(models.user, {
+    blood.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
   };
-  return bloodPressure;
+  return blood;
 };

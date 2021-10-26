@@ -17,12 +17,14 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateArticle(req, res, next) {
+  static validateInspiration(req, res, next) {
     const schema = Joi.object({
-      title: Joi.string(),
-      description: Joi.string(),
-      body: Joi.string(),
-      articleImage: Joi.string(),
+      background: Joi.string(),
+      condition: Joi.string(),
+      icon: Joi.string(),
+      type: Joi.string(),
+      category: Joi.string(),
+      quote: Joi.string()
     });
     validation(req, res, schema, next);
   }

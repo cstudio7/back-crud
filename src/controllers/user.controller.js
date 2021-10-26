@@ -26,12 +26,7 @@ class userController {
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
-        const token = GenerateToken({
-          email,
-            firstName,
-            lastName,
-          isVerified: false,
-        });
+
         const NewUser = {
           firstName,
           lastName,
@@ -45,32 +40,40 @@ class userController {
           country,
           isVerified: false,
         };
-         const verificationEmail = generateEmail(NewUser);
-        await sendMail(
-          process.env.SENDGRID_API_KEY,
-          email,
-          process.env.SENDER_EMAIL,
-          'Diatron Health',
-          verificationEmail
-        );
-        const data = {
-          token,
-        };
+         // const verificationEmail = generateEmail(NewUser);
+        // await sendMail(
+        //   process.env.SENDGRID_API_KEY,
+        //   email,
+        //   process.env.SENDER_EMAIL,
+        //   'Diatron Health',
+        //   verificationEmail
+        // );
+
 
         const accountSid = process.env.TWILIO_ACCOUNT_SID;
         const authToken = process.env.TWILIO_AUTH_TOKEN;
         const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
 
         const client = require('twilio')(accountSid, authToken);
-        client.messages
-            .create({
-                body: message,
-                from: process.env.TWILIO_PHONE_NUMBER,
-                to: `+${phoneNumber}`
-            })
-            .then(message => console.log("Phone Message Delivered"));
+        // client.messages
+        //     .create({
+        //         body: message,
+        //         from: process.env.TWILIO_PHONE_NUMBER,
+        //         to: `+${phoneNumber}`
+        //     })
+        //     .then(message => console.log("Phone Message Delivered"));
 
-      await db.user.create(NewUser);
+      const users = await db.user.create(NewUser);
+        const token = GenerateToken({
+            userId: users.id,
+            email,
+            firstName,
+            lastName,
+            isVerified: false,
+        });
+        const data = {
+            token,
+        };
       return response.successMessage(
           res,
           'user created successfully, proceed to verify your account from your email',
@@ -79,7 +82,6 @@ class userController {
       );
 
     } catch (e) {
-        console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }

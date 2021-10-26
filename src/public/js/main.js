@@ -13,7 +13,7 @@ const socket = io.connect();
 // const socket = io('http://localhost:4000');
 
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {

@@ -19,12 +19,15 @@ const checkEmailpassword = async (req, res) => {
     return response.errorMessage(res, 'User Is Not Verified, Please verify the User First', status);
   }
 
+  let manage
+  user.onBoarding? manage = user.onBoarding.manage : manage = null
+
   const data = {
     token: GenerateToken({ email: req.body.email, isVerified: user.isVerified, id: user.id, authType: user.authType   }),
     firstName: user.firstName,
     lastName: user.lastName,
     avatar: user.avatar,
-    manage: user.onBoarding.manage
+    manage:  manage
   };
   return response.successMessage(
       res,

@@ -7,7 +7,6 @@ import bloodPressureRoute from './bloodPressure.route';
 import inspRoute from './inspiration.route';
 import avatarRoute from './avatar.route';
 import onBoardingRoute from './onBoarding.route'
-import bloodPressureController from "../controllers/bloodPressure.controller";
 
 const Router = express.Router();
 Router.use('/auth', userRoute);

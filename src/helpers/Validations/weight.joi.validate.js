@@ -17,20 +17,12 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateClient(req, res, next) {
+  static validateWeight(req, res, next) {
     const schema = Joi.object({
-      name: Joi.string(),
-      phoneNumber: Joi.string()
-        .trim()
-        .regex(/^[0-9]{8,13}$/)
-        .message('The phone number should be numbers of 8 to 10 digits.'),
-      email: Joi.string()
-        .email({ minDomainSegments: 2 })
-        .message('email field should be a valid email address. e.g: johndoe@gmail.com.'),
-      gender: Joi.string().valid('female', 'male'),
-      state: Joi.string(),
-      country: Joi.string(),
-      deliveryAddress: Joi.string(),
+      type: Joi.string(),
+      readingValue: Joi.string(),
+      note: Joi.string(),
+      desc: Joi.string()
     });
     validation(req, res, schema, next);
   }

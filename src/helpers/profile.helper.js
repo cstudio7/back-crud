@@ -43,13 +43,18 @@ class ProfileHelper {
    */
   static async getProfileData(req, res) {
 
-    const onBoardingDetails = db.onBoarding.findOne({
-      where: { userId: req.user.id }
+    const userDetails = db.user.findOne({
+      where: { id: req.user.id }, include: [
+        {
+          model: db.onBoarding,
+          as: 'onBoarding',
+        }
+        ]
     });
 
     const user = req.user
-    const userProfile = this.chooseProfileData(user, onBoardingDetails);
-    return response.successMessage(res, 'User Profile', 200, userProfile);
+    // const userProfile = this.chooseProfileData(user, userDetails);
+    return response.successMessage(res, 'User Profile', 200, userDetails);
   }
 }
 export default ProfileHelper;

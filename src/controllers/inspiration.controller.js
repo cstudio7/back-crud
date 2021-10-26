@@ -3,7 +3,7 @@ import db from '../database/models';
 import shuffle from '../helpers/shuffle'
 
 /**
- * Class for users related operations such Sign UP, Sign In and others
+ * Class for users related operations such Inspiration
  */
 class inspirationController {
   /**
@@ -33,8 +33,8 @@ class inspirationController {
       const datas = await db.inspiration.findAll({
         where: { condition },
       });
-      const data = shuffle(datas)
-      response.successMessage(res, 'Gallery photos', 200, data);
+      const data = shuffle(datas);
+      response.successMessage(res, 'Inspirations', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -67,13 +67,11 @@ class inspirationController {
    */
   static async editInspiration(req, res) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
+      console.log(id)
       const infoData = req.body;
       const inspToUpdate = await db.inspiration.findOne({ where: { id } });
-      const newInspiration = await inspToUpdate.update(infoData);
-      const data = {
-        newInspiration,
-      };
+      const data = await inspToUpdate.update(infoData);
       return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

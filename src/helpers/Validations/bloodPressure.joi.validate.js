@@ -17,13 +17,11 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateMeasurement(req, res, next) {
+  static validateBloodPressure(req, res, next) {
     const schema = Joi.object({
-      name: Joi.string(),
       type: Joi.string(),
-      clientId: Joi.string().required(),
-      gender: Joi.string().valid('female', 'male'),
-      values: Joi.object(),
+      readingValue: Joi.string(),
+      desc: Joi.string(),
     });
     validation(req, res, schema, next);
   }
