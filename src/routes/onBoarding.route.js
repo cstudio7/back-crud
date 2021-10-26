@@ -7,10 +7,10 @@ const router = express.Router();
 
 const { validateOnBoard } = InputValidation;
 
-router.post('/', validateOnBoard, verifyToken.paramTokenUsers, onBoardingController.createBoard);
+router.post('/', validateOnBoard, onBoardingController.createBoard);
 
-router.get('/:id', verifyToken.paramTokenUsers, onBoardingController.getBoard);
+router.get('/:id', onBoardingController.getBoard);
 
-router.patch('/:id', verifyToken.paramTokenUsers, onBoardingController.editBoard);
+router.patch('/:id', onBoardingController.editBoard);
 
 export default router;

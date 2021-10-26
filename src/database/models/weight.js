@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       onDelete: 'CASCADE',
     },
-    time: {
-      type: DataTypes.TIME,
+    note: {
+      type: DataTypes.STRING,
     },
     desc: {
       type: DataTypes.STRING,

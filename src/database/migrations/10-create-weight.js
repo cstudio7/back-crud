@@ -23,8 +23,8 @@ module.exports = {
       readingValue:{
         type: Sequelize.STRING,
       },
-      time: {
-        type: Sequelize.TIME,
+      note: {
+        type: Sequelize.STRING,
       },
       desc:{
         type: Sequelize.STRING,
