@@ -34,8 +34,8 @@ const upload = multer({
   // FILTER OPTIONS LIKE VALIDATING FILE EXTENSION
   fileFilter(req, file, cb) {
 
-    const filetypes = /jpeg|jpg|png/;
-    console.log(file)
+    // const filetypes = /jpeg|jpg|png/;
+    console.log(req)
     // const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // const mimetype = filetypes.test(file.mimetype);
     // if (mimetype && extname) {
