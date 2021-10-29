@@ -40,7 +40,7 @@ class weightController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOneGoal(req, res) {
+  static async getGoal(req, res) {
     const { id } = req.user;
     try {
       const goal = await db.goal.findAll({
@@ -59,39 +59,18 @@ class weightController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getAllGoal(req, res) {
-    const { userId } = req.query;
+  static async getOneGoal(req, res) {
+    const { id } = req.params;
     try {
-      const weight = await db.weight.findAll({
-        where: { userId },
+      const data = await db.goal.findOne({
+        where: { id },
       });
-      const data = {
-        weight,
-      };
       response.successMessage(res, 'All Goals', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
-  static async getOneGoal(req, res) {
-    const { id } = req.params;
-    try {
-      const goal = await db.goal.findOne({
-        where: { id },
-      });
-      const data = { goal };
-      response.successMessage(res, 'Goal', 200, data);
-    } catch (e) {
-      return response.errorMessage(res, e.message, 400);
-    }
-  }
 
   /**
    * User can get all client associated to a user
@@ -103,11 +82,8 @@ class weightController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const weightToUpdate = await db.goal.findOne({ where: { id } });
-      const goal = await weightToUpdate.update(infoData);
-      const data = {
-        goal
-      };
+      const goalToUpdate = await db.goal.findOne({ where: { id } });
+      const goal = await goalToUpdate.update(infoData);
       return response.successMessage(res, 'Goal Updated', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

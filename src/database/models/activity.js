@@ -4,35 +4,32 @@
  * @returns {object} Comment model
  */
 module.exports = (sequelize, DataTypes) => {
-  const food = sequelize.define('food', {
+  const activity = sequelize.define('activity', {
     userId: {
       type: DataTypes.UUID,
       onDelete: 'CASCADE',
     },
-    name: {
+    activity: {
       type: DataTypes.STRING,
     },
-    addRecipe: {
-      type: DataTypes.ARRAY(DataTypes.JSONB ),
-    },
-    desc: {
+    difficulty: {
       type: DataTypes.STRING,
     },
-    avatar: {
+    type: {
       type: DataTypes.STRING,
     },
-    avatarAwsDetails: {
-      type: DataTypes.JSONB,
-    },
+    avatar: DataTypes.STRING,
+    avatarAwsDetails: DataTypes.JSONB,
     note: {
       type: DataTypes.STRING,
-    },
+    }
   });
-  food.associate = (models) => {
-    food.belongsTo(models.user, {
+  activity.associate = (models) => {
+    activity.belongsTo(models.user, {
       foreignKey: 'userId',
+      as: 'activities',
       onDelete: 'CASCADE',
     });
   };
-  return food;
+  return activity;
 };

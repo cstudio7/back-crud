@@ -23,6 +23,7 @@ class userController {
       const password = EncryptPassword(req.body.password);
       const code = Math.floor(100000 + Math.random() * 900000);
       const existingUser = await UserServices.findExistingUser(email, phoneNumber);
+      console.log(existingUser)
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
@@ -63,9 +64,8 @@ class userController {
         //     })
         //     .then(message => console.log("Phone Message Delivered"));
 
-      const users = await db.user.create(NewUser);
+        await db.user.create(NewUser);
         const token = GenerateToken({
-            userId: users.id,
             email,
             firstName,
             lastName,

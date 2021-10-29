@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('blood', {
+    return queryInterface.createTable('activities', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -17,16 +17,22 @@ module.exports = {
           key: 'id',
         },
       },
+      activity: {
+        type: Sequelize.STRING,
+      },
+      difficulty: {
+        type: Sequelize.STRING,
+      },
       type: {
         type: Sequelize.STRING,
       },
-      readingValue:{
+      avatar: {
         type: Sequelize.STRING,
       },
-      note:{
-        type: Sequelize.STRING,
+      avatarAwsDetails: {
+        type: Sequelize.JSONB,
       },
-      bpm:{
+      note: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -40,6 +46,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('blood');
+    return queryInterface.dropTable('activities');
   },
 };

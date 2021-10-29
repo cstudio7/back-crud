@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         readingValue: {
             type: DataTypes.STRING,
         },
-        desc: {
+        note: {
+            type: DataTypes.STRING,
+        },
+        bpm: {
             type: DataTypes.STRING,
         }
     },

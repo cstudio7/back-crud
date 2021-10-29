@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       phoneNumber: { type: DataTypes.BIGINT, allowNull: true, unique: true },
       email: { type: DataTypes.STRING, allowNull: false },
       gender: { type: DataTypes.STRING, allowNull: true },
+      age: DataTypes.STRING,
+      race: DataTypes.STRING,
       avatar: DataTypes.STRING,
       avatarAwsDetails: DataTypes.JSONB,
       emergencyContact: DataTypes.JSONB,
@@ -31,9 +33,27 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
+      user.hasOne(models.foodLibrary, {
+          foreignKey: 'userId',
+          as: 'foodLibrary',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.activity, {
+          foreignKey: 'userId',
+          as: 'activities',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
       user.hasMany(models.weight, {
           foreignKey: 'userId',
           as: 'weight',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.a1c, {
+          foreignKey: 'userId',
+          as: 'a1c',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });

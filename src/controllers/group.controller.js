@@ -52,12 +52,10 @@ class groupController {
       const existingUser = await mapEntityToModel(req.modal).findOne({
         where: { senderId },
       });
-      console.log(existingUser)
       if (existingUser) {
         const data = {
           status: 409,
           message: 'User Already Exist',
-          data: existingUser,
         };
         console.log(data)
         return data;
@@ -65,20 +63,18 @@ class groupController {
       const newContact = {
         senderId,
       };
-      const contact = await mapEntityToModel(req.modal).create(newContact);
-      let name = 'A new user'
+      await mapEntityToModel(req.modal).create(newContact);
       const data = {
         status: 201,
-        message: `${name} just Joined`,
-        data: contact,
+        message: `A new user just Joined`,
       };
       return data;
     } catch (e) {
-      console.log(e)
       const data = {
         status: 400,
         message: 'Error Adding User',
       };
+      console.log(data)
       return data;
     }
   }

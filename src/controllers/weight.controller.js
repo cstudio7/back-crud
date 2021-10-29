@@ -43,7 +43,7 @@ class weightController {
       const data = {
         weight,
       };
-      response.successMessage(res, 'Weight', 200, data)
+      response.successMessage(res, 'Weight Details', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -64,7 +64,7 @@ class weightController {
       const data = {
         weight,
       };
-      response.successMessage(res, 'Weight', 200, data);
+      response.successMessage(res, 'Weight Detail', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -85,7 +85,7 @@ class weightController {
       const data = {
         weight,
       };
-      return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
+      return response.successMessage(res, 'Weight Record Updated', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -101,7 +101,7 @@ class weightController {
     try {
       const { id } = req.body;
       await db.weight.destroy({ where: { id } });
-      response.successMessage(res, 'Weight deleted', 200);
+      response.successMessage(res, 'Weight Record Deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }

@@ -2,29 +2,25 @@ import response from '../helpers/response.helper';
 import db from '../database/models';
 
 /**
- * Class for users related operations such Sign UP, Sign In and others
+ * Class for bloodPressure related operations
  */
-class foodController {
+class bloodPressureController {
   /**
-   * Add a food and saving client data in the database
+   * Add a bloodPressure and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addFood(req, res) {
+  static async addA1c(req, res) {
     try {
       const { id } = req.user;
-      const { name,
-        addRecipe,avatar,
-        avatarAwsDetails,note } = req.body;
-      const Food = { userId: id, name,
-        addRecipe,avatar,
-        avatarAwsDetails,note  };
+      const { type, readingValue, note } = req.body;
+      const Blood = { userId: id, type, readingValue, note };
 
-      const data = await db.food.create(Food);
-      return res.status(status).json({
+      const data = await db.blood.create(Blood);
+      return res.json({
         status: 201,
-        message: 'Food Details Added',
+        message: 'Blood Pressure Added',
         data,
       });
     } catch (e) {
@@ -38,19 +34,17 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getFood(req, res) {
+  static async getPressues(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.food.findAll({
+      const data = await db.blood.findAll({
         where: { userId: id },
       });
-      response.successMessage(res, 'Food Details', 200, data)
+      response.successMessage(res, 'Blood Pressure', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
-
-
 
   /**
    * User can get all client associated to a user
@@ -58,20 +52,18 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOnePressure(req, res) {
+  static async getOnePressues(req, res) {
     const { id } = req.params;
     try {
-      const photo = await db.media.findOne({
+      const data = await db.blood.findOne({
         where: { id },
       });
-      const data = {
-        photo,
-      };
-      response.successMessage(res, 'Gallery photo', 200, data);
+      response.successMessage(res, 'Blood Pressure', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
+
 
   /**
    * User can get all client associated to a user
@@ -79,16 +71,16 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editFood(req, res) {
+  static async editPressure(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const weightToUpdate = await db.food.findOne({ where: { id } });
-      const weight = await weightToUpdate.update(infoData);
+      const weightToUpdate = await db.blood.findOne({ where: { id } });
+      const pressure = await weightToUpdate.update(infoData);
       const data = {
-        weight,
+        pressure,
       };
-      return response.successMessage(res, 'Food Details Updated.', 200, data);
+      return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -100,15 +92,15 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteWeight(req, res) {
+  static async deleteBlood(req, res) {
     try {
       const { id } = req.body;
-      await db.food.destroy({ where: { id } });
-      response.successMessage(res, 'Food Details deleted', 200);
+      await db.blood.destroy({ where: { id } });
+      response.successMessage(res, 'Blood Pressure deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 }
 
-export default foodController;
+export default bloodPressureController;

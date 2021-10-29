@@ -40,13 +40,13 @@ const socketio = (server) => {
       });
     });
 
-    // //Delete existing User
-    // socket.on('removeUser', async (userKeysObj) => {
-    //   await groupController.removeUser(userKeysObj).then((data) => {
-    //     socket.emit('remove_contact', data);
-    //   });
-    // });
-    //
+    //Delete existing User
+    socket.on('removeUser', async (userKeysObj) => {
+      await groupController.removeUser(userKeysObj).then((data) => {
+        socket.emit('remove_contact', data);
+      });
+    });
+
     // //Join Room
     // socket.on('joinRoom', (data) => {
     //   // set isOnline session when sender joins a chat room

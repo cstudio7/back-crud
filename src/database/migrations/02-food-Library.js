@@ -1,7 +1,8 @@
-'use strict';
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('blood', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    await queryInterface.createTable('onBoardings', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -9,7 +10,8 @@ module.exports = {
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
       userId: {
-        type: Sequelize.UUID,
+        allowNull: false,
+        type: Sequelize.DataTypes.UUID,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
@@ -17,17 +19,8 @@ module.exports = {
           key: 'id',
         },
       },
-      type: {
-        type: Sequelize.STRING,
-      },
-      readingValue:{
-        type: Sequelize.STRING,
-      },
-      note:{
-        type: Sequelize.STRING,
-      },
-      bpm:{
-        type: Sequelize.STRING,
+      details: {
+        type: Sequelize.JSONB,
       },
       createdAt: {
         allowNull: false,
@@ -39,7 +32,7 @@ module.exports = {
       },
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('blood');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('onBoardings');
   },
 };

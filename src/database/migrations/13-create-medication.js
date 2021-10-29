@@ -8,6 +8,15 @@ module.exports = {
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
+      userId: {
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
       name: {
         type: Sequelize.STRING,
       },
@@ -20,12 +29,6 @@ module.exports = {
       measuringUnit:{
         type: Sequelize.STRING,
       },
-      date: {
-        type: Sequelize.DATE,
-      },
-      time:{
-        type: Sequelize.TIME,
-      },
       tag: {
         type: Sequelize.STRING,
       },
@@ -34,9 +37,6 @@ module.exports = {
       },
       avatarAwsDetails: {
         type: Sequelize.JSONB,
-      },
-      addToLibrary:{
-        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,

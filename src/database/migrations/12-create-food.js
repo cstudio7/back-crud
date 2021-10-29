@@ -32,17 +32,8 @@ module.exports = {
       avatarAwsDetails: {
         type: Sequelize.JSONB,
       },
-      date: {
-        type: Sequelize.DATE,
-      },
-      time:{
-        type: Sequelize.TIME,
-      },
-      tag: {
+      note: {
         type: Sequelize.STRING,
-      },
-      addToLibrary:{
-        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,

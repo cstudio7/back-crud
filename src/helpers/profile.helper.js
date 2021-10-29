@@ -17,16 +17,15 @@ class ProfileHelper {
       id,
       firstName,
       lastName, phoneNumber, email,
-      avatar, gender,
+      avatar, gender, age, race,
       personalDetails, hypertensionProfile,
       diabetesProfile, lifestyleProfile,
       state, country
     } = userData;
 
     return {
-      id, firstName, email,
-      avatar, gender,
-      lastName, phoneNumber,
+      id, firstName, lastName, age, race, email,
+      avatar, gender, phoneNumber,
       personalDetails, hypertensionProfile,
       diabetesProfile, lifestyleProfile,
       state, country, onBoarding
@@ -42,7 +41,6 @@ class ProfileHelper {
    * excluing the password
    */
   static async getProfileData(req, res) {
-    // console.log(req.user)
 
     const userDetails = await db.user.findOne({
       where: { id: req.user.id }, include: [
@@ -52,7 +50,6 @@ class ProfileHelper {
         }
         ]
     });
-    console.log(userDetails)
 
     const user = req.user
     // const userProfile = this.chooseProfileData(user, userDetails);

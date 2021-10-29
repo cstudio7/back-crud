@@ -14,7 +14,6 @@ class fileUploadController {
    */
   static async uploadAvatar(req, res) {
     try {
-
       const mapEntityToModel = (entity) => {
         switch (entity) {
           case 'user':

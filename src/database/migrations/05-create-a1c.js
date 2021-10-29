@@ -14,10 +14,7 @@ module.exports = {
       readingValue:{
         type: Sequelize.BIGINT,
       },
-      date: {
-        type: Sequelize.DATE,
-      },
-      desc:{
+      note:{
         type: Sequelize.STRING,
       },
       createdAt: {

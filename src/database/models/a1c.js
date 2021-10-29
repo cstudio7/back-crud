@@ -11,18 +11,15 @@ module.exports = (sequelize, DataTypes) => {
     readingValue: {
       type: DataTypes.BIGINT,
     },
-    date: {
-      type: DataTypes.DATE,
-    },
-    desc: {
+    note: {
       type: DataTypes.STRING,
     }
   });
   a1c.associate = (models) => {
-    // a1c.belongsTo(models.user, {
-    //   foreignKey: 'artisanId',
-    //   onDelete: 'CASCADE',
-    // });
+    a1c.belongsTo(models.user, {
+      foreignKey: 'artisanId',
+      onDelete: 'CASCADE',
+    });
   };
   return a1c;
 };

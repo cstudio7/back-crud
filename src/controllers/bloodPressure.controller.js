@@ -14,8 +14,8 @@ class bloodPressureController {
   static async addBloodPressure(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, time, desc } = req.body;
-      const Blood = { userId: id, type, readingValue, time, desc };
+      const { type, readingValue, note } = req.body;
+      const Blood = { userId: id, type, readingValue, note };
 
       const data = await db.blood.create(Blood);
       return res.json({
@@ -76,10 +76,7 @@ class bloodPressureController {
       const { id } = req.params;
       const infoData = req.body;
       const weightToUpdate = await db.blood.findOne({ where: { id } });
-      const pressure = await weightToUpdate.update(infoData);
-      const data = {
-        pressure,
-      };
+      const data = await weightToUpdate.update(infoData);
       return response.successMessage(res, 'Gallery Updated Successfully.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
