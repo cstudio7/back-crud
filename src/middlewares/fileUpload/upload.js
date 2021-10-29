@@ -36,11 +36,11 @@ const upload = multer({
 
     const filetypes = /jpeg|jpg|png/;
     console.log(file)
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
+    // const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // const mimetype = filetypes.test(file.mimetype);
+    // if (mimetype && extname) {
+    //   return cb(null, true);
+    // }
     cb('Error: Allow images only of extensions jpeg|jpg|png!');
   },
 });
