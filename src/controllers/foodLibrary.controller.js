@@ -72,7 +72,7 @@ class foodLibraryController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editActivity(req, res) {
+  static async editFoodLib(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;

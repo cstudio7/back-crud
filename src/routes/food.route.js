@@ -1,17 +1,17 @@
 import express from 'express';
-import weightController from '../controllers/weight.controller';
-import InputValidation from '../helpers/Validations/weight.joi.validate';
+import foodController from '../controllers/food.controller';
+import InputValidation from '../helpers/Validations/food.joi.validate';
 import verifyToken from '../middlewares/verify.token.middleware';
 import verifyUser from '../middlewares/verify.user.middleware';
 const router = express.Router();
 
 const {
-    validateWeight
+    validateFood
 } = InputValidation;
 
-router.post('/', verifyToken.headerToken, verifyUser, validateWeight, weightController.addWeight);
-router.get('/', verifyToken.headerToken, verifyUser, weightController.getWeight);
-router.get('/:id', verifyToken.headerToken, verifyUser, weightController.getOneWeight);
-router.patch('/:id', verifyToken.headerToken, verifyUser, weightController.editWeight);
-router.delete('/', verifyToken.headerToken, verifyUser, weightController.deleteWeight);
+router.post('/', verifyToken.headerToken, verifyUser, validateFood, foodController.addFood);
+router.get('/', verifyToken.headerToken, verifyUser, foodController.getFood);
+router.get('/:id', verifyToken.headerToken, verifyUser, foodController.getOneFood);
+router.patch('/:id', verifyToken.headerToken, verifyUser, foodController.editFood);
+router.delete('/', verifyToken.headerToken, verifyUser, foodController.deleteFood);
 export default router;

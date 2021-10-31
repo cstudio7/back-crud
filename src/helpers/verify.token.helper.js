@@ -5,33 +5,21 @@ import UserServices from '../services/user.service';
 const verifyAllTokens = async (req, res, next, token) => {
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_KEY);
-    const userByPhone = await UserServices.findUserByPhone(
-      decodedToken.payload.phoneNumber || '44444444444'
-    );
-    const userByEmail = await UserServices.findUserByEmail(
-      decodedToken.payload.email || '44444444444'
-    );
 
-    if (userByPhone === undefined && userByEmail === undefined) {
-      return response.errorMessage(res, 'You provided the invalid token!', 401);
+    const user = await UserServices.findUserByEmail(decodedToken.payload.email);
+    if (user === undefined) {
+      return response.errorMessage(res, 'UNAUTHORIZED ACCESS', 401);
     }
 
-    if (userByPhone === null) {
-      if (userByEmail.token === null && userByEmail.token !== token) {
-        return response.errorMessage(res, 'You need to signin first!', 401);
-      }
-      req.user = userByEmail;
+    if (user.token !== token && user.token === null) {
+      return response.successMessage(res, 'UNAUTHORIZED ACCESS', 401);
+    }
+    decodedToken.token = token;
+    req.user = user;
       return next();
-    }
 
-    if (userByEmail === null) {
-      if (userByPhone.token === null && userByPhone.token !== token) {
-        return response.errorMessage(res, 'You need to signin first!', 401);
-      }
-      req.user = userByPhone;
-      return next();
-    }
   } catch (error) {
+    console.log(error)
     response.errorMessage(res, error.message, 401);
   }
 };

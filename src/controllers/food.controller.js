@@ -94,7 +94,7 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteWeight(req, res) {
+  static async deleteFood(req, res) {
     try {
       const { id } = req.body;
       await db.food.destroy({ where: { id } });

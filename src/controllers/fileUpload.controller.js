@@ -25,6 +25,15 @@ class fileUploadController {
           case 'coach':
             return db.coach;
             break;
+          case 'foodLibrary':
+            return db.foodLibrary;
+            break;
+          case 'medication':
+            return db.medication;
+            break;
+          case 'medLibrary':
+            return db.medLibrary;
+            break;
           case 'inspiration':
             return db.inspiration;
             break;

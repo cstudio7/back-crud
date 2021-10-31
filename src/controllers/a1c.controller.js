@@ -24,6 +24,7 @@ class a1cController {
         data,
       });
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }

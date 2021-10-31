@@ -17,10 +17,13 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateMeasurement(req, res, next) {
+  static validateFood(req, res, next) {
     const schema = Joi.object({
       name: Joi.string(),
-      form: Joi.array(),
+      addRecipe: Joi.string(),
+      avatar: Joi.string(),
+      avatarAwsDetail: Joi.object(),
+      note: Joi.string(),
     });
     validation(req, res, schema, next);
   }

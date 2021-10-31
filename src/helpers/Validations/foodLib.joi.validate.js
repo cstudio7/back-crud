@@ -17,9 +17,9 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateMedia(req, res, next) {
+  static validateFoodLib(req, res, next) {
     const schema = Joi.object({
-      photo: Joi.string(),
+      details: Joi.object()
     });
     validation(req, res, schema, next);
   }
