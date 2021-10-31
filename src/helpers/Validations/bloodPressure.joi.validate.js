@@ -21,7 +21,7 @@ export default class InputValidation {
     const schema = Joi.object({
       type: Joi.string(),
       readingValue: Joi.string(),
-      desc: Joi.string(),
+      note: Joi.string(),
     });
     validation(req, res, schema, next);
   }

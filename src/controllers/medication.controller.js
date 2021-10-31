@@ -4,29 +4,25 @@ import db from '../database/models';
 /**
  * Class for users related operations such Sign UP, Sign In and others
  */
-class goalController {
+class medicationController {
   /**
-   * Add a client and saving client data in the database
+   * Add a food and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addGoal(req, res) {
+  static async addMedication(req, res) {
     try {
       const { id } = req.user;
-      const { title, interval, goal, desc,
-        notification, goalDay, notificationDelay,
-        startDate, startTime, streak
-      } = req.body;
+      const { type, amount,avatar,
+        avatarAwsDetails, measuringUnit } = req.body;
+      const med = { userId: id, type, amount,avatar,
+        avatarAwsDetails, measuringUnit  };
 
-      const goals = { userId: id, title, interval, goal, desc,
-        notification, goalDay, notificationDelay,
-        startDate, startTime, streak };
-
-      const data = await db.weight.create(goals);
+      const data = await db.medication.create(med);
       return res.status(status).json({
         status: 201,
-        message: 'New Goals Added',
+        message: 'Medications Added',
         data,
       });
     } catch (e) {
@@ -40,18 +36,19 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getGoal(req, res) {
+  static async getMedication(req, res) {
     const { id } = req.user;
     try {
-      const goal = await db.goal.findAll({
+      const data = await db.medication.findAll({
         where: { userId: id },
       });
-      const data = { goal };
-      response.successMessage(res, 'Weight', 200, data)
+      response.successMessage(res, 'Medication Details', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
+
+
 
   /**
    * User can get all client associated to a user
@@ -59,18 +56,17 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOneGoal(req, res) {
+  static async getOneMed(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.goal.findOne({
+      const data = await db.medication.findOne({
         where: { id },
       });
-      response.successMessage(res, 'All Goals', 200, data);
+      response.successMessage(res, 'Medication Details', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
-
 
   /**
    * User can get all client associated to a user
@@ -78,13 +74,13 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editGoal(req, res) {
+  static async editMedication(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const goalToUpdate = await db.goal.findOne({ where: { id } });
-      const goal = await goalToUpdate.update(infoData);
-      return response.successMessage(res, 'Goal Updated', 200, data);
+      const medToUpdate = await db.Medication.findOne({ where: { id } });
+      const data = await medToUpdate.update(infoData);
+      return response.successMessage(res, 'Medication Details Updated.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -96,15 +92,15 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteGoal(req, res) {
+  static async deleteMedication(req, res) {
     try {
       const { id } = req.body;
-      await db.goal.destroy({ where: { id } });
-      response.successMessage(res, 'Goals deleted', 200);
+      await db.medication.destroy({ where: { id } });
+      response.successMessage(res, 'Medication deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 }
 
-export default goalController;
+export default medicationController;

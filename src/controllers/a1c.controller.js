@@ -4,7 +4,7 @@ import db from '../database/models';
 /**
  * Class for bloodPressure related operations
  */
-class bloodPressureController {
+class a1cController {
   /**
    * Add a bloodPressure and saving client data in the database
    * @param {Object} req The request object
@@ -17,7 +17,7 @@ class bloodPressureController {
       const { type, readingValue, note } = req.body;
       const Blood = { userId: id, type, readingValue, note };
 
-      const data = await db.blood.create(Blood);
+      const data = await db.a1c.create(Blood);
       return res.json({
         status: 201,
         message: 'Blood Pressure Added',
@@ -34,10 +34,10 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getPressues(req, res) {
+  static async getA1c(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.blood.findAll({
+      const data = await db.a1c.findAll({
         where: { userId: id },
       });
       response.successMessage(res, 'Blood Pressure', 200, data);
@@ -52,10 +52,10 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOnePressues(req, res) {
+  static async getOneA1c(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.blood.findOne({
+      const data = await db.a1c.findOne({
         where: { id },
       });
       response.successMessage(res, 'Blood Pressure', 200, data);
@@ -71,11 +71,11 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editPressure(req, res) {
+  static async editA1c(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const weightToUpdate = await db.blood.findOne({ where: { id } });
+      const weightToUpdate = await db.a1c.findOne({ where: { id } });
       const pressure = await weightToUpdate.update(infoData);
       const data = {
         pressure,
@@ -92,10 +92,10 @@ class bloodPressureController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteBlood(req, res) {
+  static async deleteA1c(req, res) {
     try {
       const { id } = req.body;
-      await db.blood.destroy({ where: { id } });
+      await db.a1c.destroy({ where: { id } });
       response.successMessage(res, 'Blood Pressure deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
@@ -103,4 +103,4 @@ class bloodPressureController {
   }
 }
 
-export default bloodPressureController;
+export default a1cController;

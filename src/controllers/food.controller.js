@@ -58,16 +58,13 @@ class foodController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOnePressure(req, res) {
+  static async getOneFood(req, res) {
     const { id } = req.params;
     try {
-      const photo = await db.media.findOne({
+      const data = await db.food.findOne({
         where: { id },
       });
-      const data = {
-        photo,
-      };
-      response.successMessage(res, 'Gallery photo', 200, data);
+      response.successMessage(res, 'Food Details', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -83,11 +80,8 @@ class foodController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const weightToUpdate = await db.food.findOne({ where: { id } });
-      const weight = await weightToUpdate.update(infoData);
-      const data = {
-        weight,
-      };
+      const foodToUpdate = await db.food.findOne({ where: { id } });
+      const data = await foodToUpdate.update(infoData);
       return response.successMessage(res, 'Food Details Updated.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
@@ -104,7 +98,7 @@ class foodController {
     try {
       const { id } = req.body;
       await db.food.destroy({ where: { id } });
-      response.successMessage(res, 'Food Details deleted', 200);
+      response.successMessage(res, 'Food deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }

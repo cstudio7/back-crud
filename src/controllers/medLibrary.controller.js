@@ -4,29 +4,24 @@ import db from '../database/models';
 /**
  * Class for users related operations such Sign UP, Sign In and others
  */
-class goalController {
+class medLibraryController {
   /**
    * Add a client and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addGoal(req, res) {
+  static async addMedDetails(req, res) {
     try {
       const { id } = req.user;
-      const { title, interval, goal, desc,
-        notification, goalDay, notificationDelay,
-        startDate, startTime, streak
-      } = req.body;
+      const { details } = req.body;
 
-      const goals = { userId: id, title, interval, goal, desc,
-        notification, goalDay, notificationDelay,
-        startDate, startTime, streak };
+      const act = { userId: id, details};
 
-      const data = await db.weight.create(goals);
+      const data = await db.medLibrary.create(act);
       return res.status(status).json({
         status: 201,
-        message: 'New Goals Added',
+        message: 'Medication Details Added',
         data,
       });
     } catch (e) {
@@ -40,14 +35,13 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getGoal(req, res) {
+  static async getMedLibrary(req, res) {
     const { id } = req.user;
     try {
-      const goal = await db.goal.findAll({
+      const data = await db.medLibrary.findAll({
         where: { userId: id },
       });
-      const data = { goal };
-      response.successMessage(res, 'Weight', 200, data)
+      response.successMessage(res, 'Med Library', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -59,13 +53,13 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOneGoal(req, res) {
+  static async getOneMedLib(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.goal.findOne({
+      const data = await db.medLibrary.findOne({
         where: { id },
       });
-      response.successMessage(res, 'All Goals', 200, data);
+      response.successMessage(res, 'Med Library', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -78,13 +72,13 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editGoal(req, res) {
+  static async editMedLibrary(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const goalToUpdate = await db.goal.findOne({ where: { id } });
-      const goal = await goalToUpdate.update(infoData);
-      return response.successMessage(res, 'Goal Updated', 200, data);
+      const medToUpdate = await db.medLibrary.findOne({ where: { id } });
+      const data = await medToUpdate.update(infoData);
+      return response.successMessage(res, 'Food Updated', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -96,15 +90,15 @@ class goalController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteGoal(req, res) {
+  static async deleteLibrary(req, res) {
     try {
       const { id } = req.body;
-      await db.goal.destroy({ where: { id } });
-      response.successMessage(res, 'Goals deleted', 200);
+      await db.medLibrary.destroy({ where: { id } });
+      response.successMessage(res, 'Library deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 }
 
-export default goalController;
+export default medLibraryController;

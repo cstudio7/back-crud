@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   a1c.associate = (models) => {
     a1c.belongsTo(models.user, {
-      foreignKey: 'artisanId',
+      foreignKey: 'userIdId',
       onDelete: 'CASCADE',
     });
   };

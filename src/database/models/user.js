@@ -69,6 +69,12 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
+      user.hasMany(models.medication, {
+          foreignKey: 'userId',
+          as: 'medication',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
       user.hasMany(models.blood, {
           foreignKey: 'userId',
           as: 'bloodPressure',

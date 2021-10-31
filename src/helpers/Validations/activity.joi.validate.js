@@ -17,10 +17,11 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateAddress(req, res, next) {
+  static validateActivity(req, res, next) {
     const schema = Joi.object({
       clientId: Joi.string(),
-      deliveryAddress: Joi.string(),
+      readingValue: Joi.string(),
+      note: Joi.string()
     });
     validation(req, res, schema, next);
   }
