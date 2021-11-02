@@ -23,6 +23,7 @@ const checkEmailpassword = async (req, res) => {
   user.onBoarding? manage = user.onBoarding.manage : manage = null
 
   const data = {
+    id: user.id,
     token: GenerateToken({ email: req.body.email, isVerified: user.isVerified, id: user.id, authType: user.authType   }),
     firstName: user.firstName,
     lastName: user.lastName,

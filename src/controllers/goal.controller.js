@@ -23,13 +23,14 @@ class goalController {
         notification, goalDay, notificationDelay,
         startDate, startTime, streak };
 
-      const data = await db.weight.create(goals);
-      return res.status(status).json({
+      const data = await db.goal.create(goals);
+      return res.json({
         status: 201,
         message: 'New Goals Added',
         data,
       });
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
@@ -83,7 +84,7 @@ class goalController {
       const { id } = req.params;
       const infoData = req.body;
       const goalToUpdate = await db.goal.findOne({ where: { id } });
-      const goal = await goalToUpdate.update(infoData);
+      const data = await goalToUpdate.update(infoData);
       return response.successMessage(res, 'Goal Updated', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

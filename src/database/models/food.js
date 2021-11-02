@@ -4,7 +4,7 @@
  * @returns {object} Comment model
  */
 module.exports = (sequelize, DataTypes) => {
-  const food = sequelize.define('food', {
+  const foods = sequelize.define('fud', {
     userId: {
       type: DataTypes.UUID,
       onDelete: 'CASCADE',
@@ -28,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   });
-  food.associate = (models) => {
-    food.belongsTo(models.user, {
+  foods.associate = (models) => {
+    foods.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
   };
-  return food;
+  return foods;
 };

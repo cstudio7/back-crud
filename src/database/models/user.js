@@ -63,9 +63,9 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
-      user.hasMany(models.food, {
+      user.hasMany(models.fud, {
           foreignKey: 'userId',
-          as: 'food',
+          as: 'foods',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });

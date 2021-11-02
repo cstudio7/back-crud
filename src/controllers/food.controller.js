@@ -21,13 +21,14 @@ class foodController {
         addRecipe,avatar,
         avatarAwsDetails,note  };
 
-      const data = await db.food.create(Food);
-      return res.status(status).json({
+      const data = await db.fud.create(Food);
+      return res.json({
         status: 201,
         message: 'Food Details Added',
         data,
       });
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
@@ -41,7 +42,7 @@ class foodController {
   static async getFood(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.food.findAll({
+      const data = await db.fud.findAll({
         where: { userId: id },
       });
       response.successMessage(res, 'Food Details', 200, data)
@@ -61,7 +62,7 @@ class foodController {
   static async getOneFood(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.food.findOne({
+      const data = await db.fud.findOne({
         where: { id },
       });
       response.successMessage(res, 'Food Details', 200, data);
@@ -80,7 +81,7 @@ class foodController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const foodToUpdate = await db.food.findOne({ where: { id } });
+      const foodToUpdate = await db.fud.findOne({ where: { id } });
       const data = await foodToUpdate.update(infoData);
       return response.successMessage(res, 'Food Details Updated.', 200, data);
     } catch (e) {
@@ -97,7 +98,7 @@ class foodController {
   static async deleteFood(req, res) {
     try {
       const { id } = req.body;
-      await db.food.destroy({ where: { id } });
+      await db.fud.destroy({ where: { id } });
       response.successMessage(res, 'Food deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

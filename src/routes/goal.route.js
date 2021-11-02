@@ -1,17 +1,17 @@
 import express from 'express';
-import weightController from '../controllers/weight.controller';
-import InputValidation from '../helpers/Validations/weight.joi.validate';
+import goalController  from '../controllers/goal.controller';
+import InputValidation from '../helpers/Validations/goal.joi.validate';
 import verifyToken from '../middlewares/verify.token.middleware';
 import verifyUser from '../middlewares/verify.user.middleware';
 const router = express.Router();
 
 const {
-    validateWeight
+    validateGoal
 } = InputValidation;
 
-router.post('/', verifyToken.headerToken, verifyUser, validateWeight, weightController.addWeight);
-router.get('/', verifyToken.headerToken, verifyUser, weightController.getWeight);
-router.get('/:id', verifyToken.headerToken, verifyUser, weightController.getOneWeight);
-router.patch('/:id', verifyToken.headerToken, verifyUser, weightController.editWeight);
-router.delete('/', verifyToken.headerToken, verifyUser, weightController.deleteWeight);
+router.post('/', verifyToken.headerToken, verifyUser, validateGoal, goalController.addGoal );
+router.get('/', verifyToken.headerToken, verifyUser, goalController.getGoal );
+router.get('/:id', verifyToken.headerToken, verifyUser, goalController.getOneGoal );
+router.patch('/:id', verifyToken.headerToken, verifyUser, goalController.editGoal );
+router.delete('/', verifyToken.headerToken, verifyUser, goalController.deleteGoal );
 export default router;
