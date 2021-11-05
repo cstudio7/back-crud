@@ -64,8 +64,9 @@ class userController {
             })
             .then(message => console.log("Phone Message Delivered"));
 
-        await db.user.create(NewUser);
+        const user = await db.user.create(NewUser);
         const token = GenerateToken({
+            userId: user.id,
             email,
             firstName,
             lastName,
