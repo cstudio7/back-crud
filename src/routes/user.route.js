@@ -7,10 +7,7 @@ const {
     validateLogin,
     validateActivateByCode,
     validateResetPassword,
-    validateResetPasswordPh,
-    validateResendCode,
-    validateResendEmail,
-    validateGoogleSignUp,
+    validateResendCode
 } = InputValidation;
 
 const router = express.Router();

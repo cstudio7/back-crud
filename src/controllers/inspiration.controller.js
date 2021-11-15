@@ -29,7 +29,7 @@ class inspirationController {
    */
   static async getInspiration(req, res) {
     try {
-      const { condition } = req.body;
+      const { condition } = req.query;
       const datas = await db.inspiration.findAll({
         where: { condition },
       });
@@ -68,7 +68,6 @@ class inspirationController {
   static async editInspiration(req, res) {
     try {
       const { id } = req.params;
-      console.log(id)
       const infoData = req.body;
       const inspToUpdate = await db.inspiration.findOne({ where: { id } });
       const data = await inspToUpdate.update(infoData);
