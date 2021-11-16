@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.JSONB,
       },
       emergencyContact: {
-        type: Sequelize.JSONB,
+        type: Sequelize.STRING,
       },
       manage: {
         type: Sequelize.STRING,
@@ -49,16 +49,19 @@ module.exports = {
         type: Sequelize.STRING,
       },
       a1c: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING
       },
       bloodPressure: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING
       },
       bloodGlucose: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING
       },
       weight: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING
+      },
+      height: {
+        type: Sequelize.STRING
       },
       diagnosedDate: {
         type: Sequelize.DATE,

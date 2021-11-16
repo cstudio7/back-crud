@@ -47,6 +47,7 @@ class onBoardingController {
                 bloodGlucose: averageBloodGlucose,
                 bloodPressure: averageBloodPressure,
                 weight,
+                height,
                 diagnosedDate,
             };
             await req.user.update(profile);

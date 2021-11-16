@@ -23,6 +23,7 @@ class ProfileHelper {
       bloodPressure,
       bloodGlucose,
       weight,
+      height,
       diagnosedDate,
       gender, age, race,
       state, country
@@ -38,6 +39,7 @@ class ProfileHelper {
       bloodPressure,
       bloodGlucose,
       weight,
+      height,
       diagnosedDate,
       gender, age, race,
       state, country
