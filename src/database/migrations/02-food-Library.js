@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-    await queryInterface.createTable('onBoardings', {
+    await queryInterface.createTable('foodLibs', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -33,6 +33,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('onBoardings');
+    await queryInterface.dropTable('foodLibs');
   },
 };

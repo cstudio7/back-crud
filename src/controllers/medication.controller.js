@@ -17,10 +17,11 @@ class medicationController {
       const { type, amount,avatar,
         avatarAwsDetails, measuringUnit } = req.body;
       const med = { userId: id, type, amount,avatar,
-        avatarAwsDetails, measuringUnit  };
+        avatarAwsDetails, measuringUnit
+      };
 
       const data = await db.medication.create(med);
-      return res.status(status).json({
+      return res.status(201).json({
         status: 201,
         message: 'Medications Added',
         data,
@@ -78,7 +79,7 @@ class medicationController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const medToUpdate = await db.Medication.findOne({ where: { id } });
+      const medToUpdate = await db.medication.findOne({ where: { id } });
       const data = await medToUpdate.update(infoData);
       return response.successMessage(res, 'Medication Details Updated.', 200, data);
     } catch (e) {

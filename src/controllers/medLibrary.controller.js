@@ -18,8 +18,8 @@ class medLibraryController {
 
       const act = { userId: id, details};
 
-      const data = await db.medLibrary.create(act);
-      return res.status(status).json({
+      const data = await db.medLib.create(act);
+      return res.status(201).json({
         status: 201,
         message: 'Medication Details Added',
         data,
@@ -38,7 +38,7 @@ class medLibraryController {
   static async getMedLibrary(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.medLibrary.findAll({
+      const data = await db.medLib.findAll({
         where: { userId: id },
       });
       response.successMessage(res, 'Med Library', 200, data)
@@ -56,7 +56,7 @@ class medLibraryController {
   static async getOneMedLib(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.medLibrary.findOne({
+      const data = await db.medLib.findOne({
         where: { id },
       });
       response.successMessage(res, 'Med Library', 200, data);
@@ -76,7 +76,7 @@ class medLibraryController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const medToUpdate = await db.medLibrary.findOne({ where: { id } });
+      const medToUpdate = await db.medLib.findOne({ where: { id } });
       const data = await medToUpdate.update(infoData);
       return response.successMessage(res, 'Food Updated', 200, data);
     } catch (e) {
@@ -93,7 +93,7 @@ class medLibraryController {
   static async deleteLibrary(req, res) {
     try {
       const { id } = req.body;
-      await db.medLibrary.destroy({ where: { id } });
+      await db.medLib.destroy({ where: { id } });
       response.successMessage(res, 'Library deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

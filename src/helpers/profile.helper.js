@@ -17,18 +17,30 @@ class ProfileHelper {
       id,
       firstName,
       lastName, phoneNumber, email,
-      avatar, gender, age, race,
-      personalDetails, hypertensionProfile,
-      diabetesProfile, lifestyleProfile,
+      avatar, emergencyContact,
+      manage, typeOfDiabetes,
+      typeOfHypertension, a1c,
+      bloodPressure,
+      bloodGlucose,
+      weight,
+      diagnosedDate,
+      gender, age, race,
       state, country
     } = userData;
 
     return {
-      id, firstName, lastName, age, race, email,
-      avatar, gender, phoneNumber,
-      personalDetails, hypertensionProfile,
-      diabetesProfile, lifestyleProfile,
-      state, country, onBoarding
+      id,
+      firstName,
+      lastName, phoneNumber, email,
+      avatar, emergencyContact,
+      manage, typeOfDiabetes,
+      typeOfHypertension, a1c,
+      bloodPressure,
+      bloodGlucose,
+      weight,
+      diagnosedDate,
+      gender, age, race,
+      state, country
     };
   }
 
@@ -42,18 +54,11 @@ class ProfileHelper {
    */
   static async getProfileData(req, res) {
 
-    const userDetails = await db.user.findOne({
-      where: { id: req.user.id }, include: [
-        {
-          model: db.onBoarding,
-          as: 'onBoarding',
-        }
-        ]
-    });
+    const userDetails = await db.user.findByPk(req.user.id);
 
     const user = req.user
-    // const userProfile = this.chooseProfileData(user, userDetails);
-    return response.successMessage(res, 'User Profile', 200, userDetails);
+    const userProfile = this.chooseProfileData(user, userDetails);
+    return response.successMessage(res, 'User Profile', 200, userProfile);
   }
 }
 export default ProfileHelper;

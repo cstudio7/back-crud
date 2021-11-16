@@ -168,13 +168,7 @@ class UserServices {
   static async findUserByEmail(email) {
     try {
       const user = await db.user.findOne({
-        where: { email },include: [
-          {
-            model: db.onBoarding,
-            as: 'onBoarding',
-          },
-        ],
-      });
+        where: { email } });
       if (!user) return null;
       return user;
     } catch (error) {
@@ -402,26 +396,20 @@ class UserServices {
 
   /**
    * This a function that update a user account fields
-   * @param {string} phoneNumber 0r email this is a user email
-   * @param {String} email
+   * @param {string} email this is a user email
    * @param {object} userInfo this is user's fields you want to update
    * @returns {object} return  a response object
    */
-  static async updateUser(phoneNumber, email, userInfo) {
-    let userToUpdate;
-    if (phoneNumber === '4444444444444') {
-      userToUpdate = await this.findUserByEmail(email);
-    }
-    if (email === '4444444444444') {
-      userToUpdate = await this.findUserByPhone(phoneNumber);
-    }
+  static async updateUser(email, userInfo) {
+    const userToUpdate = await this.findUserByEmail(email);
     if (!userToUpdate) {
       return {
         status: 404,
-        message: 'User not found',
+        message: 'User not found'
       };
     }
-    return userToUpdate.update(userInfo);
+    const updatedUser = await userToUpdate.update(userInfo);
+    return updatedUser;
   }
 
   /**

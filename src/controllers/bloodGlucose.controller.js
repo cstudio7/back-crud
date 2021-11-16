@@ -2,29 +2,25 @@ import response from '../helpers/response.helper';
 import db from '../database/models';
 
 /**
- * Class for users related operations such Sign UP, Sign In and others
+ * Class for bloodPressure related operations
  */
-class activityController {
+class bloodGlucoseController {
   /**
-   * Add a client and saving client data in the database
+   * Add a bloodPressure and saving client data in the database
    * @param {Object} req The request object
    * @param {Object} res The response object
    * @returns {Object} A user object with selected fields
    */
-  static async addActivity(req, res) {
+  static async addBloodGlucose(req, res) {
     try {
       const { id } = req.user;
-      const { activity, difficulty, type, avatar,
-        avatarAwsDetails, note
-      } = req.body;
+      const { type, readingValue, readingType, note } = req.body;
+      const Blood = { userId: id, type, readingValue, readingType, note };
 
-      const act = { userId: id, activity, difficulty, type, avatar,
-        avatarAwsDetails, note };
-
-      const data = await db.activity.create(act);
-      return res.status(201).json({
+      const data = await db.glucose.create(Blood);
+      return res.json({
         status: 201,
-        message: 'New Activity Added',
+        message: 'Blood Glucose Added',
         data,
       });
     } catch (e) {
@@ -38,13 +34,13 @@ class activityController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getActivity(req, res) {
+  static async getGlucose(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.activity.findAll({
+      const data = await db.glucose.findAll({
         where: { userId: id },
       });
-      response.successMessage(res, 'Activity', 200, data)
+      response.successMessage(res, 'Blood Glucose', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -56,13 +52,13 @@ class activityController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async getOneActivity(req, res) {
+  static async getOneGlucose(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.activity.findOne({
+      const data = await db.glucose.findOne({
         where: { id },
       });
-      response.successMessage(res, 'All Activities', 200, data);
+      response.successMessage(res, 'Blood Glucose', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -75,13 +71,13 @@ class activityController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async editActivity(req, res) {
+  static async editGlucose(req, res) {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const goalToUpdate = await db.activity.findOne({ where: { id } });
-      const data = await goalToUpdate.update(infoData);
-      return response.successMessage(res, 'Activity Updated', 200, data);
+      const glucoseToUpdate = await db.glucose.findOne({ where: { id } });
+      const data = await glucoseToUpdate.update(infoData);
+      return response.successMessage(res, 'Updated Successfully.', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -93,15 +89,15 @@ class activityController {
    * @param {object} res This is a response will be send to the user
    * @returns {object} return object which include status and message
    */
-  static async deleteActivity(req, res) {
+  static async deleteBlood(req, res) {
     try {
       const { id } = req.body;
-      await db.activity.destroy({ where: { id } });
-      response.successMessage(res, 'Activity deleted', 200);
+      await db.glucose.destroy({ where: { id } });
+      response.successMessage(res, 'Blood Glucose deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
   }
 }
 
-export default activityController;
+export default bloodGlucoseController ;

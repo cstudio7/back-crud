@@ -1,14 +1,14 @@
 // import db from "./index";
 module.exports = (sequelize, DataTypes) => {
-    const foodLibrary = sequelize.define('foodLibrary',
+    const foodLib = sequelize.define('foodLib',
         {
             userId: { type: DataTypes.UUID, defaultValue: DataTypes.UUID },
-            details: { type: DataTypes.STRING }
+            details: { type: DataTypes.JSONB }
         },
         {}
     );
-    foodLibrary.associate = (models) => {
+    foodLib.associate = (models) => {
         // association goes here
     };
-    return foodLibrary;
+    return foodLib;
 };

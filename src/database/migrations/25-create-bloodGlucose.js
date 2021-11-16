@@ -1,24 +1,33 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('inspirations', {
+    return queryInterface.createTable('glucoses', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      category:{
+      userId: {
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      type: {
         type: Sequelize.STRING,
       },
-      details:{
-        type: Sequelize.JSONB,
-      },
-      avatar: {
+      readingValue:{
         type: Sequelize.STRING,
       },
-      avatarAwsDetails: {
-        type: Sequelize.JSONB,
+      readingType:{
+        type: Sequelize.STRING,
+      },
+      note:{
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +40,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('inspirations');
+    return queryInterface.dropTable('glucoses');
   },
 };

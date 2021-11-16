@@ -14,7 +14,7 @@ class onBoardingController {
      */
     static async createBoard(req, res) {
         try {
-            const { id } = req.user;
+            const { id, email } = req.user;
             const existingUser = await db.onBoarding.findOne({
                 where: {userId: id}
             });
@@ -41,6 +41,15 @@ class onBoardingController {
                 careTeam, isCareTeamList, progressRate, needsACareTeam,
                 foodTimetable, personalizedFoodTimetable
             };
+            const profile = {
+                typeOfHypertension: conditionOfHypertension,
+                manage,
+                bloodGlucose: averageBloodGlucose,
+                bloodPressure: averageBloodPressure,
+                weight,
+                diagnosedDate,
+            };
+            await req.user.update(profile);
             const board = await db.onBoarding.create(newOnBoard);
             const data = { board };
             response.successMessage(res, 'onBoarded successfully', 201, data);

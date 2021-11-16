@@ -18,8 +18,8 @@ class foodLibraryController {
 
       const act = { userId: id, details};
 
-      const data = await db.foodLibrary.create(act);
-      return res.status(status).json({
+      const data = await db.foodLib.create(act);
+      return res.status(201).json({
         status: 201,
         message: 'Food Details Added',
         data,
@@ -38,7 +38,7 @@ class foodLibraryController {
   static async getFoodLibrary(req, res) {
     const { id } = req.user;
     try {
-      const data = await db.foodLibrary.findAll({
+      const data = await db.foodLib.findAll({
         where: { userId: id },
       });
       response.successMessage(res, 'Food Library', 200, data)
@@ -56,7 +56,7 @@ class foodLibraryController {
   static async getOneFoodLib(req, res) {
     const { id } = req.params;
     try {
-      const data = await db.foodLibrary.findOne({
+      const data = await db.foodLib.findOne({
         where: { id },
       });
       response.successMessage(res, 'Food Library', 200, data);
@@ -76,7 +76,7 @@ class foodLibraryController {
     try {
       const { id } = req.params;
       const infoData = req.body;
-      const foodToUpdate = await db.foodLibrary.findOne({ where: { id } });
+      const foodToUpdate = await db.foodLib.findOne({ where: { id } });
       const data = await foodToUpdate.update(infoData);
       return response.successMessage(res, 'Food Updated', 200, data);
     } catch (e) {
@@ -93,7 +93,7 @@ class foodLibraryController {
   static async deleteLibrary(req, res) {
     try {
       const { id } = req.body;
-      await db.foodLibrary.destroy({ where: { id } });
+      await db.foodLib.destroy({ where: { id } });
       response.successMessage(res, 'Library deleted', 200);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);

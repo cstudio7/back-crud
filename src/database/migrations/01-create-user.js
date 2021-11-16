@@ -42,20 +42,32 @@ module.exports = {
       manage: {
         type: Sequelize.STRING,
       },
-      emergencyMail: {
+      typeOfDiabetes: {
         type: Sequelize.STRING,
       },
-      diabetesProfile: {
-        type: Sequelize.JSONB,
+      typeOfHypertension: {
+        type: Sequelize.STRING,
       },
-      hypertensionProfile: {
-        type: Sequelize.JSONB,
+      a1c: {
+        type: Sequelize.JSONB
       },
-      lifestyleProfile: {
-        type: Sequelize.JSONB,
+      bloodPressure: {
+        type: Sequelize.JSONB
+      },
+      bloodGlucose: {
+        type: Sequelize.JSONB
+      },
+      weight: {
+        type: Sequelize.JSONB
+      },
+      diagnosedDate: {
+        type: Sequelize.DATE,
       },
       password: {
         type: Sequelize.STRING,
+      },
+      token: {
+        type: Sequelize.STRING(500)
       },
       code: {
         type: Sequelize.STRING(6),

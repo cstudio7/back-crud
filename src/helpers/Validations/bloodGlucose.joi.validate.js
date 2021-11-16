@@ -17,13 +17,11 @@ const validation = (req, res, schema, next) => {
 };
 
 export default class InputValidation {
-  static validateActivity(req, res, next) {
+  static validateGlucosePressure(req, res, next) {
     const schema = Joi.object({
       type: Joi.string(),
-      activity: Joi.string(),
-      difficulty: Joi.string(),
-      avatar: Joi.string(),
-      avatarAwsDetails: Joi.object(),
+      readingValue: Joi.string(),
+      readingType: Joi.string(),
       note: Joi.string()
     });
     validation(req, res, schema, next);

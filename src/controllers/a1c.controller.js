@@ -20,7 +20,7 @@ class a1cController {
       const data = await db.a1c.create(Blood);
       return res.json({
         status: 201,
-        message: 'Blood Pressure Added',
+        message: 'A1c Added',
         data,
       });
     } catch (e) {

@@ -12,11 +12,16 @@ module.exports = (sequelize, DataTypes) => {
       avatar: DataTypes.STRING,
       avatarAwsDetails: DataTypes.JSONB,
       emergencyContact: DataTypes.JSONB,
-      emergencyMail: { type: DataTypes.JSONB},
-      diabetesProfile: { type: DataTypes.JSONB},
-      hypertensionProfile: { type: DataTypes.JSONB},
-      lifestyleProfile: { type: DataTypes.JSONB},
+      manage: DataTypes.STRING,
+      typeOfDiabetes: DataTypes.STRING,
+      typeOfHypertension: DataTypes.STRING,
+      a1c: DataTypes.JSONB,
+      bloodPressure: DataTypes.JSONB,
+      bloodGlucose: DataTypes.JSONB,
+      weight: DataTypes.JSONB,
+      diagnosedDate: DataTypes.DATE,
       password: { type: DataTypes.STRING, allowNull: false },
+      token: { type: DataTypes.STRING(500), allowNull: true },
       code: { type: DataTypes.STRING, allowNull: false },
       state: { type: DataTypes.STRING, allowNull: false },
       country: { type: DataTypes.STRING, allowNull: true },
@@ -33,9 +38,15 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
-      user.hasOne(models.foodLibrary, {
+      user.hasOne(models.foodLib, {
           foreignKey: 'userId',
           as: 'foodLibrary',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasOne(models.medLib, {
+          foreignKey: 'userId',
+          as: 'medLibrary',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
@@ -47,13 +58,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       user.hasMany(models.weight, {
           foreignKey: 'userId',
-          as: 'weight',
+          as: 'userWeight',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
       user.hasMany(models.a1c, {
           foreignKey: 'userId',
-          as: 'a1c',
+          as: 'A1c',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });
@@ -77,7 +88,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       user.hasMany(models.blood, {
           foreignKey: 'userId',
-          as: 'bloodPressure',
+          as: 'bloodPressures',
+          onDelete: 'cascade',
+          onUpdate: 'cascade',
+      });
+      user.hasMany(models.glucose, {
+          foreignKey: 'userId',
+          as: 'glucose',
           onDelete: 'cascade',
           onUpdate: 'cascade',
       });

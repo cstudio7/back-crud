@@ -26,6 +26,11 @@ class userController {
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
+        const token = GenerateToken({
+            email,
+            firstName,
+            isVerified: false,
+        });
 
         const NewUser = {
           firstName,
@@ -35,6 +40,7 @@ class userController {
           gender,
           password,
           code,
+            token,
           authType,
           state,
           country,
@@ -63,14 +69,8 @@ class userController {
             })
             .then(message => console.log("Phone Message Delivered"));
 
-        const user = await db.user.create(NewUser);
-        const token = GenerateToken({
-            userId: user.id,
-            email,
-            firstName,
-            lastName,
-            isVerified: false,
-        });
+         await db.user.create(NewUser);
+
         const data = {
             token,
         };
