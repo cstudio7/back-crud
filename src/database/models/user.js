@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       phoneNumber: { type: DataTypes.BIGINT, allowNull: true, unique: true },
       email: { type: DataTypes.STRING, allowNull: false },
       gender: { type: DataTypes.STRING, allowNull: true },
-      age: DataTypes.STRING,
+      dob: DataTypes.DATE,
       race: DataTypes.STRING,
       avatar: DataTypes.STRING,
       avatarAwsDetails: DataTypes.JSONB,

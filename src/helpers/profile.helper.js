@@ -25,7 +25,7 @@ class ProfileHelper {
       weight,
       height,
       diagnosedDate,
-      gender, age, race,
+      gender, dob, race,
       state, country
     } = userData;
 
@@ -41,7 +41,7 @@ class ProfileHelper {
       weight,
       height,
       diagnosedDate,
-      gender, age, race,
+      gender, dob, race,
       state, country
     };
   }

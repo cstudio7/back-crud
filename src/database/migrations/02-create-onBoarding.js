@@ -65,19 +65,19 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.JSON),
       },
       averageBloodGlucose: {
-        type: Sequelize.JSONB,
+        type: Sequelize.STRING,
       },
       averageBloodPressure: {
         type: Sequelize.STRING,
       },
       bloodGlucose: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING,
       },
       weight: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING,
       },
       height: {
-        type: Sequelize.JSONB
+        type: Sequelize.STRING,
       },
       mainGoal:{
         type: Sequelize.ARRAY(Sequelize.STRING),

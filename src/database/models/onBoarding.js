@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
             medicationDetails: {
                 type: DataTypes.ARRAY(DataTypes.JSON),
             },
-            averageBloodGlucose: { type: DataTypes.JSONB },
-            averageBloodPressure: { type: DataTypes.JSONB },
-            bloodGlucose: { type: DataTypes.JSONB },
-            weight:  { type: DataTypes.JSONB },
-            height:  { type: DataTypes.JSONB },
+            averageBloodGlucose: { type: DataTypes.STRING },
+            averageBloodPressure: { type: DataTypes.STRING },
+            bloodGlucose: { type: DataTypes.STRING },
+            weight:  { type: DataTypes.STRING },
+            height:  { type: DataTypes.STRING },
             mainGoal: {
                 type: DataTypes.ARRAY(DataTypes.STRING),
             },
