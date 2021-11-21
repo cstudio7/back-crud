@@ -29,11 +29,29 @@ class inspirationController {
    */
   static async getInspiration(req, res) {
     try {
-      const { condition } = req.query;
+      const { category } = req.query;
       const datas = await db.inspiration.findAll({
-        where: { condition },
+        where: { category },
       });
       const data = shuffle(datas);
+      response.successMessage(res, 'Inspirations', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
+  /**
+   * User can get all client associated to a user
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async getOneInspiration(req, res) {
+    try {
+      const { id } = req.params;
+      const data = await db.inspiration.findOne({
+        where: { id },
+      });
       response.successMessage(res, 'Inspirations', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
@@ -52,7 +70,7 @@ class inspirationController {
       const data = {
         datas
       };
-      response.successMessage(res, 'Gallery photos', 200, data);
+      response.successMessage(res, 'Inspiration', 200, data);
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }

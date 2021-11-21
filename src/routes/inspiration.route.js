@@ -11,7 +11,8 @@ const {
 
 router.post('/', verifyToken.headerToken, verifyUser, validateInspiration, inspirationController.addInspiration);
 router.get('/',  inspirationController.getAllInspiration);
-router.get('/:id',  inspirationController.getInspiration);
+router.get('/',  inspirationController.getInspiration);
+router.get('/:id',  inspirationController.getOneInspiration);
 router.patch('/:id', verifyToken.headerToken, verifyUser, inspirationController.editInspiration);
 router.delete('/', verifyToken.headerToken, verifyUser, inspirationController.deleteInspiration);
 export default router;
