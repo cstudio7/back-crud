@@ -87,6 +87,9 @@ module.exports = {
       code: {
         type: Sequelize.STRING(6),
       },
+      group: {
+        type: Sequelize.STRING(6),
+      },
       state: {
         type: Sequelize.STRING,
       },
