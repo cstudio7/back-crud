@@ -88,7 +88,7 @@ module.exports = {
         type: Sequelize.STRING(6),
       },
       group: {
-        type: Sequelize.STRING(6),
+        type: Sequelize.INTEGER,
       },
       state: {
         type: Sequelize.STRING,
