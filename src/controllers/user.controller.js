@@ -23,6 +23,7 @@ class userController {
       const password = EncryptPassword(req.body.password);
       const code = Math.floor(100000 + Math.random() * 900000);
       const existingUser = await UserServices.findExistingUser(email, phoneNumber);
+      console.log(existingUser)
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
@@ -47,27 +48,27 @@ class userController {
           isVerified: false,
         };
          const verificationEmail = generateEmail(NewUser);
-        // await sendMail(
-        //   process.env.SENDGRID_API_KEY,
-        //   email,
-        //   process.env.SENDER_EMAIL,
-        //   'Diatron Health',
-        //   verificationEmail
-        // );
+        await sendMail(
+          process.env.SENDGRID_API_KEY,
+          email,
+          process.env.SENDER_EMAIL,
+          'Diatron Health',
+          verificationEmail
+        );
 
 
         const accountSid = process.env.TWILIO_ACCOUNT_SID;
         const authToken = process.env.TWILIO_AUTH_TOKEN;
         const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
 
-        // const client = require('twilio')(accountSid, authToken);
-        // client.messages
-        //     .create({
-        //         body: message,
-        //         from: process.env.TWILIO_PHONE_NUMBER,
-        //         to: `+${phoneNumber}`
-        //     })
-        //     .then(message => console.log("Phone Message Delivered"));
+        const client = require('twilio')(accountSid, authToken);
+        client.messages
+            .create({
+                body: message,
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: `+${phoneNumber}`
+            })
+            .then(message => console.log("Phone Message Delivered"));
 
          await db.user.create(NewUser);
 
