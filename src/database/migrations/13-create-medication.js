@@ -38,6 +38,9 @@ module.exports = {
       avatarAwsDetails: {
         type: Sequelize.JSONB,
       },
+      startTime:{
+        type: Sequelize.TIME,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -14,8 +14,8 @@ class bloodPressureController {
   static async addBloodPressure(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, note, bpm } = req.body;
-      const Blood = { userId: id, type, readingValue, note, bpm };
+      const { type, readingValue,startTime, note, bpm } = req.body;
+      const Blood = { userId: id, type,startTime, readingValue, note, bpm };
 
       const data = await db.blood.create(Blood);
       return res.json({

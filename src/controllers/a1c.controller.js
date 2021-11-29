@@ -14,8 +14,8 @@ class a1cController {
   static async addA1c(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, note } = req.body;
-      const Blood = { userId: id, type, readingValue, note };
+      const { type, readingValue, startTime, note } = req.body;
+      const Blood = { userId: id, startTime, type, readingValue, note };
 
       const data = await db.a1c.create(Blood);
       return res.json({

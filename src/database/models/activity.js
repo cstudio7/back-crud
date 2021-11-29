@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     avatarAwsDetails: DataTypes.JSONB,
     note: {
       type: DataTypes.STRING,
+    },
+    startTime: {
+      type: DataTypes.TIME,
     }
   });
   activity.associate = (models) => {

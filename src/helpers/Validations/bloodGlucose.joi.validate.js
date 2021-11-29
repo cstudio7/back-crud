@@ -22,7 +22,8 @@ export default class InputValidation {
       type: Joi.string(),
       readingValue: Joi.string(),
       readingType: Joi.string(),
-      note: Joi.string()
+      note: Joi.string(),
+      startTime: Joi.string()
     });
     validation(req, res, schema, next);
   }

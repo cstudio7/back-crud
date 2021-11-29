@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     note: {
       type: DataTypes.STRING,
     },
+    startTime: {
+      type: DataTypes.TIME,
+    }
   });
   foods.associate = (models) => {
     foods.belongsTo(models.user, {

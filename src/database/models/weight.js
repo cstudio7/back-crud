@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     desc: {
       type: DataTypes.STRING,
+    },
+    startTime: {
+      type: DataTypes.TIME,
     }
   });
   weight.associate = (models) => {

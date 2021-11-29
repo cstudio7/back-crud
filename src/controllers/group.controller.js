@@ -89,8 +89,8 @@ class groupController {
     try {
       const mapEntityToModel = (entity) => {
         switch (entity) {
-          case 'nutrition':
-            return db.nutrition;
+          case 'nutritionMgt':
+            return db.nutritionMgt;
             break;
           case 'weightMgt':
             return db.weightMgt;
@@ -106,6 +106,7 @@ class groupController {
             break;
           case 'workout':
             return db.workout;
+            break;
           case 'homeAged':
             return db.homeAged;
             break;
@@ -119,11 +120,15 @@ class groupController {
             break;
         }
       };
-      const { id } = req.query;
-      await mapEntityToModel(req.query.modal).destroy({ where: { id } });
-      response.successMessage(res, 'user removed successfully', 200);
+      const senderId = req.id;
+      await mapEntityToModel(req.modal).destroy({ where: { senderId } });
+      const data = {
+        status: 204,
+        message: `user removed`,
+      };
+      return data;
     } catch (e) {
-      return response.errorMessage(res, e.message, 404);
+      console.log(e)
     }
   }
 

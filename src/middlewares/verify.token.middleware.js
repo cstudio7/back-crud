@@ -4,6 +4,7 @@ import response from '../helpers/response.helper';
 import verifyAllTokens from '../helpers/verify.token.helper';
 import verifyAllToken from '../helpers/verifyUsersToken';
 import UserServices from '../services/user.service';
+import db from "../database/models";
 
 dotenv.config();
 /**
@@ -41,9 +42,15 @@ class verifyToken {
 
   static async verifyUserToken(req, res, next) {
     try {
-      const token = req.query.authorization;
+      if (req.headers.authorization === undefined) {
+        return response.errorMessage(res, 'Unauthorized Access', 401);
+      }
+      if (!/(?=^[Bb]earer)/.test(req.headers.authorization)) {
+        return response.errorMessage(res, '"Bearer" not found Invalid token!', 401);
+      }
+      const token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_KEY);
-      const user = await UserServices.findUserByEmail(decoded.payload.email);
+      const user = await db.coach.findOne({where: {email: decoded.payload.email}});
       if (user === undefined) {
         return response.errorMessage(res, 'Invalid Account!', 404);
       }

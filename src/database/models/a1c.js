@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     note: {
       type: DataTypes.STRING,
+    },
+    startTime: {
+      type: DataTypes.TIME,
     }
   });
   a1c.associate = (models) => {

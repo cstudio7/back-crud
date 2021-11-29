@@ -24,6 +24,7 @@ export default class InputValidation {
       avatar: Joi.string(),
       avatarAwsDetails: Joi.object(),
       measuringUnit: Joi.string(),
+      startTime: Joi.string()
     });
     validation(req, res, schema, next);
   }

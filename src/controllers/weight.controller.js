@@ -14,8 +14,8 @@ class weightController {
   static async addWeight(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, note, desc } = req.body;
-      const Blood = { userId: id, type, readingValue, note, desc };
+      const { type, readingValue, startTime, note, desc } = req.body;
+      const Blood = { userId: id, type, readingValue, startTime, note, desc };
 
       const data = await db.weight.create(Blood);
       return res.json({

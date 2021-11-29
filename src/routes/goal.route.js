@@ -11,6 +11,7 @@ const {
 
 router.post('/', verifyToken.headerToken, verifyUser, validateGoal, goalController.addGoal );
 router.get('/', verifyToken.headerToken, verifyUser, goalController.getGoal );
+router.get('/:status', verifyToken.headerToken, verifyUser, goalController.getStatusGoal);
 router.get('/:id', verifyToken.headerToken, verifyUser, goalController.getOneGoal );
 router.patch('/:id', verifyToken.headerToken, verifyUser, goalController.editGoal );
 router.delete('/', verifyToken.headerToken, verifyUser, goalController.deleteGoal );

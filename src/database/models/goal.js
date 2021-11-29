@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     notificationDelay: {
       type: DataTypes.STRING,
     },
+    status: {
+      type: DataTypes.STRING,
+    },
     startDate: {
       type: DataTypes.DATE,
     },

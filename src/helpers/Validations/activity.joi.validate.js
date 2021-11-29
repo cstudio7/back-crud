@@ -24,7 +24,8 @@ export default class InputValidation {
       difficulty: Joi.string(),
       avatar: Joi.string(),
       avatarAwsDetails: Joi.object(),
-      note: Joi.string()
+      note: Joi.string(),
+      startTime: Joi.string()
     });
     validation(req, res, schema, next);
   }

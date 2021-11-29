@@ -48,7 +48,7 @@ class goalController {
         where: { userId: id },
       });
       const data = { goal };
-      response.successMessage(res, 'Weight', 200, data)
+      response.successMessage(res, 'Goals', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
@@ -67,6 +67,25 @@ class goalController {
         where: { id },
       });
       response.successMessage(res, 'All Goals', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
+  /**
+   * User can get all client associated to a user
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async getStatusGoal(req, res) {
+    const { status } = req.params;
+    try {
+      const goal = await db.goal.findAll({
+        where: { status },
+      });
+      const data = { goal };
+      response.successMessage(res, 'Goals', 200, data)
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }

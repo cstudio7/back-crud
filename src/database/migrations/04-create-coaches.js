@@ -14,6 +14,9 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING,
       },
+      bio: {
+        type: Sequelize.STRING,
+      },
       phoneNumber: {
         type: Sequelize.BIGINT,
         unique: true

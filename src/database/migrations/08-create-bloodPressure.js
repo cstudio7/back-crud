@@ -29,6 +29,9 @@ module.exports = {
       bpm:{
         type: Sequelize.STRING,
       },
+      startTime:{
+        type: Sequelize.TIME,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -14,11 +14,11 @@ class activityController {
   static async addActivity(req, res) {
     try {
       const { id } = req.user;
-      const { activity, difficulty, type, avatar,
+      const { activity, difficulty, type, avatar, startTime,
         avatarAwsDetails, note
       } = req.body;
 
-      const act = { userId: id, activity, difficulty, type, avatar,
+      const act = { userId: id, activity, difficulty, type, avatar, startTime,
         avatarAwsDetails, note };
 
       const data = await db.activity.create(act);

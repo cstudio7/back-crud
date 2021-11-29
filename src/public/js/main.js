@@ -19,6 +19,7 @@ const user = {
 
 // Join chatroom
 socket.emit('addUser', user );
+// socket.emit('removeUser', user );
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 
 // Get room and users

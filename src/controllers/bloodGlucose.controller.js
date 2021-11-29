@@ -14,8 +14,8 @@ class bloodGlucoseController {
   static async addBloodGlucose(req, res) {
     try {
       const { id } = req.user;
-      const { type, readingValue, readingType, note } = req.body;
-      const Blood = { userId: id, type, readingValue, readingType, note };
+      const { type, readingValue, readingType, startTime, note } = req.body;
+      const Blood = { userId: id, type, readingValue, startTime, readingType, note };
 
       const data = await db.glucose.create(Blood);
       return res.json({

@@ -47,24 +47,24 @@ const socketio = (server) => {
       });
     });
 
-    // //Join Room
-    // socket.on('joinRoom', (data) => {
-    //   // set isOnline session when sender joins a chat room
-    //
-    //   const chatRoom = getChatRoom(data);
-    //   if(getChatRooms.length === 2){
-    //     client[data.senderId] = socket;
-    //       socket.join(chatRoom);
-    //       io.to(chatRoom).emit('joined_Room', { chatRoom });
-    //   }
-    //
-    //   if(chatRoom.length === 1){
-    //     clients[data.senderId] = socket;
-    //     socket.join(chatRoom);
-    //     io.to(chatRoom).emit('joined_Rooms', { chatRoom });
-    //   }
-    // });
-    //
+    //Join Room
+    socket.on('joinRoom', (data) => {
+      // set isOnline session when sender joins a chat room
+
+      const chatRoom = getChatRoom(data);
+      if(getChatRooms.length === 2){
+        client[data.senderId] = socket;
+          socket.join(chatRoom);
+          io.to(chatRoom).emit('joined_Room', { chatRoom });
+      }
+
+      if(chatRoom.length === 1){
+        clients[data.senderId] = socket;
+        socket.join(chatRoom);
+        io.to(chatRoom).emit('joined_Rooms', { chatRoom });
+      }
+    });
+
     // // Listen for chatMessage
     // socket.on('chatMessage', async (data) => {
     //   const chatRoom = getChatRoom(data);

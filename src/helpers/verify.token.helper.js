@@ -19,7 +19,6 @@ const verifyAllTokens = async (req, res, next, token) => {
       return next();
 
   } catch (error) {
-    console.log(error)
     response.errorMessage(res, error.message, 401);
   }
 };

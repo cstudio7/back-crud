@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     measuringUnit: {
       type: DataTypes.STRING,
     },
+    startTime: {
+      type: DataTypes.TIME,
+    },
     avatar: DataTypes.STRING,
     avatarAwsDetails: DataTypes.JSONB,
   });

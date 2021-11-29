@@ -15,10 +15,10 @@ class foodController {
     try {
       const { id } = req.user;
       const { name,
-        addRecipe,avatar,
+        addRecipe,avatar, startTime,
         avatarAwsDetails,note } = req.body;
       const Food = { userId: id, name,
-        addRecipe,avatar,
+        addRecipe,avatar, startTime,
         avatarAwsDetails,note  };
 
       const data = await db.fud.create(Food);

@@ -4,7 +4,7 @@ import db from "../database/models";
 /**
  * This class contains functions for all user to view and update profile.
  */
-class ProfileHelper {
+class coachProfileHelper {
   /**
    * service to choose profile to edit
    * eslint-disable-next-line valid-jsdoc
@@ -16,40 +16,18 @@ class ProfileHelper {
     const {
       id,
       firstName,
-      lastName, phoneNumber, email,
-      avatar, emergencyContact,
-      manage, typeOfDiabetes,
-      typeOfHypertension, a1c,
-      bloodPressure,
-      bloodPressureMin,
-      bloodPressureMax,
-      bloodGlucose,
-      bloodGlucoseMin,
-      bloodGlucoseMax,
-      weight,
-      height,
-      diagnosedDate,
-      gender, dob, race,
+      lastName, bio, phoneNumber, email,
+      avatar,
+      gender,
       state, country
     } = userData;
 
     return {
       id,
       firstName,
-      lastName, phoneNumber, email,
-      avatar, emergencyContact,
-      manage, typeOfDiabetes,
-      typeOfHypertension, a1c,
-      bloodPressure,
-      bloodPressureMin,
-      bloodPressureMax,
-      bloodGlucose,
-      bloodGlucoseMin,
-      bloodGlucoseMax,
-      weight,
-      height,
-      diagnosedDate,
-      gender, dob, race,
+      lastName, bio, phoneNumber, email,
+      avatar,
+      gender,
       state, country
     };
   }
@@ -64,9 +42,11 @@ class ProfileHelper {
    */
   static async getProfileData(req, res) {
 
+    const userDetails = await db.coach.findByPk(req.user.id);
+
     const user = req.user
-    const userProfile = this.chooseProfileData(user, req.user);
-    return response.successMessage(res, 'User Profile', 200, userProfile);
+    const userProfile = this.chooseProfileData(user, userDetails);
+    return response.successMessage(res, 'Coach Profile', 200, userProfile);
   }
 }
-export default ProfileHelper;
+export default coachProfileHelper;

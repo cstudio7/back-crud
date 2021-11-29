@@ -19,12 +19,10 @@ const validation = (req, res, schema, next) => {
 export default class InputValidation {
   static validateInspiration(req, res, next) {
     const schema = Joi.object({
-      background: Joi.string(),
-      condition: Joi.string(),
-      icon: Joi.string(),
-      type: Joi.string(),
       category: Joi.string(),
-      quote: Joi.string()
+      details: Joi.object(),
+      avatar: Joi.string(),
+      avatarAwsDetails: Joi.object()
     });
     validation(req, res, schema, next);
   }

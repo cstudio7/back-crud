@@ -57,6 +57,18 @@ module.exports = {
       bloodGlucose: {
         type: Sequelize.STRING
       },
+      bloodPressureMin: {
+        type: Sequelize.STRING
+      },
+      bloodPressureMax:{
+        type: Sequelize.STRING
+      },
+      bloodGlucoseMin: {
+        type: Sequelize.STRING
+      },
+      bloodGlucoseMax:{
+        type: Sequelize.STRING
+      },
       weight: {
         type: Sequelize.STRING
       },

@@ -23,12 +23,13 @@ export default class InputValidation {
       interval: Joi.string(),
       desc: Joi.string(),
       goal: Joi.string(),
+      status: Joi.string(),
       notification: Joi.boolean(),
       goalDay: Joi.array(),
       notificationDelay: Joi.string(),
       startDate: Joi.date(),
       startTime: Joi.string(),
-      streak: Joi.array()
+      streak: Joi.array(),
     });
     validation(req, res, schema, next);
   }

@@ -5,8 +5,8 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.DataTypes.UUID,
-        defaultValue: Sequelize.literal('uuid_generate_v4()'),
+        autoIncrement: true,
+        type: Sequelize.INTEGER
       },
       userId: {
         type: Sequelize.UUID,
@@ -36,6 +36,9 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },
       notificationDelay: {
+        type: Sequelize.STRING,
+      },
+      status: {
         type: Sequelize.STRING,
       },
       startDate:{

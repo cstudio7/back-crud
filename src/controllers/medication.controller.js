@@ -14,9 +14,9 @@ class medicationController {
   static async addMedication(req, res) {
     try {
       const { id } = req.user;
-      const { type, amount,avatar,
+      const { type, amount,avatar, startTime,
         avatarAwsDetails, measuringUnit } = req.body;
-      const med = { userId: id, type, amount,avatar,
+      const med = { userId: id, type, amount,avatar, startTime,
         avatarAwsDetails, measuringUnit
       };
 
