@@ -57,7 +57,6 @@ class groupController {
           status: 409,
           message: 'User Already Exist',
         };
-        console.log(data)
         return data;
       }
       const newContact = {
@@ -66,7 +65,7 @@ class groupController {
       await mapEntityToModel(req.modal).create(newContact);
       const data = {
         status: 201,
-        message: `A new user just Joined`,
+        message: `${req.firstName} just Joined`,
       };
       return data;
     } catch (e) {
@@ -74,7 +73,6 @@ class groupController {
         status: 400,
         message: 'Error Adding User',
       };
-      console.log(data)
       return data;
     }
   }

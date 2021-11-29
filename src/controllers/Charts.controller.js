@@ -59,7 +59,6 @@ const getMonthlyStatistic = async (req, res) => {
             attributes: ['createdAt', 'readingValue', 'bpm']
         });
 
-
         return res.status(200).json({
             message: 'Your Reading Statistic Today',
             Glucose: Statistics.calMonth(statGlucose),

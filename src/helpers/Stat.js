@@ -9,7 +9,8 @@ export default class Stats {
             let co = parseInt(ar[i].readingValue.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 
     static calWeeks (arr, day) {
@@ -20,7 +21,8 @@ export default class Stats {
             let co = parseInt(ar[i].bpm.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 
     static calMonth(arr, month) {
@@ -30,7 +32,8 @@ export default class Stats {
             let co = parseInt(ar[i].readingValue.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 
     static calMonths(arr, month) {
@@ -40,7 +43,8 @@ export default class Stats {
             let co = parseInt(ar[i].bpm.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 
     static calYear(arr, year) {
@@ -50,7 +54,8 @@ export default class Stats {
             let co = parseInt(ar[i].readingValue.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 
     static calYears(arr, year) {
@@ -60,6 +65,7 @@ export default class Stats {
             let co = parseInt(ar[i].bpm.split('-')[0], 10)
             sum+= co
         }
-        return sum
+        const m = Math.floor(sum/ar.length)
+        return !(m) ? 0 : m
     }
 }

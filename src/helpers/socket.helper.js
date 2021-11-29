@@ -32,81 +32,78 @@ const socketio = (server) => {
   io.on('connection', (socket) => {
 
     //Add new User
-    //modal senderId||userId
-    socket.on('addUser', async (userKeysObj) => {
-      console.log(userKeysObj)
-      await groupController.addToGroup(userKeysObj).then((data) => {
-        socket.emit('receive_contact', data);
-      });
+    socket.on('joinRoom', async (userKeysObj) => {
+      let chatRoom = userKeysObj.modal
+      socket.join(chatRoom);
+      const data = await groupController.addToGroup(userKeysObj)
+      io.to(chatRoom).emit('joined_Room', data);
     });
 
     //Delete existing User
     socket.on('removeUser', async (userKeysObj) => {
-      await groupController.removeUser(userKeysObj).then((data) => {
-        socket.emit('remove_contact', data);
-      });
+      let chatRoom = userKeysObj.modal
+
+      const data = groupController.removeUser(userKeysObj)
+      io.to(chatRoom).emit('user_left', data);
     });
 
-    //Join Room
-    socket.on('joinRoom', (data) => {
-      // set isOnline session when sender joins a chat room
-
-      const chatRoom = getChatRoom(data);
-      if(getChatRooms.length === 2){
-        client[data.senderId] = socket;
-          socket.join(chatRoom);
-          io.to(chatRoom).emit('joined_Room', { chatRoom });
+    // Listen for chatMessage
+    socket.on('chatMessage', async ({ content, to, sender, chatName, isChannel }) => {
+      if(isChannel){
+        const payload = {
+          content,
+          chatName,
+          sender
+        };
+        socket.to(to).emit("new_message", payload);
+      } else {
+        const payload = {
+          content,
+          chatName: sender,
+          sender
+        }
+        socket.to(to).emit("new_message", payload);
       }
+      // const chatRoom = getChatRoom(data);
+      //   if (chatRoom.length === 2) {
+      //
+      //     const {message} = data;
+      //     if (message && message.trim()) {
+      //       //messages are saved here at this phase,
+      //       //it takes sendersId and message
+      //       //you need to work on your saving message the algorithm is not completed
+      //       await chatServices.saveMessage(data);
+      //
+      //       // set isOnline session when sender sends a message
+      //       client[data.senderId] = socket;
+      //
+      //       const chatRoom = getChatRoom(data);
+      //       if (chatRoom) socket.join(chatRoom);
+      //
+      //       const chatRooms = getChatRooms(data);
+      //
+      //       io.to(chatRooms[0]).emit('receive_message', data);
+      //       io.to(chatRooms[1]).emit('receive_message', data);
+      //     }
+      //   }
 
-      if(chatRoom.length === 1){
-        clients[data.senderId] = socket;
-        socket.join(chatRoom);
-        io.to(chatRoom).emit('joined_Rooms', { chatRoom });
-      }
+      //   if (getChatRooms.length === 1) {
+      //     const { message } = data;
+      //     if (message && message.trim()) {
+      //       await chatServices.saveMessages(data);
+      //
+      //       // set isOnline session when sender sends a message
+      //       clients[data.senderId] = socket;
+      //
+      //       const chatRoom = getChatRoom(data);
+      //       if (chatRoom) socket.join(chatRoom);
+      //
+      //       const chatRooms = getChatRooms(data);
+      //
+      //     io.to(chatRooms[0]).emit('receive_message', data);
+      //   }
+      // }
     });
-
-    // // Listen for chatMessage
-    // socket.on('chatMessage', async (data) => {
-    //   const chatRoom = getChatRoom(data);
-    //     if (chatRoom.length === 2) {
-    //
-    //       const {message} = data;
-    //       if (message && message.trim()) {
-    //         //messages are saved here at this phase,
-    //         //it takes sendersId and message
-    //         //you need to work on your saving message the algorithm is not completed
-    //         await chatServices.saveMessage(data);
-    //
-    //         // set isOnline session when sender sends a message
-    //         client[data.senderId] = socket;
-    //
-    //         const chatRoom = getChatRoom(data);
-    //         if (chatRoom) socket.join(chatRoom);
-    //
-    //         const chatRooms = getChatRooms(data);
-    //
-    //         io.to(chatRooms[0]).emit('receive_message', data);
-    //         io.to(chatRooms[1]).emit('receive_message', data);
-    //       }
-    //     }
-    //
-    //     if (getChatRooms.length === 1) {
-    //       const { message } = data;
-    //       if (message && message.trim()) {
-    //         await chatServices.saveMessages(data);
-    //
-    //         // set isOnline session when sender sends a message
-    //         clients[data.senderId] = socket;
-    //
-    //         const chatRoom = getChatRoom(data);
-    //         if (chatRoom) socket.join(chatRoom);
-    //
-    //         const chatRooms = getChatRooms(data);
-    //
-    //       io.to(chatRooms[0]).emit('receive_message', data);
-    //     }
-    //   }
-    // });
 
     // Runs when client disconnects
     // socket.on('disconnect', () => {

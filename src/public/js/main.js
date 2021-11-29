@@ -14,11 +14,16 @@ const socket = io.connect();
 
 const user = {
   id: "ab9f95a1-314c-4281-adc5-aa9061cd9ce0",
+  firstName: "Victor",
   modal: "nutritionMgt"
 }
 
+const cb = (data) => {
+  console.log(data)
+}
+
 // Join chatroom
-socket.emit('addUser', user );
+socket.emit('joinRoom', user);
 // socket.emit('removeUser', user );
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 
