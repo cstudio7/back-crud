@@ -1,5 +1,7 @@
 import response from '../helpers/response.helper';
 import db from '../database/models';
+import sendMail from '../helpers/emails';
+import generateEmail from "../emailTemplates/verification";
 
 /**
  * Class for bloodPressure related operations
@@ -13,9 +15,42 @@ class a1cController {
    */
   static async addA1c(req, res) {
     try {
-      const { id } = req.user;
+      const { id, bloodPressureMax, bloodPressureMin, firstName, emergencyContact } = req.user;
       const { type, readingValue, startTime, note } = req.body;
       const Blood = { userId: id, startTime, type, readingValue, note };
+      const value = readingValue.split('-')[0]
+
+      if(value >= bloodPressureMax && emergencyContact.length !== 0 ){
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const message = `Hi ${firstName}, Your blood Pressure is at a critical rate. Please see your doctor`
+
+        const client = require('twilio')(accountSid, authToken);
+        client.messages
+            .create({
+              body: message,
+              from: process.env.TWILIO_PHONE_NUMBER,
+              to: `+${emergencyContact}`
+            })
+            .then(message => console.log("Phone Message Delivered"));
+
+      }
+
+      if(value <= bloodPressureMin ){
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const message = `Hi ${firstName}, Your blood Pressure is at a critical rate. Please see your doctor`
+
+        const client = require('twilio')(accountSid, authToken);
+        client.messages
+            .create({
+              body: message,
+              from: process.env.TWILIO_PHONE_NUMBER,
+              to: `+${emergencyContact}`
+            })
+            .then(message => console.log("Phone Message Delivered"));
+
+      }
 
       const data = await db.a1c.create(Blood);
       return res.json({

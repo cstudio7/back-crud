@@ -1,6 +1,5 @@
 /* eslint-disable require-jsdoc */
 import dotenv from 'dotenv';
-import Sequelize, { Op } from 'sequelize';
 import { clients } from '../helpers/socket.helper';
 import chatService from '../services/chat.service';
 import response from '../helpers/response.helper';
@@ -23,7 +22,7 @@ class ChatController {
       const mapEntityToModel = (entity) => {
         switch (entity) {
           case 'nutrition':
-            return db.nutrition;
+            return db.nutritionMgt;
             break;
           case 'weightMgt':
             return db.weightMgt;
@@ -54,77 +53,79 @@ class ChatController {
         }
       };
 
-      const { userId } = req.query.id;
+      const { userId } = req.query;
       const allContacts =   await mapEntityToModel(req.query.modal).findAll({
-        where: { senderId:userId },
+        where: { senderId: userId },
         include: [
           {
             model: db.user,
-            as: userDetails,
+            as: "nutrition",
             attributes: [
               'id',
               'firstName',
               'lastName',
               'avatar',
               'email',
-              'createdAt',
             ],
           },
         ],
       });
 
-      const privateContacts =  await db.chat.findAll({
-        where: {
-          [Op.or]: [
-            {
-              senderId: userId,
-            },
-            {
-              receiverId: userId,
-            },
-          ],
-        },
-        include: [
-          {
-            model: db.user,
-            as: chatContactUserAs,
-            attributes: [
-              'id',
-              'firstName',
-              'lastName',
-              'avatar',
-              'email',
-              'createdAt',
-            ],
-          },
-        ],
-      });
+      // const privateContacts =  await db.chat.findAll({
+      //   where: {
+      //     [Op.or]: [
+      //       {
+      //         senderId: userId,
+      //       },
+      //       {
+      //         receiverId: userId,
+      //       },
+      //     ],
+      //   },
+      //   include: [
+      //     {
+      //       model: db.user,
+      //       as: "chatContactUserAs",
+      //       attributes: [
+      //         'id',
+      //         'firstName',
+      //         'lastName',
+      //         'avatar',
+      //         'email',
+      //         'createdAt',
+      //       ],
+      //     },
+      //   ],
+      // });
 
+      const id = userId
+
+console.log(allContacts.nutrition)
       const newArray = [];
       allContacts.forEach((contact) => {
-        const client = clients[contact[userId]];
+        const client = clients[contact.senderId];
         newArray.push({
           id: contact.id,
           userId: contact.userId,
-          artisanId: contact.artisanId,
+          senderId: contact.senderId,
           createdAt: contact.createdAt,
-          user: contact[userId].dataValues,
+          user: contact["dataValues"].nutrition,
           isOnline: Boolean(client),
         });
       });
 
 
-      privateContacts.forEach((contact) => {
-        const client = clients[contact[userId]];
-        newArray.push({
-          id: contact.id,
-          userId: contact.userId,
-          artisanId: contact.artisanId,
-          createdAt: contact.createdAt,
-          user: contact[userId].dataValues,
-          isOnline: Boolean(client),
-        });
-      });
+      // privateContacts.forEach((contact) => {
+      //   const client = clients[contact[userId]];
+      //   newArray.push({
+      //     id: contact.id,
+      //     userId: contact.userId,
+      //     artisanId: contact.artisanId,
+      //     createdAt: contact.createdAt,
+      //     user: contact[userId].dataValues,
+      //     isOnline: Boolean(client),
+      //   });
+      // });
 
       return response.successMessage(
         res,
@@ -135,30 +136,12 @@ class ChatController {
           .reverse()
       );
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
 
 
-  /** Get Private and public message between two users
-   * @param {object} req the request sent
-   * @param {object} res the response returned
-   * @returns {*} data returned
-   */
-  static async getMessages(req, res) {
-    try {
-      const { userId, page, size } = req.query;
-      const { id } = req.user;
-      if (userId) {
-        const publicMessages = await chatService.getGroupMessage();
-        return response.successMessage(res, 'Messages', 200, publicMessages);
-      }
-      const privateMessages = await chatService.getPrivateMessage(userId, id, page, size);
-      return response.successMessage(res, 'Messages', 200, privateMessages);
-    } catch (error) {
-      return response.errorMessage(res, error.message, 500);
-    }
-  }
 }
 
 export default ChatController;

@@ -13,9 +13,17 @@ const socket = io.connect();
 // const socket = io('http://localhost:4000');
 
 const user = {
-  id: "ab9f95a1-314c-4281-adc5-aa9061cd9ce0",
+  id: "670abefb-9064-42ba-920b-a1c6d969c29b",
   firstName: "Victor",
-  modal: "nutritionMgt"
+  modal: "nutritionMgt",
+  message: 'How are you'
+}
+
+const msg = {
+  id: "670abefb-9064-42ba-920b-a1c6d969c29b",
+  senderId: "670abefb-9064-42ba-920b-a1c6d969c29b",
+  modal: "nutritionMgt",
+  message: 'How are you'
 }
 
 const cb = (data) => {
@@ -23,7 +31,8 @@ const cb = (data) => {
 }
 
 // Join chatroom
-socket.emit('joinRoom', user);
+socket.emit('joinRoom', user, cb);
+socket.emit('chatMessage', msg);
 // socket.emit('removeUser', user );
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 

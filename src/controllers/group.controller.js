@@ -1,4 +1,5 @@
-import response from '../helpers/response.helper';
+import moment from "moment";
+import {Op} from 'sequelize';
 import db from '../database/models';
 
 /**
@@ -49,31 +50,42 @@ class groupController {
 
     try {
       const senderId = req.id;
+      const user = await db.user.findByPk(senderId);
+
+      if(user.group > 1){
+        return {
+          status: 409,
+          message: 'User Already Exist',
+        }
+      }
       const existingUser = await mapEntityToModel(req.modal).findOne({
         where: { senderId },
       });
       if (existingUser) {
-        const data = {
+        return {
           status: 409,
           message: 'User Already Exist',
         };
-        return data;
       }
       const newContact = {
         senderId,
+        message: `${req.firstName} just Joined`,
       };
       await mapEntityToModel(req.modal).create(newContact);
-      const data = {
+      let data = {
+        group: user.group + 1
+      }
+      await user.update(data);
+      return {
         status: 201,
         message: `${req.firstName} just Joined`,
       };
-      return data;
     } catch (e) {
-      const data = {
+      console.log(e)
+      return {
         status: 400,
         message: 'Error Adding User',
       };
-      return data;
     }
   }
 
@@ -130,8 +142,110 @@ class groupController {
     }
   }
 
+  /**
+   * User can get all client associated to a user
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async getMessage(req, res) {
+    try {
+      const mapEntityToModel = (entity) => {
+        switch (entity) {
+          case 'nutritionMgt':
+            return db.nutritionMgt;
+            break;
+          case 'weightMgt':
+            return db.weightMgt;
+            break;
+          case 'hypertensionMgt':
+            return db.hypertensionMgt;
+            break;
+          case 'stressMgt':
+            return db.stressMgt;
+            break;
+          case 'workHome':
+            return db.workHome;
+            break;
+          case 'workout':
+            return db.workout;
+            break;
+          case 'homeAged':
+            return db.homeAged;
+            break;
+          case 'homeKid':
+            return db.homeKid;
+            break;
+          case 'sleepHealth':
+            return db.sleepHealth;
+            break;
+          default:
+            break;
+        }
+      };
 
+     const data =  await mapEntityToModel(req.modal).findAll({ where: {
+          createdAt: {
+            [Op.gte]: moment().subtract(7, 'days').toDate()
+          }
+      } });
+      return data;
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
+  /**
+   * User can get all client associated to a user
+   * @param {int} req This is the parameter(user id) that will be passed in url
+   * @param {object} res This is a response will be send to the user
+   * @returns {object} return object which include status and message
+   */
+  static async saveMessage(req, res) {
+    try {
+      const mapEntityToModel = (entity) => {
+        switch (entity) {
+          case 'nutritionMgt':
+            return db.nutritionMgt;
+            break;
+          case 'weightMgt':
+            return db.weightMgt;
+            break;
+          case 'hypertensionMgt':
+            return db.hypertensionMgt;
+            break;
+          case 'stressMgt':
+            return db.stressMgt;
+            break;
+          case 'workHome':
+            return db.workHome;
+            break;
+          case 'workout':
+            return db.workout;
+            break;
+          case 'homeAged':
+            return db.homeAged;
+            break;
+          case 'homeKid':
+            return db.homeKid;
+            break;
+          case 'sleepHealth':
+            return db.sleepHealth;
+            break;
+          default:
+            break;
+        }
+      };
+      let save = {
+        senderId: req.id,
+        message: req.message
+      }
+
+      return await mapEntityToModel(req.modal).create(save);
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 
 export default groupController;

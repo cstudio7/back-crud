@@ -15,10 +15,6 @@ const checkEmailpassword = async (req, res) => {
       return response.errorMessage(res, 'Invalid Login Detail', status);
     }
     const isverifiedTrue = user.isVerified;
-    if (!isverifiedTrue) {
-      const status = 401;
-      return response.errorMessage(res, 'User Is Not Verified, Please verify the User First', status);
-    }
 
     if (!isverifiedTrue) {
       const status = 401;
@@ -42,7 +38,6 @@ const checkEmailpassword = async (req, res) => {
         data
     );
   } catch (e) {
-    console.log(e)
     return response.errorMessage(res, e.message, 400);
   }
 

@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     nutritionMgt.associate = (models) => {
     // associations can be defined here
-
+    nutritionMgt.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'nutrition',
+        onDelete: 'CASCADE',
+    });
   };
   return nutritionMgt;
 };

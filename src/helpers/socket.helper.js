@@ -3,6 +3,8 @@ import skt from 'socket.io';
 import groupController from '../controllers/group.controller';
 import chatServices from '../services/chat.service';
 
+const clients = {};
+
 const socketio = (server) => {
   const io = skt(server, {
     cors: {
@@ -10,7 +12,7 @@ const socketio = (server) => {
     },
   });
 
-  const clients = {};
+
   const client = {};
 
   const getChatRoom = ({ senderId, receiverId }) => {
@@ -18,26 +20,19 @@ const socketio = (server) => {
     return null;
   };
 
-  const getChatRooms = ({ senderId, receiverId }) => {
-    if (senderId && receiverId) {
-      return [`${senderId}<>${receiverId}`, `${receiverId}<>${senderId}`];
-    }
-
-    if (senderId) {
-      return `${senderId}`;
-    }
-    return [];
-  };
-
   io.on('connection', (socket) => {
 
     //Add new User
-    socket.on('joinRoom', async (userKeysObj) => {
+    socket.on('joinRoom', async (userKeysObj, cb) => {
+      clients[userKeysObj.id] = socket;
       let chatRoom = userKeysObj.modal
       socket.join(chatRoom);
-      const data = await groupController.addToGroup(userKeysObj)
-      io.to(chatRoom).emit('joined_Room', data);
+      const response = await groupController.addToGroup(userKeysObj)
+      const message = await groupController.getMessage(userKeysObj)
+       cb(message)
+      io.to(chatRoom).emit('joined_Room', response);
     });
+
 
     //Delete existing User
     socket.on('removeUser', async (userKeysObj) => {
@@ -48,87 +43,31 @@ const socketio = (server) => {
     });
 
     // Listen for chatMessage
-    socket.on('chatMessage', async ({ content, to, sender, chatName, isChannel }) => {
-      if(isChannel){
-        const payload = {
-          content,
-          chatName,
-          sender
-        };
-        socket.to(to).emit("new_message", payload);
+    socket.on('chatMessage', async (data) => {
+      console.log(data)
+      if(data.modal){
+       const resp = await groupController.saveMessage(data)
+        socket.to(to).emit("new_message", resp);
       } else {
+        //Do for Private Chat
         const payload = {
-          content,
-          chatName: sender,
-          sender
+          // content,
+          // to,
+          // chatName: sender,
+          // sender
         }
         socket.to(to).emit("new_message", payload);
       }
-      // const chatRoom = getChatRoom(data);
-      //   if (chatRoom.length === 2) {
-      //
-      //     const {message} = data;
-      //     if (message && message.trim()) {
-      //       //messages are saved here at this phase,
-      //       //it takes sendersId and message
-      //       //you need to work on your saving message the algorithm is not completed
-      //       await chatServices.saveMessage(data);
-      //
-      //       // set isOnline session when sender sends a message
-      //       client[data.senderId] = socket;
-      //
-      //       const chatRoom = getChatRoom(data);
-      //       if (chatRoom) socket.join(chatRoom);
-      //
-      //       const chatRooms = getChatRooms(data);
-      //
-      //       io.to(chatRooms[0]).emit('receive_message', data);
-      //       io.to(chatRooms[1]).emit('receive_message', data);
-      //     }
-      //   }
-
-      //   if (getChatRooms.length === 1) {
-      //     const { message } = data;
-      //     if (message && message.trim()) {
-      //       await chatServices.saveMessages(data);
-      //
-      //       // set isOnline session when sender sends a message
-      //       clients[data.senderId] = socket;
-      //
-      //       const chatRoom = getChatRoom(data);
-      //       if (chatRoom) socket.join(chatRoom);
-      //
-      //       const chatRooms = getChatRooms(data);
-      //
-      //     io.to(chatRooms[0]).emit('receive_message', data);
-      //   }
-      // }
     });
 
     // Runs when client disconnects
-    // socket.on('disconnect', () => {
-    //   const user = userLeave(socket.id);
-    //
-    //   if (user) {
-    //     io.to(user.room).emit(
-    //         'message',
-    //         formatMessage(botName, `${user.username} has left the chat`)
-    //     );
-    //
-    //     // Send users and room info
-    //     io.to(user.room).emit('roomUsers', {
-    //       room: user.room,
-    //       users: getRoomUsers(user.room)
-    //     });
-    //   }
-    // });
 
-    socket.on('disconnect', async () => {
-      socket.broadcast.emit('user-disconnected', 'user has left the chat');
-    });
+    // socket.on('disconnect', async () => {
+    //   socket.broadcast.emit('user-disconnected', 'user has left the chat');
+    // });
 
   })
     return io;
 };
 
-export { socketio };
+export { socketio, clients };
