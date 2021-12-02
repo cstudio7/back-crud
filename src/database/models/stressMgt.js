@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     stressMgt.associate = (models) => {
     // associations can be defined here
-
+    stressMgt.belongsTo(models.user, {
+    foreignKey: 'senderId',
+    as: 'stress',
+    onDelete: 'CASCADE',
+    });
   };
   return stressMgt;
 };

@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     workout.associate = (models) => {
     // associations can be defined here
-
+    workout.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'workout',
+        onDelete: 'CASCADE',
+    });
   };
   return workout;
 };

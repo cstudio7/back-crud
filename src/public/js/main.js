@@ -13,22 +13,22 @@ const socket = io.connect();
 // const socket = io('http://localhost:4000');
 
 const user = {
-  id: "670abefb-9064-42ba-920b-a1c6d969c29b",
-  firstName: "Victor",
+  id: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
+  firstName: "Samuel",
   modal: "nutritionMgt",
-  message: 'How are you'
+  message: 'Victor Just Joined'
 }
 
 const msg = {
-  id: "670abefb-9064-42ba-920b-a1c6d969c29b",
+  receiverId: "670abefb-9064-42ba-920b-a1c6d969c29b",
   senderId: "670abefb-9064-42ba-920b-a1c6d969c29b",
-  modal: "nutritionMgt",
+  modal: "homeAged",
   message: 'How are you'
 }
 
 const cb = (data) => {
   console.log(data)
-}
+};
 
 // Join chatroom
 socket.emit('joinRoom', user, cb);
@@ -37,19 +37,19 @@ socket.emit('chatMessage', msg);
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 
 // Get room and users
-socket.on('roomUsers', ({ room, users }) => {
-  outputRoomName(room);
-  outputUsers(users);
-});
-
-// Message from server
-socket.on('message', (message) => {
-  console.log(message);
-  outputMessage(message);
-
-  // Scroll down
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
+// socket.on('roomUsers', ({ room, users }) => {
+//   outputRoomName(room);
+//   outputUsers(users);
+// });
+//
+// // Message from server
+// socket.on('message', (message) => {
+//   console.log(message);
+//   outputMessage(message);
+//
+//   // Scroll down
+//   chatMessages.scrollTop = chatMessages.scrollHeight;
+// });
 
 // Message submit
 chatForm.addEventListener('submit', (e) => {

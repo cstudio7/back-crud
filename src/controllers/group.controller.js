@@ -52,7 +52,7 @@ class groupController {
       const senderId = req.id;
       const user = await db.user.findByPk(senderId);
 
-      if(user.group > 1){
+      if(user.group > 1 ){
         return {
           status: 409,
           message: 'User Already Exist',
@@ -184,12 +184,31 @@ class groupController {
         }
       };
 
-     const data =  await mapEntityToModel(req.modal).findAll({ where: {
+      if(req.modal === "chat"){
+        const {senderId, receiverId } = req
+
+        return await db.chat.findAndCountAll({
+          where: {
+            [Op.or]: [
+              {
+                [Op.and]: [{senderId}, {receiverId}],
+              },
+              {
+                [Op.and]: [{senderId: receiverId}, {receiverId: senderId}],
+              },
+            ],
+          },
+          order: [['createdAt', 'DESC']],
+        });
+      }
+
+      return await mapEntityToModel(req.modal).findAll({
+        where: {
           createdAt: {
             [Op.gte]: moment().subtract(7, 'days').toDate()
           }
-      } });
-      return data;
+        }
+      });
     } catch (e) {
       console.log(e)
     }
@@ -236,8 +255,17 @@ class groupController {
             break;
         }
       };
+
+      if(req.modal === "chat"){
+        let save = {
+          senderId: req.id,
+          receiverId: req.receiverId,
+          message: req.message
+        }
+        return await db.chat.create(save);
+      }
       let save = {
-        senderId: req.id,
+        senderId: req.senderId,
         message: req.message
       }
 

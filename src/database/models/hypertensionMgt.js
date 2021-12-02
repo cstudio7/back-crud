@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     hypertensionMgt.associate = (models) => {
     // associations can be defined here
-
+    hypertensionMgt.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'hypertensionMgt',
+        onDelete: 'CASCADE',
+    });
   };
   return hypertensionMgt;
 };

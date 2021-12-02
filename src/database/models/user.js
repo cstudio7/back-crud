@@ -110,24 +110,24 @@ module.exports = (sequelize, DataTypes) => {
       //     onDelete: 'cascade',
       //     onUpdate: 'cascade',
       // });
-      user.hasOne(models.hypertensionMgt, {
-          foreignKey: 'senderId',
-          as: 'hypertension',
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-      });
-      user.hasOne(models.excercise, {
-          foreignKey: 'senderId',
-          as: 'excercise',
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-      });
-      user.hasOne(models.stressMgt, {
-          foreignKey: 'senderId',
-          as: 'stress',
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
-      });
+      // user.hasOne(models.hypertensionMgt, {
+      //     foreignKey: 'senderId',
+      //     as: 'hypertension',
+      //     onDelete: 'cascade',
+      //     onUpdate: 'cascade',
+      // });
+      // user.hasOne(models.excercise, {
+      //     foreignKey: 'senderId',
+      //     as: 'excercise',
+      //     onDelete: 'cascade',
+      //     onUpdate: 'cascade',
+      // });
+      // user.hasOne(models.stressMgt, {
+      //     foreignKey: 'senderId',
+      //     as: 'stress',
+      //     onDelete: 'cascade',
+      //     onUpdate: 'cascade',
+      // });
   };
   return user;
 };

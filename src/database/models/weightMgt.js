@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     weightMgt.associate = (models) => {
     // associations can be defined here
-
+    weightMgt.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'weight',
+        onDelete: 'CASCADE',
+    });
   };
   return weightMgt;
 };

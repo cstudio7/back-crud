@@ -1,15 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const workout = sequelize.define(
-    'workout',
+  const workHome = sequelize.define(
+    'workHome',
     {
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },
     {}
   );
-    workout.associate = (models) => {
+    workHome.associate = (models) => {
     // associations can be defined here
-
+    workHome.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'workHome',
+        onDelete: 'CASCADE',
+    });
   };
-  return workout;
+  return workHome;
 };

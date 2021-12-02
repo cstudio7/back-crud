@@ -30,9 +30,8 @@ const socketio = (server) => {
       const response = await groupController.addToGroup(userKeysObj)
       const message = await groupController.getMessage(userKeysObj)
        cb(message)
-      io.to(chatRoom).emit('joined_Room', response);
+      io.to(chatRoom).emit('joined_Room', message);
     });
-
 
     //Delete existing User
     socket.on('removeUser', async (userKeysObj) => {
@@ -45,18 +44,14 @@ const socketio = (server) => {
     // Listen for chatMessage
     socket.on('chatMessage', async (data) => {
       console.log(data)
-      if(data.modal){
-       const resp = await groupController.saveMessage(data)
-        socket.to(to).emit("new_message", resp);
+      if(data.modal === "chat"){
+
+        await groupController.saveMessage(data)
+        socket.to(data.modal).emit("new_message", data.message);
       } else {
-        //Do for Private Chat
-        const payload = {
-          // content,
-          // to,
-          // chatName: sender,
-          // sender
-        }
-        socket.to(to).emit("new_message", payload);
+        //Do for private Chat
+        await groupController.saveMessage(data)
+        socket.to(data.modal).emit("new_message", data.message);
       }
     });
 

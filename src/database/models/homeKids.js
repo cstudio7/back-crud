@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     homeKid.associate = (models) => {
     // associations can be defined here
-
+    homeKid.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'homeKid',
+        onDelete: 'CASCADE',
+    });
   };
   return homeKid;
 };

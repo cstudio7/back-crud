@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   );
     sleepHealth.associate = (models) => {
     // associations can be defined here
-
+    sleepHealth.belongsTo(models.user, {
+        foreignKey: 'senderId',
+        as: 'sleepHealth',
+        onDelete: 'CASCADE',
+    });
   };
   return sleepHealth;
 };
