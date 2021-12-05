@@ -18,11 +18,17 @@ const checkEmailpassword = async (req, res) => {
   }
 
   const token = GenerateToken({ email: req.body.email, isVerified: user.isVerified, id: user.id, authType: user.authType, firstName: user.firstName, lastName: user.lastName });
+  const data = {
+    token,
+    userId: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName
+  }
   return response.successMessage(
       res,
       'user has logged in successfully',
       200,
-      token
+      data
   );
 };
 export default checkEmailpassword;
