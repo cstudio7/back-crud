@@ -8,7 +8,6 @@ import UserServices from '../services/user.service';
 import checkPassword from '../middlewares/users.middleware';
 import coachProfileHelper from "../helpers/coachprofile.helper";
 import db from '../database/models';
-import profileHelper from "../helpers/profile.helper";
 
 dotenv.config();
 
@@ -116,7 +115,6 @@ class coachController {
   static async editCoachProfile(req, res) {
     try {
       const user = req.user;
-      const { email } = user
       const userInfo = req.body;
       const user2 = await user.update(userInfo);
 
