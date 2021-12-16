@@ -78,6 +78,7 @@ class coachController {
     } catch (e) {
       return response.errorMessage(res, e.message, 400);
     }
+
   }
 
   /**
