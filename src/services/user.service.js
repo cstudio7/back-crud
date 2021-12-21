@@ -44,10 +44,8 @@ class UserServices {
   static async findExistingUser(email, phoneNumber) {
     try {
       const user = await db.user.findOne({
-        where: {
-          [Op.or]: [{ email}, {phoneNumber }],
-        },
-        });
+        where: {email}
+      });
       if (!user) return null;
       return user;
     } catch (error) {

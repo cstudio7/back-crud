@@ -44,29 +44,29 @@ class coachController {
           country,
           isVerified: false,
         };
-         const verificationEmail = generateEmail(NewUser);
-        await sendMail(
-          process.env.SENDGRID_API_KEY,
-          email,
-          process.env.SENDER_EMAIL,
-          'Diatron Health',
-          verificationEmail
-        );
+        //  const verificationEmail = generateEmail(NewUser);
+        // await sendMail(
+        //   process.env.SENDGRID_API_KEY,
+        //   email,
+        //   process.env.SENDER_EMAIL,
+        //   'Diatron Health',
+        //   verificationEmail
+        // );
         const data = {
           token,
         };
-        const accountSid = process.env.TWILIO_ACCOUNT_SID;
-        const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const message = `Hi ${firstName}, Welcome to Diatron Health,We are Glad to have you on our Platform!`
-
-        const client = require('twilio')(accountSid, authToken);
-        client.messages
-            .create({
-                body: message,
-                from: process.env.TWILIO_PHONE_NUMBER,
-                to: `+${phoneNumber}`
-            })
-            .then(message => console.log("Phone Message Delivered"));
+        // const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        // const authToken = process.env.TWILIO_AUTH_TOKEN;
+        // const message = `Hi ${firstName}, Welcome to Diatron Health,We are Glad to have you on our Platform!`
+        //
+        // const client = require('twilio')(accountSid, authToken);
+        // client.messages
+        //     .create({
+        //         body: message,
+        //         from: process.env.TWILIO_PHONE_NUMBER,
+        //         to: `+${phoneNumber}`
+        //     })
+        //     .then(message => console.log("Phone Message Delivered"));
 
       await db.coach.create(NewUser);
       return response.successMessage(
@@ -101,7 +101,34 @@ class coachController {
    * @returns {Object} A user object with selected fields
    * excluing the password
    */
-  static async viewCoach(req, res) {
+  static async getAllCoach(req, res) {
+    try {
+      const coach = await db.coach.findAll();
+      const data = {
+        coach
+      };
+
+      return response.successMessage(
+          res,
+          'All Coaches',
+          201,
+          data
+      );
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+
+  }
+
+  /**
+   * Logs in a user by checking if they exist in the database
+   * and if the supplied password matches the stored password
+   * @param {Object} req The request object
+   * @param {Object} res The response object
+   * @returns {Object} A user object with selected fields
+   * excluing the password
+   */
+  static async getCoach(req, res) {
     return coachProfileHelper.getProfileData(req, res);
   }
 
