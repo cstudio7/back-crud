@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const weightMgt = sequelize.define(
     'weightMgt',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

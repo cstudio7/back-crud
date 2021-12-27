@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const sleepHealth = sequelize.define(
     'sleepHealth',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const homeKid = sequelize.define(
     'homeKid',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

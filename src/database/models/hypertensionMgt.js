@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const hypertensionMgt = sequelize.define(
     'hypertensionMgt',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

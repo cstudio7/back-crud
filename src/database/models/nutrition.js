@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const nutritionMgt = sequelize.define(
     'nutritionMgt',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

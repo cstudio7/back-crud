@@ -1,7 +1,6 @@
 import skt from 'socket.io';
 
 import groupController from '../controllers/group.controller';
-import chatServices from '../services/chat.service';
 
 const clients = {};
 
@@ -23,11 +22,18 @@ const socketio = (server) => {
   io.on('connection', (socket) => {
 
     //Add new User
+    socket.on('addUser', async (userKeysObj) => {
+      let chatRoom = userKeysObj.modal
+      const message = await groupController.addToGroup(userKeysObj)
+      io.to(chatRoom).emit('addUser', message);
+    });
+
+    // Get Messages
     socket.on('joinRoom', async (userKeysObj, cb) => {
       clients[userKeysObj.id] = socket;
-      let chatRoom = userKeysObj.modal
+      let chatRoom = userKeysObj.modal;
+
       socket.join(chatRoom);
-      const response = await groupController.addToGroup(userKeysObj)
       const message = await groupController.getMessage(userKeysObj)
        cb(message)
       io.to(chatRoom).emit('joined_Room', message);
@@ -37,7 +43,7 @@ const socketio = (server) => {
     socket.on('removeUser', async (userKeysObj) => {
       let chatRoom = userKeysObj.modal
 
-      const data = groupController.removeUser(userKeysObj)
+      const data = await groupController.removeUser(userKeysObj)
       io.to(chatRoom).emit('user_left', data);
     });
 
@@ -45,7 +51,6 @@ const socketio = (server) => {
     socket.on('chatMessage', async (data) => {
       console.log(data)
       if(data.modal === "chat"){
-
         await groupController.saveMessage(data)
         socket.to(data.modal).emit("new_message", data.message);
       } else {

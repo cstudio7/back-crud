@@ -8,6 +8,9 @@ module.exports = {
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
+      fullName: {
+        type: Sequelize.STRING,
+      },
       senderId: {
         type: Sequelize.UUID,
       },

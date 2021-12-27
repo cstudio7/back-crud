@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const stressMgt = sequelize.define(
     'stressMgt',
     {
+      fullName: DataTypes.STRING,
       groupName: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },

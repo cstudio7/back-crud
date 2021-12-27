@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const excercise = sequelize.define(
     'excercise',
     {
+      fullName: DataTypes.STRING,
       message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },
