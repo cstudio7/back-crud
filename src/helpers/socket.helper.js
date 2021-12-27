@@ -47,7 +47,7 @@ const socketio = (server) => {
       if(data.modal === "chat"){
 
         await groupController.saveMessage(data)
-        socket.to(data.modal).emit("new_message", data.message);
+        io.to(data.modal).emit("new_message", data.message);
       } else {
         //Do for private Chat
         await groupController.saveMessage(data)
