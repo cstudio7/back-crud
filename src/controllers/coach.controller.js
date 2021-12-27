@@ -21,7 +21,7 @@ class coachController {
     try {
         const { firstName, lastName, phoneNumber, email,authType, gender, state, country } = req.body;
       const password = EncryptPassword(req.body.password);
-      const existingUser = await UserServices.findExistingUser(email, phoneNumber);
+      const existingUser = await UserServices.findExistingCoach(email, phoneNumber);
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
@@ -76,6 +76,7 @@ class coachController {
           data
       );
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
 

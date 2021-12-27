@@ -54,6 +54,46 @@ class UserServices {
   }
 
   /**
+   * Find user by phoneNumber
+   * @param {Object} phoneNumber of the User email.
+   * @param {Object} email of the User email.
+   * @returns {Object} Returns a user object and if user doesn't exist it returns null.
+   */
+  static async findExistingUsers(email, phoneNumber) {
+    try {
+      const user = await db.user.findOne({
+        where: {
+          [Op.or]: [{email}, {phoneNumber}],
+        }
+      });
+      if (!user) return null;
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
+   * Find user by phoneNumber
+   * @param {Object} phoneNumber of the User email.
+   * @param {Object} email of the User email.
+   * @returns {Object} Returns a user object and if user doesn't exist it returns null.
+   */
+  static async findExistingCoach(email, phoneNumber) {
+    try {
+      const user = await db.coach.findOne({
+        where: {
+          [Op.or]: [{email}, {phoneNumber}],
+        }
+      });
+      if (!user) return null;
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
    * service to get Supported Role In Database
    // eslint-disable-next-line valid-jsdoc
    * @param {Object} name user request

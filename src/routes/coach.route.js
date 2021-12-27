@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post('/signup', validateSignup, coachController.CoachSignup);
 router.post('/signin', validateLogin, coachController.signIn);
-router.get('/me', verifyToken.verifyUserToken, coachController.getCoach);
+router.get('/me', verifyToken.headerToken, coachController.getCoach);
 router.get('/coach', coachController.getAllCoach);
-router.patch('/me', verifyToken.verifyUserToken, coachController.editCoachProfile);
+router.patch('/me', verifyToken.headerToken, coachController.editCoachProfile);
 
 export default router;
