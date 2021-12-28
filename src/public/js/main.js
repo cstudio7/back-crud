@@ -22,6 +22,7 @@ const user = {
 const msg = {
   receiverId: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
   senderId: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
+  fullName: "Sam Samson",
   modal: "homeAged",
   message: 'How are you'
 }
@@ -31,9 +32,9 @@ const cb = (data) => {
 };
 
 // Join chatroom
-// socket.emit('joinRoom', user, cb);
+socket.emit('joinRoom', user, cb);
 socket.emit('addUser', user);
-// socket.emit('chatMessage', msg);
+socket.emit('chatMessage', msg);
 // socket.emit('removeUser', user );
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
 

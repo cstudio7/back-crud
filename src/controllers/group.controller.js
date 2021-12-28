@@ -271,8 +271,19 @@ class groupController {
         }
         return await db.chat.create(save);
       }
+      const senderId = req.senderId;
+      const existingUser = await mapEntityToModel(req.modal).findOne({
+        where: { senderId },
+      });
+      if (!existingUser) {
+        return {
+          status: 409,
+          message: 'You are not permitted to make this request',
+        };
+      }
       let save = {
         senderId: req.senderId,
+        fullName: req.fullName,
         message: req.message
       }
 

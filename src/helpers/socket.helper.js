@@ -49,14 +49,13 @@ const socketio = (server) => {
 
     // Listen for chatMessage
     socket.on('chatMessage', async (data) => {
-      console.log(data)
       if(data.modal === "chat"){
-        await groupController.saveMessage(data)
-        socket.to(data.modal).emit("new_message", data.message);
+       let message =  await groupController.saveMessage(data)
+        socket.to(data.modal).emit("new_message", message);
       } else {
         //Do for private Chat
-        await groupController.saveMessage(data)
-        io.to(data.modal).emit("new_message", data.message);
+        let message = await groupController.saveMessage(data)
+        io.to(data.modal).emit("new_message", message.dataValues);
       }
     });
 
