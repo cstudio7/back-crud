@@ -271,7 +271,7 @@ class groupController {
 
       if(req.modal === "chat"){
         let save = {
-          senderId: req.id,
+          senderId: req.senderId,
           receiverId: req.receiverId,
           message: req.message
         }

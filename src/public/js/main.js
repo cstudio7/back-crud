@@ -23,7 +23,7 @@ const msg = {
   receiverId: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
   senderId: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
   fullName: "Sam Samson",
-  modal: "homeAged",
+  modal: "chat",
   message: 'How are you'
 }
 
@@ -32,8 +32,8 @@ const cb = (data) => {
 };
 
 // Join chatroom
-socket.emit('joinRoom', user, cb);
-socket.emit('addUser', user);
+// socket.emit('joinRoom', user, cb);
+// socket.emit('addUser', user);
 socket.emit('chatMessage', msg);
 // socket.emit('removeUser', user );
 // socket.emit('joinRoom', { "meaa": "sisi", "insis":"dnisnis" });
@@ -45,13 +45,14 @@ socket.emit('chatMessage', msg);
 // });
 //
 // // Message from server
-// socket.on('message', (message) => {
-//   console.log(message);
-//   outputMessage(message);
-//
-//   // Scroll down
-//   chatMessages.scrollTop = chatMessages.scrollHeight;
-// });
+socket.on('new_message', (message) => {
+  console.log('Hi')
+  console.log(message);
+  // outputMessage(message);
+
+  // // Scroll down
+  // chatMessages.scrollTop = chatMessages.scrollHeight;
+});
 
 // Message submit
 chatForm.addEventListener('submit', (e) => {
