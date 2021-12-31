@@ -52,7 +52,7 @@ class groupController {
       const senderId = req.id;
       const fullName = req.fullName;
       let user
-      if(req.modal !== "coach"){
+      if(req.modal2 !== "coach"){
         user = await db.user.findByPk(senderId,{attributes: ['id','group']});
 
         if(user.group > 1 ){
@@ -62,11 +62,9 @@ class groupController {
             message: 'User Already Exist',
           }
         }
-        let data = {
-          group: user.group + 1
-        }
-        await user.update(data);
       }
+
+      console.log('hi from server')
 
       const existingUser = await mapEntityToModel(req.modal).findOne({
         where: { senderId },
@@ -83,6 +81,10 @@ class groupController {
         message: `${req.fullName} just Joined`,
       };
       await mapEntityToModel(req.modal).create(newContact);
+      let data = {
+        group: user.group + 1
+      }
+      await user.update(data);
       return {
         status: 201,
         message: `${req.fullName} just Joined`,
