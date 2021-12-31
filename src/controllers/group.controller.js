@@ -51,14 +51,21 @@ class groupController {
     try {
       const senderId = req.id;
       const fullName = req.fullName;
-      const user = await db.user.findByPk(senderId,{attributes: ['id','group']});
-      if(user.group > 1 ){
-        console.log('no')
-        return {
-          status: 409,
-          message: 'User Already Exist',
+      let user
+      if(req.modal === "chat"){
+        user = await db.chat.findByPk(senderId,{attributes: ['id','group']});
+      } else {
+        user = await db.user.findByPk(senderId,{attributes: ['id','group']});
+
+        if(user.group > 1 ){
+          console.log('no')
+          return {
+            status: 409,
+            message: 'User Already Exist',
+          }
         }
       }
+
       const existingUser = await mapEntityToModel(req.modal).findOne({
         where: { senderId },
       });
