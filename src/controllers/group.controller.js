@@ -64,7 +64,6 @@ class groupController {
         }
       }
 
-      console.log('hi from server')
 
       const existingUser = await mapEntityToModel(req.modal).findOne({
         where: { senderId },
