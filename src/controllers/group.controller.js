@@ -52,7 +52,7 @@ class groupController {
       const senderId = req.id;
       const fullName = req.fullName;
       let user
-      if(req.modal === "chat"){
+      if(req.modal === "coach"){
         user = await db.chat.findByPk(senderId,{attributes: ['id','group']});
       } else {
         user = await db.user.findByPk(senderId,{attributes: ['id','group']});
