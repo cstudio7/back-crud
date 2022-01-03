@@ -51,7 +51,7 @@ const socketio = (server) => {
     socket.on('chatMessage', async (data) => {
       if(data.modal === "chat"){
 
-        // clients[data.senderId] = socket;
+        // clients[data.senderId] = socket
        let message =  await groupController.saveMessage(data)
         console.log(data)
         console.log(message)
