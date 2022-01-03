@@ -15,19 +15,11 @@ module.exports = {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
-        references: {
-          model: 'users',
-          key: 'id',
-        },
       },
       senderId: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
-        references: {
-          model: 'users',
-          key: 'id',
-        },
       },
       createdAt: {
         allowNull: false,
