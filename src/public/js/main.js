@@ -16,6 +16,7 @@ const user = {
   id: "60c4a20d-6a02-4276-9dd0-61a5d71d72ff",
   fullName: "Samuel Otibo",
   modal: "nutritionMgt",
+  modal2: "chat",
   message: 'Victor Just Joined'
 }
 

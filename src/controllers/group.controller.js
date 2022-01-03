@@ -269,7 +269,7 @@ class groupController {
         }
       };
 
-      if(req.modal === "chat"){
+      if(req.modal2 === "chat"){
         let save = {
           senderId: req.senderId,
           receiverId: req.receiverId,
