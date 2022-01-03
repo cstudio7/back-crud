@@ -47,7 +47,7 @@ const socketio = (server) => {
       io.to(chatRoom).emit('user_left', data);
     });
 
-    // Listen for chatMessage
+    // Listen for chatMessages
     socket.on('chatMessage', async (data) => {
       if(data.modal === "chat"){
 
