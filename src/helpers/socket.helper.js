@@ -53,7 +53,7 @@ const socketio = (server) => {
 
         // clients[data.senderId] = socket;
        let message =  await groupController.saveMessage(data)
-        console.log(data.message)
+        console.log(data)
         console.log(message)
         // socket.to(data.receiverId).emit("new_message", message);
         // socket.to(data.senderId).emit("new_message", message);
