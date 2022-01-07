@@ -34,8 +34,29 @@ const socketio = (server) => {
       let chatRoom = userKeysObj.modal;
 
       socket.join(chatRoom);
+      //Private Chat with coach
+      if(userKeysObj.model2 === "chat"){
+
+
+        const message = await groupController.getMessage(userKeysObj)
+        cb(message)
+        io.to(chatRoom).emit('joined_Room', message);
+      } else {
+        // Group Chat
+        const message = await groupController.getMessage(userKeysObj)
+        cb(message)
+        io.to(chatRoom).emit('joined_Room', message);
+      }
+    });
+
+    // Get Messages
+    socket.on('joinChat', async (userKeysObj, cb) => {
+      clients[userKeysObj.id] = socket;
+      let chatRoom = userKeysObj.modal;
+
+      socket.join(chatRoom);
       const message = await groupController.getMessage(userKeysObj)
-       cb(message)
+      cb(message)
       io.to(chatRoom).emit('joined_Room', message);
     });
 
@@ -53,8 +74,6 @@ const socketio = (server) => {
 
         // clients[data.senderId] = socket
        let message =  await groupController.saveMessage(data)
-        console.log(data)
-        console.log(message)
         // socket.to(data.receiverId).emit("new_message", message);
         // socket.to(data.senderId).emit("new_message", message);
         socket.emit("new_message", message);

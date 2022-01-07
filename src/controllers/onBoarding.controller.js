@@ -85,6 +85,27 @@ class onBoardingController {
      * @param {object} res This is a response will be send to the user
      * @returns {object} return object which include status and message
      */
+    static async getUserBoard(req, res) {
+        try {
+            const { id } = req.params;
+            const board = await db.onBoarding.findOne({where:{
+                userId: id
+            }});
+            const data = {
+                board,
+            };
+            response.successMessage(res, 'onBoarding Data', 200, data);
+        } catch (e) {
+            return response.errorMessage(res, e.message, 400);
+        }
+    }
+
+    /**
+     * User can get all client associated to a user
+     * @param {int} req This is the parameter(user id) that will be passed in url
+     * @param {object} res This is a response will be send to the user
+     * @returns {object} return object which include status and message
+     */
     static async editBoard(req, res) {
         try {
             const { id } = req.params;

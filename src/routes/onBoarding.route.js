@@ -11,6 +11,8 @@ router.post('/',  verifyToken.paramTokenUsers, validateOnBoard, onBoardingContro
 
 router.get('/:id', verifyToken.paramTokenUsers, onBoardingController.getBoard);
 
+router.get('/user/:id', verifyToken.paramTokenUsers, onBoardingController.getUserBoard);
+
 router.patch('/:id', verifyToken.paramTokenUsers, onBoardingController.editBoard);
 
 export default router;

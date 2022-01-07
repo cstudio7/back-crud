@@ -17,6 +17,7 @@ const user = {
   fullName: "Samuel Otibo",
   modal: "nutritionMgt",
   message: 'Victor Just Joined'
+
 }
 
 const msg = {
