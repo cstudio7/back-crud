@@ -117,12 +117,7 @@ export default class InputValidation {
       phoneNumber: Joi.string()
         .trim()
         .regex(/^[0-9]{8,13}$/)
-        .message('The phone number should be numbers of 8 to 10 digits.'),
-      code: Joi.string()
-          .trim()
-          .required()
-          .length(6)
-          .message('the code is not correct')
+        .message('The phone number should be numbers of 8 to 10 digits.')
     });
     validation(req, res, schema, next);
   }

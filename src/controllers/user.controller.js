@@ -106,7 +106,7 @@ class userController {
     static async resendCode(req, res) {
         try {
             const { phoneNumber, email } = req.body;
-            const userToUpdate = await UserServices.findExistingUser(phoneNumber, email);
+            const userToUpdate = await UserServices.findExistingCoach(phoneNumber, email);
             if (!userToUpdate) {
                 return response.errorMessage(res, 'Account not found', 404);
             }
@@ -141,6 +141,7 @@ class userController {
                 201
             );
         } catch (e) {
+            console.log(e)
             return response.errorMessage(res, e.message, 400);
         }
     }
@@ -157,7 +158,7 @@ class userController {
     };
     const { phoneNumber, code } = req.body;
     try {
-      const updateUser = await UserServices.activeUser(phoneNumber, code, activate);
+      const updateUser = await UserServices.activeCoach(phoneNumber, code, activate);
       const data = {
         isVerified: true,
       };

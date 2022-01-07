@@ -59,6 +59,24 @@ class UserServices {
    * @param {Object} email of the User email.
    * @returns {Object} Returns a user object and if user doesn't exist it returns null.
    */
+  static async findExistingCoach(email, phoneNumber) {
+    try {
+      const user = await db.coach.findOne({
+        where: {email}
+      });
+      if (!user) return null;
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  /**
+   * Find user by phoneNumber
+   * @param {Object} phoneNumber of the User email.
+   * @param {Object} email of the User email.
+   * @returns {Object} Returns a user object and if user doesn't exist it returns null.
+   */
   static async findExistingUsers(email, phoneNumber) {
     try {
       const user = await db.user.findOne({
@@ -325,6 +343,58 @@ class UserServices {
       };
     }
   }
+
+  /**
+   * This a function that activete a user account
+   * @param {string} phoneNumber this is a user mobile Number to be updated
+   * @param {string} code of the user to be updated
+   * @param {object} updateUser this is a value need to update  a user account
+   * @returns {object} return  a response object
+   */
+  static async activeCoach(phoneNumber, code, updateUser) {
+    /**
+     * This is exception handling
+     *@return {object} return an error object if there is any
+     */
+
+    try {
+      const userToUpdate = await db.coach.findOne({
+        where: {
+          [Op.and]: [{ phoneNumber }, { code }],
+        },
+      });
+
+      if (userToUpdate && userToUpdate.isVerified) {
+        return {
+          status: 409,
+          message: 'User already activated',
+        };
+      }
+
+      if (userToUpdate) {
+        await db.coach.update(updateUser, { where: { phoneNumber }, returning: true, plain: true });
+
+        return {
+          status: 200,
+          message: 'Account successfully activated',
+        };
+      }
+
+      if (!userToUpdate) {
+        return {
+          status: 404,
+          message: 'User not found',
+        };
+      }
+
+    } catch (error) {
+      return {
+        status: 400,
+        message: error,
+      };
+    }
+  }
+
 
   /**
    * This a function that activete a user account

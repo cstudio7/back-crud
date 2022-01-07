@@ -30,6 +30,9 @@ module.exports = {
       avatarAwsDetails: {
         type: Sequelize.JSONB,
       },
+      code: {
+        type: Sequelize.STRING(6),
+      },
       gender: {
         type: Sequelize.STRING,
       },

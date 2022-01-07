@@ -1,6 +1,6 @@
 import { APP_NAME, getMailGenerator } from './config';
 
-const emailTemplate = (firstName, link) => ({
+const emailTemplate = (firstName, code, link) => ({
     body: {
         intro: `${firstName}!`,
         action: {
@@ -8,7 +8,7 @@ const emailTemplate = (firstName, link) => ({
                 "Welcome to Diatron App. We are glad having you on our platform",
             button: {
                 color: '#020f8a',
-                text: APP_NAME,
+                text: `${code}`,
                 link,
             },
         },
@@ -18,9 +18,9 @@ const emailTemplate = (firstName, link) => ({
 
 const generateEmail = (user) => {
     const { BASE_URL } = process.env;
-    const { firstName } = user;
+    const { firstName, code } = user;
     const mailGenerator = getMailGenerator(BASE_URL);
-    const link = emailTemplate(`${firstName}`, `${BASE_URL}`);
+    const link = emailTemplate(`${firstName}`, `${code}`, `${BASE_URL}`);
     const emailBody = mailGenerator.generate(link);
     return emailBody;
 };

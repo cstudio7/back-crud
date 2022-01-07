@@ -8,6 +8,7 @@ const checkEmailpassword = async (req, res) => {
   const user = await db.coach.findOne({
     where: { email }
   });
+  console.log(user)
   if (!user) {
     const status = 404;
     return response.errorMessage(res, 'User is not found', status);
