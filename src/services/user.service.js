@@ -41,7 +41,7 @@ class UserServices {
    * @param {Object} email of the User email.
    * @returns {Object} Returns a user object and if user doesn't exist it returns null.
    */
-  static async findExistingUser(email, phoneNumber) {
+  static async findExistingUser( phoneNumber,email) {
     try {
       const user = await db.user.findOne({
         where: {email}
@@ -59,10 +59,10 @@ class UserServices {
    * @param {Object} email of the User email.
    * @returns {Object} Returns a user object and if user doesn't exist it returns null.
    */
-  static async findExistingCoach(email, phoneNumber) {
+  static async findExistingCoach(phoneNumber, email) {
     try {
       const user = await db.coach.findOne({
-        where: {email}
+        where: {phoneNumber}
       });
       if (!user) return null;
       return user;
@@ -91,25 +91,6 @@ class UserServices {
     }
   }
 
-  /**
-   * Find user by phoneNumber
-   * @param {Object} phoneNumber of the User email.
-   * @param {Object} email of the User email.
-   * @returns {Object} Returns a user object and if user doesn't exist it returns null.
-   */
-  static async findExistingCoach(email, phoneNumber) {
-    try {
-      const user = await db.coach.findOne({
-        where: {
-          [Op.or]: [{email}, {phoneNumber}],
-        }
-      });
-      if (!user) return null;
-      return user;
-    } catch (error) {
-      return error;
-    }
-  }
 
   /**
    * service to get Supported Role In Database

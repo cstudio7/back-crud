@@ -16,9 +16,9 @@ const router = express.Router();
 router.post('/signup', validateSignup, coachController.CoachSignup);
 router.post('/signin', validateLogin, coachController.signIn);
 router.get('/me', verifyToken.verifyCoachToken, coachController.getCoach);
-router.post('/coach/verify', validateActivateByCode, userController.activateUserByCode );
+router.post('/coach/verify', validateActivateByCode, coachController.activateUserByCode );
 
-router.post('/coach/resendcode', validateResendCode, userController.resendCode);
+router.post('/coach/resendcode', validateResendCode, coachController.resendCode);
 router.get('/coach', coachController.getAllCoach);
 router.patch('/me', verifyToken.verifyCoachToken, coachController.editCoachProfile);
 

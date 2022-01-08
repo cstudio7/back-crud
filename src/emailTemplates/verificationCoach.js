@@ -17,6 +17,7 @@ const emailTemplate = (firstName, code, link) => ({
 });
 
 const generateEmail = (user) => {
+    console.log(user)
     const { BASE_URL } = process.env;
     const { firstName, code } = user;
     const mailGenerator = getMailGenerator(BASE_URL);

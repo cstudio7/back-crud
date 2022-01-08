@@ -177,15 +177,25 @@ class coachController {
   static async resendCode(req, res) {
     try {
       const { phoneNumber, email } = req.body;
-      const userToUpdate = await UserServices.findExistingUser(phoneNumber, email);
+      const userToUpdate = await UserServices.findExistingCoach(phoneNumber, email);
+
       if (!userToUpdate) {
         return response.errorMessage(res, 'Account not found', 404);
       }
       if (userToUpdate && userToUpdate.isVerified) {
         return response.errorMessage(res, 'user already activated', 409);
       }
-      const { firstName, code } = userToUpdate
-      const verificationEmail = generateEmail(userToUpdate);
+
+    if(req.body.email){
+      const userDetail = {
+        firstName: userToUpdate.firstName,
+        lastName: userToUpdate.lastName,
+        phoneNumber: userToUpdate.phoneNumber,
+        email: userToUpdate.email,
+        code: userToUpdate.code
+      }
+
+      const verificationEmail = generateEmail(userDetail);
       await sendMail(
           process.env.SENDGRID_API_KEY,
           email,
@@ -193,10 +203,15 @@ class coachController {
           'Diatron Health',
           verificationEmail
       );
-
+      return response.successMessage(
+          res,
+          'Account code sent successfully, Please verify your account',
+          201
+      );
+    }else{
       const accountSid = process.env.TWILIO_ACCOUNT_SID;
       const authToken = process.env.TWILIO_AUTH_TOKEN;
-      const message = `Hi ${firstName}, Welcome to Diatron Health, Your Verification code is ${code}!`
+      const message = `Hi ${userToUpdate.firstName}, Welcome to Diatron Health, Your Verification code is ${userToUpdate.code}!`
 
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -211,7 +226,11 @@ class coachController {
           'Account code sent successfully, Please verify your account',
           201
       );
+
+    }
+
     } catch (e) {
+      console.log(e)
       return response.errorMessage(res, e.message, 400);
     }
   }
