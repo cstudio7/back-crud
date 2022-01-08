@@ -32,6 +32,7 @@ const socketio = (server) => {
     socket.on('joinRoom', async (userKeysObj, cb) => {
       clients[userKeysObj.id] = socket;
       let chatRoom = userKeysObj.modal;
+      console.log(userKeysObj)
 
       socket.join(chatRoom);
       //Private Chat with coach
