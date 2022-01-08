@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('hypertensions', {
+    return queryInterface.createTable('hypertensionMgts', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -28,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('hypertensions');
+    return queryInterface.dropTable('hypertensionMgt');
   },
 };

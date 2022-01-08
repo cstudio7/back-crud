@@ -77,10 +77,12 @@ class UserServices {
    * @param {Object} email of the User email.
    * @returns {Object} Returns a user object and if user doesn't exist it returns null.
    */
-  static async findExistingCoachUser(email) {
+  static async findExistingCoachUser(email, phoneNumber) {
     try {
       const user = await db.coach.findOne({
-        where: {email}
+        where: {
+          [Op.or]: [{email}, {phoneNumber}],
+        }
       });
       if (!user) return null;
       return user;

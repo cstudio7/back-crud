@@ -22,7 +22,7 @@ class coachController {
         const { firstName, lastName, phoneNumber, email,authType, gender, state, country } = req.body;
       const password = EncryptPassword(req.body.password);
       const code = Math.floor(100000 + Math.random() * 900000);
-      const existingUser = await UserServices.findExistingCoachUser(email);
+      const existingUser = await UserServices.findExistingCoachUser(email, phoneNumber);
       if (existingUser) {
         return response.errorMessage(res, 'user already exist', 409);
       }
