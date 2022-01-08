@@ -35,8 +35,8 @@ const socketio = (server) => {
 
       socket.join(chatRoom);
       //Private Chat with coach
-      if(userKeysObj.model2 === "chat"){
-
+      if(userKeysObj.modal2 === "chat"){
+console.log(userKeysObj)
         const message = await groupController.getMessage(userKeysObj)
         cb(message)
         io.to(chatRoom).emit('joined_Room', message);
