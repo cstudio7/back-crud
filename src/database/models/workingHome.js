@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const workHome = sequelize.define(
-    'workHome',
+  const workingHome = sequelize.define(
+    'workingHome',
     {
       fullName: DataTypes.STRING,
       message: DataTypes.STRING,
@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-    workHome.associate = (models) => {
+    workingHome.associate = (models) => {
     // associations can be defined here
-    workHome.belongsTo(models.user, {
+        workingHome.belongsTo(models.user, {
         foreignKey: 'senderId',
         as: 'workHome',
         onDelete: 'CASCADE',
     });
   };
-  return workHome;
+  return workingHome;
 };

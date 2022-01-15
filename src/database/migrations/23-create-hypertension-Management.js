@@ -28,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('hypertensionMgt');
+    return queryInterface.dropTable('hypertensionMgts');
   },
 };

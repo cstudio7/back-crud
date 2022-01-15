@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'stressMgt',
     {
       fullName: DataTypes.STRING,
-      groupName: DataTypes.STRING,
+      message: DataTypes.STRING,
       senderId: DataTypes.UUID,
     },
     {}

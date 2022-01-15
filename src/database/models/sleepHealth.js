@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const sleepHealth = sequelize.define(
-    'sleepHealth',
+  const sleepHealthMgt = sequelize.define(
+    'sleepHealthMgt',
     {
       fullName: DataTypes.STRING,
       message: DataTypes.STRING,
@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-    sleepHealth.associate = (models) => {
+    sleepHealthMgt.associate = (models) => {
     // associations can be defined here
-    sleepHealth.belongsTo(models.user, {
+        sleepHealthMgt.belongsTo(models.user, {
         foreignKey: 'senderId',
         as: 'sleepHealth',
         onDelete: 'CASCADE',
     });
   };
-  return sleepHealth;
+  return sleepHealthMgt;
 };

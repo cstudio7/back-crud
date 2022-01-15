@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       dob: DataTypes.DATE,
       race: DataTypes.STRING,
       avatar: DataTypes.STRING,
-      group: DataTypes.INTEGER,
+      group:  { type: DataTypes.ARRAY(DataTypes.STRING)},
       avatarAwsDetails: DataTypes.JSONB,
       emergencyContact: DataTypes.STRING,
       manage: DataTypes.STRING,

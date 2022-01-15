@@ -60,16 +60,19 @@ module.exports = {
       },
       bloodPressureMin: {
         type: Sequelize.STRING
+        defaultValue: 90
       },
       bloodPressureMax:{
         type: Sequelize.STRING
+        defaultValue: 180
       },
       bloodGlucoseMin: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 60
       },
       bloodGlucoseMax:{
         type: Sequelize.STRING,
-        defaultValue: 40
+        defaultValue: 220
       },
       weight: {
         type: Sequelize.STRING
@@ -90,8 +93,7 @@ module.exports = {
         type: Sequelize.STRING(6),
       },
       group: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       state: {
         type: Sequelize.STRING,

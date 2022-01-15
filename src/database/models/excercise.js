@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const excercise = sequelize.define(
-    'excercise',
+  const excerciseMgt = sequelize.define(
+    'excerciseMgt',
     {
       fullName: DataTypes.STRING,
       message: DataTypes.STRING,
@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-    excercise.associate = (models) => {
+    excerciseMgt.associate = (models) => {
     // associations can be defined here
 
   };
-  return excercise;
+  return excerciseMgt;
 };

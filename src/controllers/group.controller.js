@@ -28,8 +28,8 @@ class groupController {
         case 'stressMgt':
           return db.stressMgt;
           break;
-        case 'workHome':
-          return db.workHome;
+        case 'workingHome':
+          return db.workingHome;
           break;
         case 'workout':
           return db.workout;
@@ -37,11 +37,14 @@ class groupController {
         case 'homeAged':
           return db.homeAged;
           break;
-        case 'homeKid':
-          return db.homeKid;
+        case 'homeKidMgt':
+          return db.homeKidMgt;
           break;
-        case 'sleepHealth':
-          return db.sleepHealth;
+        case 'sleepHealthMgt':
+          return db.sleepHealthMgt;
+          break;
+        case 'excerciseMgt':
+          return db.excerciseMgt;
           break;
         default:
           break;
@@ -49,19 +52,29 @@ class groupController {
     };
 
     try {
+
       const senderId = req.id;
       const fullName = req.fullName;
       let user
-      if(req.modal2 !== "coach"){
-        user = await db.user.findByPk(senderId,{attributes: ['id','group']});
 
-        if(user.group > 1 ){
-          console.log('no')
-          return {
-            status: 409,
-            message: 'User Already Exist',
-          }
-        }
+      user = await db.user.findByPk(senderId,{attributes: ['id','group']});
+
+      let group
+      if(user.group === null){
+        group = []
+      } else {
+        group = user.group
+      }
+      console.log(group)
+      if(req.modal2 !== "coach"){
+
+        // if(group.length > 1 ){
+        //   console.log('no')
+        //   return {
+        //     status: 409,
+        //     message: 'User Already Exist',
+        //   }
+        // }
       }
 
 
@@ -80,10 +93,22 @@ class groupController {
         message: `${req.fullName} just Joined`,
       };
       await mapEntityToModel(req.modal).create(newContact);
-      let data = {
-        group: user.group + 1
+      let data
+      if( group.length === 0){
+
+        await user.update({
+          group: [
+            `${req.modal}`
+          ]
+        });
+      } else {
+        await user.update({
+          group: [
+            ...group,
+            req.modal
+          ]
+        });
       }
-      await user.update(data);
       return {
         status: 201,
         message: `${req.fullName} just Joined`,
@@ -119,8 +144,8 @@ class groupController {
           case 'stressMgt':
             return db.stressMgt;
             break;
-          case 'workHome':
-            return db.workHome;
+          case 'workingHome':
+            return db.workingHome;
             break;
           case 'workout':
             return db.workout;
@@ -128,21 +153,27 @@ class groupController {
           case 'homeAged':
             return db.homeAged;
             break;
-          case 'homeKid':
-            return db.homeKid;
+          case 'homeKidMgt':
+            return db.homeKidMgt;
             break;
-          case 'sleepHealth':
-            return db.sleepHealth;
+          case 'sleepHealthMgt':
+            return db.sleepHealthMgt;
+            break;
+          case 'excerciseMgt':
+            return db.excerciseMgt;
             break;
           default:
             break;
         }
       };
+
       const senderId = req.id;
       const user = await db.user.findByPk(senderId,{attributes: ['id','group']});
+      let newGroup = group.filter( elem => elem !== req.modal )
+
       let count = {
-        group: user.group - 1
-      }
+        group: newGroup
+      };
       await user.update(count);
       await mapEntityToModel(req.modal).destroy({ where: { senderId } });
       const data = {
@@ -177,8 +208,8 @@ class groupController {
           case 'stressMgt':
             return db.stressMgt;
             break;
-          case 'workHome':
-            return db.workHome;
+          case 'workingHome':
+            return db.workingHome;
             break;
           case 'workout':
             return db.workout;
@@ -186,11 +217,14 @@ class groupController {
           case 'homeAged':
             return db.homeAged;
             break;
-          case 'homeKid':
-            return db.homeKid;
+          case 'homeKidMgt':
+            return db.homeKidMgt;
             break;
-          case 'sleepHealth':
-            return db.sleepHealth;
+          case 'sleepHealthMgt':
+            return db.sleepHealthMgt;
+            break;
+          case 'excerciseMgt':
+            return db.excerciseMgt;
             break;
           default:
             break;
@@ -249,8 +283,8 @@ class groupController {
           case 'stressMgt':
             return db.stressMgt;
             break;
-          case 'workHome':
-            return db.workHome;
+          case 'workingHome':
+            return db.workingHome;
             break;
           case 'workout':
             return db.workout;
@@ -258,11 +292,14 @@ class groupController {
           case 'homeAged':
             return db.homeAged;
             break;
-          case 'homeKid':
-            return db.homeKid;
+          case 'homeKidMgt':
+            return db.homeKidMgt;
             break;
-          case 'sleepHealth':
-            return db.sleepHealth;
+          case 'sleepHealthMgt':
+            return db.sleepHealthMgt;
+            break;
+          case 'excerciseMgt':
+            return db.excerciseMgt;
             break;
           default:
             break;
