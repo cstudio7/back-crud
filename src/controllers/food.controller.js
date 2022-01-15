@@ -5,12 +5,8 @@ import db from '../database/models';
  * Class for users related operations such Sign UP, Sign In and others
  */
 class foodController {
-  /**
-   * Add a food and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
+
   static async addFood(req, res) {
     try {
       const { id } = req.user;
@@ -32,12 +28,7 @@ class foodController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getFood(req, res) {
     const { id } = req.user;
     try {
@@ -51,13 +42,6 @@ class foodController {
   }
 
 
-
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
   static async getOneFood(req, res) {
     const { id } = req.params;
     try {
@@ -70,12 +54,19 @@ class foodController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+  static async getOneUsersFood(req, res) {
+    const { userId } = req.params;
+    try {
+      const data = await db.fud.findOne({
+        where: { userId },
+      });
+      response.successMessage(res, 'Food Details', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
+
   static async editFood(req, res) {
     try {
       const { id } = req.params;
@@ -88,12 +79,6 @@ class foodController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
   static async deleteFood(req, res) {
     try {
       const { id } = req.body;

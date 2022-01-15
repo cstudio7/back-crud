@@ -5,12 +5,8 @@ import db from '../database/models';
  * Class for users related operations such Sign UP, Sign In and others
  */
 class medicationController {
-  /**
-   * Add a food and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
+
   static async addMedication(req, res) {
     try {
       const { id } = req.user;
@@ -31,12 +27,7 @@ class medicationController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getMedication(req, res) {
     const { id } = req.user;
     try {
@@ -50,13 +41,6 @@ class medicationController {
   }
 
 
-
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
   static async getOneMed(req, res) {
     const { id } = req.params;
     try {
@@ -69,12 +53,18 @@ class medicationController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+  static async getOneUsersMed(req, res) {
+    const { userId } = req.params;
+    try {
+      const data = await db.medication.findOne({
+        where: { userId },
+      });
+      response.successMessage(res, 'Medication Details', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
   static async editMedication(req, res) {
     try {
       const { id } = req.params;
@@ -87,12 +77,7 @@ class medicationController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async deleteMedication(req, res) {
     try {
       const { id } = req.body;

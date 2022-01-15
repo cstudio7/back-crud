@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateFoodLib, foodLibraryController.addFoodDetails );
 router.get('/', verifyToken.headerToken, verifyUser, foodLibraryController.getFoodLibrary);
 router.get('/:id', verifyToken.headerToken, verifyUser, foodLibraryController.getOneFoodLib);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, foodLibraryController.getOneUsersFoodLib);
 router.patch('/:id', verifyToken.headerToken, verifyUser, validateFoodLib, foodLibraryController.editFoodLib);
 router.delete('/', verifyToken.headerToken, verifyUser, foodLibraryController.deleteLibrary);
 export default router;

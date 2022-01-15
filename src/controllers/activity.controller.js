@@ -5,12 +5,8 @@ import db from '../database/models';
  * Class for users related operations such Sign UP, Sign In and others
  */
 class activityController {
-  /**
-   * Add a client and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
+
   static async addActivity(req, res) {
     try {
       const { id } = req.user;
@@ -32,12 +28,7 @@ class activityController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getActivity(req, res) {
     const { id } = req.user;
     try {
@@ -50,12 +41,7 @@ class activityController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getOneActivity(req, res) {
     const { id } = req.params;
     try {
@@ -68,13 +54,19 @@ class activityController {
     }
   }
 
+  static async getOneUsersActivity(req, res) {
+    const { userId } = req.params;
+    try {
+      const data = await db.activity.findOne({
+        where: { userId },
+      });
+      response.successMessage(res, 'All Activities', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async editActivity(req, res) {
     try {
       const { id } = req.params;
@@ -87,12 +79,7 @@ class activityController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async deleteActivity(req, res) {
     try {
       const { id } = req.body;

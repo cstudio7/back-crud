@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateFoodLib, medLibraryController.addMedDetails);
 router.get('/', verifyToken.headerToken, verifyUser, medLibraryController.getMedLibrary);
 router.get('/:id', verifyToken.headerToken, verifyUser, medLibraryController.getOneMedLib);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, medLibraryController.getOneUserMedLib);
 router.patch('/:id', verifyToken.headerToken, verifyUser, medLibraryController.editMedLibrary);
 router.delete('/', verifyToken.headerToken, verifyUser, medLibraryController.deleteLibrary);
 export default router;

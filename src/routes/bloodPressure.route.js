@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateBloodPressure, bloodPressureController.addBloodPressure);
 router.get('/', verifyToken.headerToken, verifyUser, bloodPressureController.getPressues);
 router.get('/:id', verifyToken.headerToken, verifyUser, bloodPressureController.getOnePressues);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, bloodPressureController.getOneUsersPressues);
 router.patch('/:id', verifyToken.headerToken, verifyUser, bloodPressureController.editPressure);
 router.delete('/', verifyToken.headerToken, verifyUser, bloodPressureController.deleteBlood);
 export default router;

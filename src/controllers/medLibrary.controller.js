@@ -5,12 +5,7 @@ import db from '../database/models';
  * Class for users related operations such Sign UP, Sign In and others
  */
 class medLibraryController {
-  /**
-   * Add a client and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
   static async addMedDetails(req, res) {
     try {
       const { id } = req.user;
@@ -29,12 +24,7 @@ class medLibraryController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getMedLibrary(req, res) {
     const { id } = req.user;
     try {
@@ -47,12 +37,7 @@ class medLibraryController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getOneMedLib(req, res) {
     const { id } = req.params;
     try {
@@ -65,13 +50,19 @@ class medLibraryController {
     }
   }
 
+  static async getOneUserMedLib(req, res) {
+    const { userId } = req.params;
+    try {
+      const data = await db.medLib.findOne({
+        where: { userId },
+      });
+      response.successMessage(res, 'Med Library', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async editMedLibrary(req, res) {
     try {
       const { id } = req.params;
@@ -84,12 +75,6 @@ class medLibraryController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
   static async deleteLibrary(req, res) {
     try {
       const { id } = req.body;

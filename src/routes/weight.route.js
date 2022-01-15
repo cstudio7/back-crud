@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateWeight, weightController.addWeight);
 router.get('/', verifyToken.headerToken, verifyUser, weightController.getWeight);
 router.get('/:id', verifyToken.headerToken, verifyUser, weightController.getOneWeight);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, weightController.getOneUserWeight);
 router.patch('/:id', verifyToken.headerToken, verifyUser, weightController.editWeight);
 router.delete('/', verifyToken.headerToken, verifyUser, weightController.deleteWeight);
 export default router;

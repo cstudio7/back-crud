@@ -38,6 +38,7 @@ module.exports = {
       },
       emergencyContact: {
         type: Sequelize.STRING,
+        defaultValue: "0"
       },
       manage: {
         type: Sequelize.STRING,
@@ -67,7 +68,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       bloodGlucoseMax:{
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 40
       },
       weight: {
         type: Sequelize.STRING

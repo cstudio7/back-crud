@@ -10,6 +10,7 @@ const checkEmailpassword = async (req, res) => {
       const status = 404;
       return response.errorMessage(res, 'User is not found', status);
     }
+
     if (!comparePassword(req.body.password, user.password)) {
       const status = 409;
       return response.errorMessage(res, 'Invalid Login Detail', status);

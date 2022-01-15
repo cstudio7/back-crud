@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateBloodPressure, a1cController.addA1c);
 router.get('/', verifyToken.headerToken, verifyUser, a1cController.getA1c);
 router.get('/:id', verifyToken.headerToken, verifyUser, a1cController.getOneA1c);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, a1cController.getOneUserA1c);
 router.patch('/:id', verifyToken.headerToken, verifyUser, a1cController.editA1c);
 router.delete('/', verifyToken.headerToken, verifyUser, a1cController.deleteA1c);
 export default router;

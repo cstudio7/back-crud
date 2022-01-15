@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const EncryptPassword = (password) => {
-  const saltRounds = 10;
+  const saltRounds = 15;
 
   return bcrypt.hashSync(password, saltRounds);
 };

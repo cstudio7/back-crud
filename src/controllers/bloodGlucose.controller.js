@@ -5,12 +5,7 @@ import db from '../database/models';
  * Class for bloodPressure related operations
  */
 class bloodGlucoseController {
-  /**
-   * Add a bloodPressure and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
   static async addBloodGlucose(req, res) {
     try {
       const { id } = req.user;
@@ -28,12 +23,7 @@ class bloodGlucoseController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getGlucose(req, res) {
     const { id } = req.user;
     try {
@@ -46,12 +36,7 @@ class bloodGlucoseController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getOneGlucose(req, res) {
     const { id } = req.params;
     try {
@@ -65,12 +50,18 @@ class bloodGlucoseController {
   }
 
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+  static async getOneUsersGlucose(req, res) {
+    const userId = req.params.userId;
+    try {
+      const data = await db.glucose.findOne({
+        where: { userId },
+      });
+      response.successMessage(res, 'Blood Glucose', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
   static async editGlucose(req, res) {
     try {
       const { id } = req.params;
@@ -83,12 +74,6 @@ class bloodGlucoseController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
   static async deleteBlood(req, res) {
     try {
       const { id } = req.body;

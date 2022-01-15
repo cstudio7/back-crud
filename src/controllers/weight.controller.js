@@ -5,12 +5,7 @@ import db from '../database/models';
  * Class for users related operations such Sign UP, Sign In and others
  */
 class weightController {
-  /**
-   * Add a client and saving client data in the database
-   * @param {Object} req The request object
-   * @param {Object} res The response object
-   * @returns {Object} A user object with selected fields
-   */
+
   static async addWeight(req, res) {
     try {
       const { id } = req.user;
@@ -28,12 +23,7 @@ class weightController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getWeight(req, res) {
     const { id } = req.user;
     try {
@@ -49,12 +39,7 @@ class weightController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async getOneWeight(req, res) {
     const { id } = req.params;
     try {
@@ -70,12 +55,22 @@ class weightController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {int} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+  static async getOneUserWeight(req, res) {
+    const { userId } = req.params;
+    try {
+      const weight = await db.weight.findOne({
+        where: { userId },
+      });
+      const data = {
+        weight,
+      };
+      response.successMessage(res, 'Weight Detail', 200, data);
+    } catch (e) {
+      return response.errorMessage(res, e.message, 400);
+    }
+  }
+
+
   static async editWeight(req, res) {
     try {
       const { id } = req.params;
@@ -91,12 +86,7 @@ class weightController {
     }
   }
 
-  /**
-   * User can get all client associated to a user
-   * @param {object} req This is the parameter(user id) that will be passed in url
-   * @param {object} res This is a response will be send to the user
-   * @returns {object} return object which include status and message
-   */
+
   static async deleteWeight(req, res) {
     try {
       const { id } = req.body;

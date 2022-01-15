@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateGlucosePressure, bloodGlucoseController.addBloodGlucose);
 router.get('/', verifyToken.headerToken, verifyUser, bloodGlucoseController.getGlucose);
 router.get('/:id', verifyToken.headerToken, verifyUser, bloodGlucoseController.getOneGlucose);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, bloodGlucoseController.getOneUsersGlucose);
 router.patch('/:id', verifyToken.headerToken, verifyUser, bloodGlucoseController.editGlucose);
 router.delete('/', verifyToken.headerToken, verifyUser, bloodGlucoseController.deleteBlood);
 export default router;

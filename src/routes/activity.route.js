@@ -12,6 +12,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateActivity, activityController.addActivity);
 router.get('/', verifyToken.headerToken, verifyUser, activityController.getActivity);
 router.get('/:id', verifyToken.headerToken, verifyUser, activityController.getOneActivity);
+router.get('/user/:userId', verifyToken.headerToken, verifyUser, activityController.getOneUsersActivity);
 router.patch('/:id', verifyToken.headerToken, verifyUser, activityController.editActivity);
 router.delete('/', verifyToken.headerToken, verifyUser, activityController.deleteActivity);
 export default router;

@@ -5,10 +5,10 @@
  */
 module.exports = (sequelize, DataTypes) => {
   const medication = sequelize.define('medication', {
-        userId: {
-          type: DataTypes.UUID,
-          onDelete: 'CASCADE',
-        },
+    userId: {
+      type: DataTypes.UUID,
+      onDelete: 'CASCADE',
+    },
     type: {
       type: DataTypes.STRING,
     },
