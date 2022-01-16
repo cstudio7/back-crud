@@ -325,7 +325,7 @@ class groupController {
         };
       }
       let save = {
-        senderId: req.senderId,
+        senderId: req.senderId, 
         fullName: req.fullName,
         message: req.message
       }
