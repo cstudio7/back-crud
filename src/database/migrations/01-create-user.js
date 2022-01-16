@@ -59,11 +59,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       bloodPressureMin: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
         defaultValue: 90
       },
       bloodPressureMax:{
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
         defaultValue: 180
       },
       bloodGlucoseMin: {
