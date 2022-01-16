@@ -68,13 +68,13 @@ class groupController {
       console.log(group)
       if(req.modal2 !== "coach"){
 
-        // if(group.length > 1 ){
-        //   console.log('no')
-        //   return {
-        //     status: 409,
-        //     message: 'User Already Exist',
-        //   }
-        // }
+        if(group.length > 1 ){
+          console.log('no')
+          return {
+            status: 409,
+            message: 'User Already Exist',
+          }
+        }
       }
 
 
