@@ -107,7 +107,7 @@ class a1cController {
   static async getOneUserA1c(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.a1c.findOne({
+      const data = await db.a1c.findAll({
         where: { userId },
       });
       response.successMessage(res, 'Blood Pressure', 200, data);

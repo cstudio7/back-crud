@@ -57,7 +57,7 @@ class foodController {
   static async getOneUsersFood(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.fud.findOne({
+      const data = await db.fud.findAll({
         where: { userId },
       });
       response.successMessage(res, 'Food Details', 200, data);

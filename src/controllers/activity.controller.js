@@ -57,7 +57,7 @@ class activityController {
   static async getOneUsersActivity(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.activity.findOne({
+      const data = await db.activity.findAll({
         where: { userId },
       });
       response.successMessage(res, 'All Activities', 200, data);

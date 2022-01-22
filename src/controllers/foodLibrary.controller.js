@@ -54,7 +54,7 @@ class foodLibraryController {
   static async getOneUsersFoodLib(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.foodLib.findOne({
+      const data = await db.foodLib.findAll({
         where: { userId },
       });
       response.successMessage(res, 'Food Library', 200, data);

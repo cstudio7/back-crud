@@ -53,7 +53,7 @@ class bloodGlucoseController {
   static async getOneUsersGlucose(req, res) {
     const userId = req.params.userId;
     try {
-      const data = await db.glucose.findOne({
+      const data = await db.glucose.findAll({
         where: { userId },
       });
       response.successMessage(res, 'Blood Glucose', 200, data);

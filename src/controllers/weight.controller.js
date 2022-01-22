@@ -58,7 +58,7 @@ class weightController {
   static async getOneUserWeight(req, res) {
     const { userId } = req.params;
     try {
-      const weight = await db.weight.findOne({
+      const weight = await db.weight.findAll({
         where: { userId },
       });
       const data = {

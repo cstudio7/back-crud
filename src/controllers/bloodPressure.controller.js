@@ -52,7 +52,7 @@ class bloodPressureController {
   static async getOneUsersPressues(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.blood.findOne({
+      const data = await db.blood.findAll({
         where: { userId },
       });
       response.successMessage(res, 'Blood Pressure', 200, data);

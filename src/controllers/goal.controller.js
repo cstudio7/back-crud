@@ -61,7 +61,7 @@ class goalController {
   static async getOneUsersGoal(req, res) {
     const { userId } = req.params;
     try {
-      const data = await db.goal.findOne({
+      const data = await db.goal.findAll({
         where: { userId },
       });
       response.successMessage(res, 'All Goals', 200, data);
