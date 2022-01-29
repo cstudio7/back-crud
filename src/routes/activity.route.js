@@ -3,6 +3,7 @@ import verifyToken from '../middlewares/verify.token.middleware';
 import InputValidation from '../helpers/Validations/activity.joi.validate';
 import verifyUser from '../middlewares/verify.user.middleware';
 import activityController from "../controllers/activity.controller";
+import verifyTokens from "../middlewares/coachToken/verify.coach.middleware";
 const router = express.Router();
 
 const {
@@ -12,7 +13,7 @@ const {
 router.post('/', verifyToken.headerToken, verifyUser, validateActivity, activityController.addActivity);
 router.get('/', verifyToken.headerToken, verifyUser, activityController.getActivity);
 router.get('/:id', verifyToken.headerToken, verifyUser, activityController.getOneActivity);
-router.get('/user/:userId', verifyToken.headerToken, verifyUser, activityController.getOneUsersActivity);
+router.get('/user/:userId', verifyTokens.verifyCoachToken, activityController.getOneUsersActivity);
 router.patch('/:id', verifyToken.headerToken, verifyUser, activityController.editActivity);
 router.delete('/', verifyToken.headerToken, verifyUser, activityController.deleteActivity);
 export default router;
